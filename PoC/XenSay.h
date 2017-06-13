@@ -20,22 +20,21 @@ typedef unsigned short u16;
 typedef unsigned long u32;
 
 // I2C Slave ADDR
-
 # define ADDR (0x7C)
+
+// State enum
+typedef enum {
+    CONFIG,
+    SIMON,
+    LEARNING,
+    FREE
+} STATES;
 
 // Global
 u32 g_press;    // switch venant d'etre appuye
 u32 g_release;  // swith venant d'etre relache
 STATES  g_state;    //  etat general dans lequel se trouve le piano
 u32 g_led;      //  gestion des leds
-
-// State enum
-typedef enum {
-    INIT;
-    SIMON;
-    LEARNING;
-    FREE;
-} STATES;
 
 #endif	/* XENSAY_H */
 
