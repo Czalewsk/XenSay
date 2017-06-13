@@ -11,7 +11,8 @@ void    init_timer1(void)
     IEC0bits.T1IE = 1;      // Active l'interruption du timer 1
 }
 
-void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer(void) // Load des switch + envoie de l'etat des LEDs
+// Load des switch + envoie de l'etat des LEDs
+void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(void) 
 {
     if (SPI1STATbits.SPITBE)
     {

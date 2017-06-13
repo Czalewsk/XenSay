@@ -7,6 +7,8 @@
 
 #include "XenSay.h"
 
+// Interrupt I2C priority > All || (I2C Priority == Priority (Switch)) > ALL ?
+
 void    i2c_init(void)
 {
     u8      tmp = 0;

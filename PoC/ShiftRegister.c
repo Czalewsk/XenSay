@@ -1,5 +1,11 @@
 #include "XenSay.h"
 
+static u32 g_press;    // switch venant d'etre appuye
+static u32 g_release;  // swith venant d'etre relache
+
+static void (*onPressCallback)(u32 button);
+static void (*onReleaseCallback)(u32 button);
+
 void     init_load_latch(void)
 {
     TRISDbits.TRISD0 = 0;
@@ -39,6 +45,25 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
         g_release = before & ~actual_state; // calcul des switch relaches
         g_press = actual_state & ~before;   // calcul des switch appuyes
         IFS0bits.SPI1RXIF = 0;
+		if (g_press  > 0 || g_release > 0)
+			switcher();
     }
 }
 
+void		switcher(void)
+{
+	if (g_press > 0 && onPressCallback)
+		onPressCallback(g_press);
+	if (g_release > 0 && onReleaseCallback)
+		onReleaseCallback(g_release);
+}
+
+void		setOnPressCallback(void (*c)(u32 button))
+{
+	onPressCallback = c;
+}
+
+void		setOnReleaseCallback(void (*c)(u32 button))
+{
+	onReleaseCallback = c;
+}

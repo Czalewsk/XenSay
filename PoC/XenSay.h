@@ -8,8 +8,8 @@
 #ifndef XENSAY_H
 #define	XENSAY_H
 
-#include <xc.h>
-#include <sys/attribs.h>
+# include <xc.h>
+# include <sys/attribs.h>
 
 //Typedef Unsigned and Signed 8/16/32
 typedef signed char s8;
@@ -31,10 +31,8 @@ typedef enum {
 } STATES;
 
 // Global
-u32 g_press;    // switch venant d'etre appuye
-u32 g_release;  // swith venant d'etre relache
 STATES  g_state;    //  etat general dans lequel se trouve le piano
-u32 g_led;      //  gestion des leds
+u32		g_led;      //  gestion des leds
 
 #endif	/* XENSAY_H */
 

@@ -52,5 +52,6 @@ int     main(void)
                 run_free();
                 break;
         }
-    };
+		WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
+    }
 }
