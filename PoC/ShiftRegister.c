@@ -1,9 +1,11 @@
 #include "XenSay.h"
 
-void     init_led_latch(void)
+void     init_load_latch(void)
 {
     TRISDbits.TRISD0 = 0;
     LATDbits.LATD0 = 0;
+    TRISDbits.TRISD1 = 0;
+    LATDbits.LATD1 = 1;
 }
 
 void    pulse_load(void)
@@ -20,6 +22,10 @@ void    pulse_latch(void)
 
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
 {
+    static u32 before;
+    static u32 actual_state;
+
+    before = actual_state;
     if  (SPI1STATbits.SPIROV || IFS0bits.SPI1EIF) // En cas d'erreur
         ;
     if (IFS0bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
@@ -29,7 +35,9 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
     }
     if (IFS0bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
-        g_input = SPI1BUF;
+        actual_state = SPI1BUF;
+        g_release = before & ~actual_state; // calcul des switch relaches
+        g_press = actual_state & ~before;   // calcul des switch appuyes
         IFS0bits.SPI1RXIF = 0;
     }
 }
