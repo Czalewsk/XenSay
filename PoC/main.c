@@ -13,10 +13,8 @@ void    init_interrupt(void)
 
 void    init_global(void)
 {
-    g_press = 0;
-    g_release = 0;
     g_state = CONFIG;
-    g_led = 0;
+    g_led = 0xFF;
 }
 
 int     main(void)
@@ -37,7 +35,7 @@ int     main(void)
         //SWITCH_GAME -> GAME MODE...
         //EVENT_CLR
         
-        switch(g_state)
+/*        switch(g_state)
         {
             case CONFIG:
                 run_config();
@@ -51,7 +49,8 @@ int     main(void)
             case FREE:
                 run_free();
                 break;
-        }
+        }*/
 		WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
+    return (1);
 }

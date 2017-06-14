@@ -9,6 +9,7 @@ void    init_timer1(void)
     TMR1 = 0;               // Reset le timer 1
     PR1 = 100;            // osc (8 MHz) / PBDIV(8) -> 1MHz ->  / timer prescale(64) -> 15625 -> 1s
     IEC0bits.T1IE = 1;      // Active l'interruption du timer 1
+    T1CONbits.ON = 1;
 }
 
 // Load des switch + envoie de l'etat des LEDs
@@ -16,6 +17,7 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(vo
 {
     if (SPI1STATbits.SPITBE)
     {
+        g_led = g_switch;
          pulse_load();
          SPI1BUF = g_led;
     }
