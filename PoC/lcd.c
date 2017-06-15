@@ -56,6 +56,26 @@ void    lcd_write_line(char *str, s8 line)
     i2c_stop();
 }
 
+void    lcd_write_nb(char *str, u8 line, s8 icase)
+{
+    if (line > 1 || icase > 15)
+    i2c_start();
+    i2c_sendByte(ADDR);
+    i2c_sendByte(0x80);
+    if (line == 0)
+        i2c_sendByte(128 + icase);
+    else
+        i2c_sendByte(192 + icase);
+    while (*str && *(str + 1))
+    {
+        i2c_sendByte(0xC0);
+        i2c_sendByte(*str++);
+    }
+    i2c_sendByte(0x40);
+    i2c_sendByte(*str);
+    i2c_stop();
+}
+
 void    lcd_cursor(s8 show, s8 blink)
 {
     i2c_start();
