@@ -10,14 +10,7 @@
 
 # include <xc.h>
 # include <sys/attribs.h>
-
-//Typedef Unsigned and Signed 8/16/32
-typedef signed char s8;
-typedef signed short s16;
-typedef signed long s32;
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned long u32;
+# include "types.h"
 
 // I2C Slave ADDR
 # define ADDR (0x7C)

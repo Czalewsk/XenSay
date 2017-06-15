@@ -1,4 +1,5 @@
 #include "XenSay.h"
+#include "audio.h"
 
 void run_config(void);
 void run_simon(void);
@@ -25,10 +26,10 @@ int     main(void)
     i2c_init();
     spi_init();
     lcd_init();
-    lcd_init();
     lcd_create_char();
     init_interrupt();
     init_timer1();
+	audio_init();
     while (1)
     {
         //EVENT_GENERATOR
