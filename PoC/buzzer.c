@@ -36,11 +36,11 @@ void buzzer_init()
 
     // Initialisation du timer
     IEC0bits.T2IE = 1;
-    IPC1bits.T2IP = 6;
+    IPC2bits.T2IP = 6;
     IFS0bits.T2IF = 0;
 
     T2CON = 0;
-    T2CONbits.TCS = 0; // Clock PBCLK
+    //T2CONbits.TCS = 0; // Clock PBCLK
     T2CONbits.TCKPS = 0; // Timer Prescal 1:1 (500000 = 0.5s)
     T2CONbits.TGATE = 0;
     T2CONbits.ON = 0;

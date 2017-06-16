@@ -47,7 +47,7 @@ void music_init()
 
     // Enable interruption timer audio
     IEC0bits.T3IE = 1;
-    IPC2bits.T3IP = 5;
+    IPC3bits.T3IP = 5;
     IFS0bits.T3IF = 0;
 
     // Settings timer audio
