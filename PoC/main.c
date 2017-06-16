@@ -14,43 +14,64 @@ void    init_interrupt(void)
 void    init_global(void)
 {
     g_state = CONFIG;
-    g_led = 0xFF;
+    g_led = 0x00;
 }
 
 int     main(void)
 {
+    STATES old_state = -1;
+
     init_global();
     init_load_latch();
     lcd_init_rst();
     i2c_init();
+    lcd_init();
     spi_init();
-    lcd_init();
-    lcd_init();
     lcd_create_char();
     init_interrupt();
     init_timer1();
+//    lcd_clear();
+    lcd_init_end();
     while (1)
     {
         //EVENT_GENERATOR
         //SWITCH_GAME -> GAME MODE...
         //EVENT_CLR
-        
-/*        switch(g_state)
-        {
-            case CONFIG:
-                run_config();
-                break;
-            case SIMON:
-                run_simon();
-                break;
-            case LEARNING:
-                run_learning();
-                break;
-            case FREE:
-                run_free();
-                break;
-        }*/
-		WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
+        if (old_state != g_state)
+            switch(g_state)
+            {
+                case CONFIG:
+                {
+                    old_state = CONFIG;
+                    run_config();
+                    break;
+                }
+    //            case SIMON:
+    //            {
+    //               old_state = SIMON;
+    //               run_simon();
+    //               break;
+    //            }
+    //            case LEARNING:
+    //            {
+    //                old_state = LEARNING;
+    //                run_learning();
+    //                break;
+    //            }
+    //            case FREE:
+    //            {
+    //                old_state = FREE;
+    //                run_free();
+    //                break;
+    //            }
+                default:
+                {
+                    old_state = -1;
+                    g_state = CONFIG;
+                    run_config();
+                }
+            }
+        WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
     return (1);
 }

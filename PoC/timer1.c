@@ -17,7 +17,7 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(vo
 {
     if (SPI1STATbits.SPITBE)
     {
-        g_led = g_switch;
+//        g_led = g_switch;   //Debug switch <-> LED
          pulse_load();
          SPI1BUF = g_led;
     }

@@ -25,7 +25,7 @@ void    i2c_init(void)
 //    TRISFbits.TRISF4 = 0;
 //    LATFbits.LATF4 = 0;
     I2C1CON = 0;
-    I2C1BRG = 7;
+    I2C1BRG = 2;
     I2C1STAT = 0;
     I2C1CONbits.SIDL = 1;
     I2C1ADD = ADDR;
@@ -35,10 +35,10 @@ void    i2c_init(void)
 
 int     i2c_idle(void)
 {
-    u8 t = 255;
+    u8 t = 250;
 
     while ((I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN
-            || I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT) || t--);
+            || I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT) && t--);
     return (1);
 }
 
