@@ -33,7 +33,6 @@ int     main(void)
     init_timer1();
     lcd_init_end();
     audio_init();
-    buzzer_init();
     while (1)
     {
         //EVENT_GENERATOR
