@@ -1,3 +1,4 @@
 build/default/production/lcd.o:  \
 lcd.c  \
-XenSay.h 
+XenSay.h  \
+types.h 

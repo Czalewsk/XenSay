@@ -1,3 +1,4 @@
 build/default/production/ShiftRegister.o:  \
 ShiftRegister.c  \
-XenSay.h 
+XenSay.h  \
+ types.h 

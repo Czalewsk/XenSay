@@ -4,9 +4,9 @@ void    press_menu(u32 button)
 {
     static u8 i = 0;
     char game_mode[3][15] = {
-        "  Free  Mode  ",
         " Ultra  Simon ",
-        "  Learn Mode  "
+        "  Learn Mode  ",
+        "  Free  Mode  "
     };
 
     if (button & 0x40)

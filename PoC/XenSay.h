@@ -19,7 +19,7 @@
 typedef enum {
     CONFIG,
     SIMON,
-    LEARNING,
+    LEARN,
     FREE
 } STATES;
 

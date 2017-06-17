@@ -31,15 +31,15 @@ int     main(void)
     lcd_create_char();
     init_interrupt();
     init_timer1();
-//    lcd_clear();
     lcd_init_end();
-	audio_init();
-
+    audio_init();
+    buzzer_init();
     while (1)
     {
         //EVENT_GENERATOR
         //SWITCH_GAME -> GAME MODE...
         //EVENT_CLR
+
         if (old_state != g_state)
             switch(g_state)
             {
@@ -55,10 +55,10 @@ int     main(void)
     //               run_simon();
     //               break;
     //            }
-    //            case LEARNING:
+    //            case LEARN:
     //            {
-    //                old_state = LEARNING;
-    //                run_learning();
+    //                old_state = LEARN;
+    //                run_learn();
     //                break;
     //            }
     //            case FREE:

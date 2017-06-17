@@ -6,11 +6,19 @@
       <itemPath>ShiftRegister.c</itemPath>
       <itemPath>i2c.c</itemPath>
       <itemPath>lcd.c</itemPath>
+      <itemPath>midi.c</itemPath>
+      <itemPath>buzzer.c</itemPath>
+      <itemPath>audio.c</itemPath>
+      <itemPath>music.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>XenSay.h</itemPath>
+      <itemPath>audio.h</itemPath>
+      <itemPath>buzzer.h</itemPath>
+      <itemPath>midi.h</itemPath>
+      <itemPath>music.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -25,6 +33,9 @@
     </logicalFolder>
     <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
       <itemPath>run_config.c</itemPath>
+      <itemPath>run_simon.c</itemPath>
+      <itemPath>run_learn.c</itemPath>
+      <itemPath>run_free.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
