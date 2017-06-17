@@ -48,18 +48,18 @@ int     main(void)
                     run_config();
                     break;
                 }
-    //            case SIMON:
+    //           case SIMON:
     //            {
     //               old_state = SIMON;
     //               run_simon();
     //               break;
     //            }
-    //            case LEARN:
-    //            {
-    //                old_state = LEARN;
-    //                run_learn();
-    //                break;
-    //            }
+                case LEARN:
+                {
+                    old_state = LEARN;
+                    run_learn();
+                    break;
+                }
     //            case FREE:
     //            {
     //                old_state = FREE;
