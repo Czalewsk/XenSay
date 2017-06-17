@@ -31,7 +31,7 @@ void    lcd_write_line(char *str, s8 line)
 
 void        lcd_init(void)
 {
-    u32 t = 500000;
+    u32 t = 50000;
 
     i2c_start();
     i2c_sendByte(ADDR);
