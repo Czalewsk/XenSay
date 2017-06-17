@@ -2,7 +2,7 @@
 
 char    *read_musicName(int *index)
 {
-    char simulation[12][] =
+    char simulation[13][30] =
     {
         "Tim Hotel's mom ",
         "  Dricc's Mom   ",
@@ -15,10 +15,11 @@ char    *read_musicName(int *index)
         "NIKTOI FORT",
         "NIKER VOUS",
         "NIKER VOUS FORT",
-        0
+        NULL
     };
 
-    if (i <)
+ //   if (i < )
+    return (NULL);
 }
 
 void    press_learn(u32 button)
