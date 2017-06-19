@@ -19,7 +19,6 @@ typedef struct  t_I2Cdata //I2C data struct with buf
 {
     char    data[50];
     u8      len;
-    u8      index;
 }               s_I2Cdata;
 
 // State enum

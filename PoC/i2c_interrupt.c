@@ -62,5 +62,49 @@ s8      i2c_init(void)
     I2C1ADD = ADDR;
     I2C1CONbits.ON = 1;
     tmp = I2C2RCV;
+    IPC6bits.I2C1IP = 5;
+    IPC6bits.I2C1IS = 1;
+    IEC0bits.IC1IE = 1;
+    IEC0bits.I2C1MIE = 1;
 }
+
+char    *i2c_writeBuffer(t_I2Cdata new)
+{
+    static  t_I2Cdata   buffer;
+    static  u8          index;
+
+    if (new)
+    {
+        buffer = new;
+        index = 0;
+    }
+    if (index >= buffer.len)
+        return (NULL);
+    return (buffer.data[index++]);
+}
+
+void   i2c_fillBuffer(u8 data, u8 last)
+{
+    static  t_I2Cdata   i2c_buffer;
+    static  u8          i;
+
+    i2c_buffer.data[i++] = data;
+    i2c_buffer.len = i;
+    if (last)
+        i2c_writeBuffer(i2c_buffer);
+}
+
+void    __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(25))) i2c1_interrupt(void)
+{
+    static  u8  state;
+
+    if ()
+}
+
+
+
+
+
+
+
 
