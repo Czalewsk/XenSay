@@ -10,6 +10,7 @@
       <itemPath>buzzer.c</itemPath>
       <itemPath>audio.c</itemPath>
       <itemPath>music.c</itemPath>
+      <itemPath>i2c_interrupt.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"

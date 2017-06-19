@@ -32,7 +32,7 @@ int     main(void)
     init_interrupt();
     init_timer1();
     lcd_init_end();
-    audio_init();
+//    audio_init();
     while (1)
     {
         //EVENT_GENERATOR

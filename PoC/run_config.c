@@ -2,7 +2,7 @@
 
 void    press_menu(u32 button)
 {
-    static u8 i = 0;
+    static u8 i = 1;
     char game_mode[3][15] = {
         " Ultra  Simon ",
         "  Learn Mode  ",

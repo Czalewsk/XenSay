@@ -12,8 +12,15 @@
 # include <sys/attribs.h>
 # include "types.h"
 
-// I2C Slave ADDR
-# define ADDR (0x7C)
+// I2C
+# define ADDR (0x7C)  // I2C screen Addr
+
+typedef struct  t_I2Cdata //I2C data struct with buf
+{
+    char    data[50];
+    u8      len;
+    u8      index;
+}               s_I2Cdata;
 
 // State enum
 typedef enum {

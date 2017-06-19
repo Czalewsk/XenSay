@@ -13,7 +13,7 @@ void        lcd_init_rst(void)
 void    lcd_write_line(char *str, s8 line)
 {
     i2c_start();
-    i2c_sendByte(ADDR);
+//    i2c_sendByte(ADDR);
     i2c_sendByte(0x80);
     if (line == 0)
         i2c_sendByte(0x80);
@@ -33,8 +33,9 @@ void        lcd_init(void)
 {
     u32 t = 50000;
 
+    i2c_idle();
     i2c_start();
-    i2c_sendByte(ADDR);
+ //   i2c_sendByte(ADDR);
     i2c_sendByte(0x80);
     i2c_sendByte(0x38);
     i2c_sendByte(0x80);
@@ -64,7 +65,7 @@ void        lcd_init(void)
 void    lcd_init_end(void)
 {
     i2c_start();
-    i2c_sendByte(ADDR);
+ //   i2c_sendByte(ADDR);
     i2c_sendByte(0);
     i2c_sendByte(0x39);
     i2c_stop();
@@ -75,7 +76,7 @@ void    lcd_clear(void)
     u8 t = 50;
 
     i2c_start();
-    i2c_sendByte(ADDR);
+//    i2c_sendByte(ADDR);
     i2c_sendByte(0x00);
     i2c_sendByte(0x01);
     i2c_stop();
@@ -87,7 +88,7 @@ void    lcd_write_nb(char *str, u8 line, s8 icase)
     if (line > 1 || icase > 15)
         return ;
     i2c_start();
-    i2c_sendByte(ADDR);
+ //   i2c_sendByte(ADDR);
     i2c_sendByte(0x80);
     if (line == 0)
         i2c_sendByte(128 + icase);
@@ -106,7 +107,7 @@ void    lcd_write_nb(char *str, u8 line, s8 icase)
 void    lcd_cursor(s8 show, s8 blink)
 {
     i2c_start();
-    i2c_sendByte(ADDR);
+//    i2c_sendByte(ADDR);
     i2c_sendByte(0x00);
     if (!show && !blink)
         i2c_sendByte(0x0C);
@@ -123,7 +124,7 @@ void    lcd_create_char(void)
 {
 //    DelayMs(10);
     i2c_start();
-    i2c_sendByte(ADDR);
+//    i2c_sendByte(ADDR);
     i2c_sendByte(0x80);
     i2c_sendByte(0x34);
 //    DelayMs(10);
