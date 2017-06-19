@@ -14,7 +14,7 @@
 #pragma config FPLLODIV = DIV_256       // System PLL Output Clock Divider (PLL Divide by 256)
 
 // DEVCFG1
-#pragma config FNOSC = FRCDIV           // Oscillator Selection Bits (Fast RC Osc w/Div-by-N (FRCDIV))
+#pragma config FNOSC = PRI           // Oscillator Selection Bits (Fast RC Osc w/Div-by-N (FRCDIV))
 #pragma config FSOSCEN = ON             // Secondary Oscillator Enable (Enabled)
 #pragma config IESO = ON                // Internal/External Switch Over (Enabled)
 #pragma config POSCMOD = OFF            // Primary Oscillator Configuration (Primary osc disabled)

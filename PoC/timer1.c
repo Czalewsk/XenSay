@@ -13,7 +13,7 @@ void    init_timer1(void)
 }
 
 // Load des switch + envoie de l'etat des LEDs
-void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(void) 
+void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(void)
 {
     if (SPI1STATbits.SPITBE)
     {

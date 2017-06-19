@@ -33,6 +33,7 @@ int     main(void)
     init_timer1();
     lcd_init_end();
     audio_init();
+    //run_free();
     while (1)
     {
         //EVENT_GENERATOR
@@ -48,24 +49,24 @@ int     main(void)
                     run_config();
                     break;
                 }
-    //           case SIMON:
-    //            {
-    //               old_state = SIMON;
-    //               run_simon();
-    //               break;
-    //            }
+//               case SIMON:
+//                {
+//                   old_state = SIMON;
+//                   run_simon();
+//                   break;
+//                }
                 case LEARN:
                 {
                     old_state = LEARN;
                     run_learn();
                     break;
                 }
-    //            case FREE:
-    //            {
-    //                old_state = FREE;
-    //                run_free();
-    //                break;
-    //            }
+                case FREE:
+                {
+                    old_state = FREE;
+                    run_free();
+                    break;
+                }
                 default:
                 {
                     old_state = -1;

@@ -24,7 +24,7 @@ static u16 notes[] = {
 __ISR(_TIMER_2_VECTOR, IPL6AUTO) BuzzerTimer()
 {
     LATDbits.LATD2 = !LATDbits.LATD2;
-    IFS0bits.T1IF = 0;
+    IFS0bits.T2IF = 0;
 }
 
 

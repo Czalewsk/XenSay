@@ -26,6 +26,14 @@ void    pulse_latch(void)
     LATDbits.LATD0 = 0;
 }
 
+static void switcher(void)
+{
+	if (g_press > 0 && onPressCallback)
+		onPressCallback(g_press);
+	if (g_release > 0 && onReleaseCallback)
+		onReleaseCallback(g_release);
+}
+
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
 {
     static u32 before;
@@ -51,20 +59,12 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
     }
 }
 
-void		switcher(void)
-{
-	if (g_press > 0 && onPressCallback)
-		onPressCallback(g_press);
-	if (g_release > 0 && onReleaseCallback)
-		onReleaseCallback(g_release);
-}
-
-void		setOnPressCallback(void (*c)(u32 button))
+void setOnPressCallback(void (*c)(u32 button))
 {
 	onPressCallback = c;
 }
 
-void		setOnReleaseCallback(void (*c)(u32 button))
+void setOnReleaseCallback(void (*c)(u32 button))
 {
 	onReleaseCallback = c;
 }
