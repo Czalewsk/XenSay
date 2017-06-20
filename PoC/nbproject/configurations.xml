@@ -10,6 +10,7 @@
       <itemPath>buzzer.c</itemPath>
       <itemPath>audio.c</itemPath>
       <itemPath>music.c</itemPath>
+      <itemPath>sdcard.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -20,6 +21,7 @@
       <itemPath>midi.h</itemPath>
       <itemPath>music.h</itemPath>
       <itemPath>button.h</itemPath>
+      <itemPath>sdcard.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
