@@ -48,6 +48,7 @@ void sr_flag_update(void)
     g_press = actual_state & ~before;   // calcul des switch appuyes
     if (g_press  > 0 || g_release > 0)
         switcher();
+    event_clearFlag(FLAG_SHIFTREGISTER);
 }
 
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
