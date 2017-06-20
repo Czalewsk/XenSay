@@ -5,17 +5,7 @@ char    *read_musicName(int *index)
     static int max = 10;
     char simulation[13][30] =
     {
-        "Tim Hotel's mom ",
-        "  Dricc's Mom   ",
-        "Tamer le Retour ",
-        "Tonper le Chevre",
-        "Taseur le brebis",
-        "Xen The biiiitch     ",
-        "Dhiu ijnnu80nji TX   uyuktyfu56",
-        "NIKTOI",
-        "NIKTOI FORT",
-        "NIKER VOUS",
-        "NIKE Dric  FORT",
+
     };
 
     if (*index == -1)

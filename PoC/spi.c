@@ -28,7 +28,7 @@ void    spi_init(void)
     IFS0bits.SPI1TXIF = 0; // SPI1 Transmitter Interrupt Request Flag Bit
     IFS0bits.SPI1RXIF = 0; // SPI1 Receive Interrupt Request Flag Bit
     IFS0bits.SPI1EIF = 0; // SPI1 Error Interrupt Request Flag Bit
-    IPC5bits.SPI1IP = 6; // SPI1 Interrupt Priority (0 a 7)
+    IPC5bits.SPI1IP = 5; // SPI1 Interrupt Priority (0 a 7)
     IPC5bits.SPI1IS = 1; // SPI1 Interrupt Sub-Priority (0 a 3)
     IEC0bits.SPI1EIE = 1; //Gestion d'erreurs
     IEC0bits.SPI1RXIE = 1; // Gestion de recois

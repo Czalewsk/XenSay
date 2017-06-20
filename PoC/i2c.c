@@ -32,7 +32,7 @@
     I2C1CONbits.ON = 1;
     tmp = I2C2RCV;
 }
-*/
+
 int     i2c_idle(void)
 {
     u8 t = 255;
@@ -49,7 +49,7 @@ int     i2c_sendByte(u8 data)
     i2c_idle();
     return (1);
 }
-/*
+
 int     i2c_start(void)
 {
     i2c_idle();

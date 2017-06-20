@@ -26,7 +26,7 @@ void    pulse_latch(void)
     LATDbits.LATD0 = 0;
 }
 
-void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
+void       __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
 {
     static u32 before;
     static u32 actual_state;

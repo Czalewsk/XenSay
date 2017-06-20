@@ -30,8 +30,8 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>pragma.c</itemPath>
-      <itemPath>main.c</itemPath>
       <itemPath>timer1.c</itemPath>
+      <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
       <itemPath>run_config.c</itemPath>

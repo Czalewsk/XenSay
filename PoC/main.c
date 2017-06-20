@@ -20,7 +20,7 @@ void    init_global(void)
 
 int     main(void)
 {
-    STATES old_state = -1;
+ //   G_STATES old_state = -1;
 
     init_global();
     init_load_latch();
@@ -28,10 +28,10 @@ int     main(void)
     i2c_init();
     lcd_init();
     spi_init();
-    lcd_create_char();
+   // lcd_create_char();
     init_interrupt();
     init_timer1();
-    lcd_init_end();
+ //   lcd_init_end();
 //    audio_init();
     while (1)
     {
@@ -39,7 +39,7 @@ int     main(void)
         //SWITCH_GAME -> GAME MODE...
         //EVENT_CLR
 
-        if (old_state != g_state)
+    /*    if (old_state != g_state)
             switch(g_state)
             {
                 case CONFIG:
@@ -72,7 +72,7 @@ int     main(void)
                     g_state = CONFIG;
                     run_config();
                 }
-            }
+            }*/
         WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
     return (1);

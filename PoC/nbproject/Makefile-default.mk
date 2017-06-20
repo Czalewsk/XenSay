@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c i2c_interrupt.c pragma.c main.c timer1.c run_config.c run_simon.c run_learn.c run_free.c
+SOURCEFILES_QUOTED_IF_SPACED=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c i2c_interrupt.c pragma.c timer1.c main.c run_config.c run_simon.c run_learn.c run_free.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/i2c_interrupt.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/spi.o.d ${OBJECTDIR}/ShiftRegister.o.d ${OBJECTDIR}/i2c.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/midi.o.d ${OBJECTDIR}/buzzer.o.d ${OBJECTDIR}/audio.o.d ${OBJECTDIR}/music.o.d ${OBJECTDIR}/i2c_interrupt.o.d ${OBJECTDIR}/pragma.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/run_config.o.d ${OBJECTDIR}/run_simon.o.d ${OBJECTDIR}/run_learn.o.d ${OBJECTDIR}/run_free.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/i2c_interrupt.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/spi.o.d ${OBJECTDIR}/ShiftRegister.o.d ${OBJECTDIR}/i2c.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/midi.o.d ${OBJECTDIR}/buzzer.o.d ${OBJECTDIR}/audio.o.d ${OBJECTDIR}/music.o.d ${OBJECTDIR}/i2c_interrupt.o.d ${OBJECTDIR}/pragma.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/run_config.o.d ${OBJECTDIR}/run_simon.o.d ${OBJECTDIR}/run_learn.o.d ${OBJECTDIR}/run_free.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/i2c_interrupt.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
+OBJECTFILES=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/i2c_interrupt.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
 
 # Source Files
-SOURCEFILES=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c i2c_interrupt.c pragma.c main.c timer1.c run_config.c run_simon.c run_learn.c run_free.c
+SOURCEFILES=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c i2c_interrupt.c pragma.c timer1.c main.c run_config.c run_simon.c run_learn.c run_free.c
 
 
 CFLAGS=
@@ -154,17 +154,17 @@ ${OBJECTDIR}/pragma.o: pragma.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/pragma.o 
 	@${FIXDEPS} "${OBJECTDIR}/pragma.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pragma.o.d" -o ${OBJECTDIR}/pragma.o pragma.c   
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c   
-	
 ${OBJECTDIR}/timer1.o: timer1.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/timer1.o.d 
 	@${RM} ${OBJECTDIR}/timer1.o 
 	@${FIXDEPS} "${OBJECTDIR}/timer1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/timer1.o.d" -o ${OBJECTDIR}/timer1.o timer1.c   
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c   
 	
 ${OBJECTDIR}/run_config.o: run_config.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -251,17 +251,17 @@ ${OBJECTDIR}/pragma.o: pragma.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/pragma.o 
 	@${FIXDEPS} "${OBJECTDIR}/pragma.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pragma.o.d" -o ${OBJECTDIR}/pragma.o pragma.c   
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c   
-	
 ${OBJECTDIR}/timer1.o: timer1.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/timer1.o.d 
 	@${RM} ${OBJECTDIR}/timer1.o 
 	@${FIXDEPS} "${OBJECTDIR}/timer1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/timer1.o.d" -o ${OBJECTDIR}/timer1.o timer1.c   
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c   
 	
 ${OBJECTDIR}/run_config.o: run_config.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
