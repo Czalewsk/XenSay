@@ -19,17 +19,22 @@ void event_init(void)
 
 void event_setState(STATES state)
 {
+    g_new = state;
+}
 
+STATES event_getState(void)
+{
+    return (g_current);
 }
 
 void event_setFlag(u32 flag)
 {
-
+    g_flags |= flag;
 }
 
 void event_clearFlag(u32 flag)
 {
-
+    g_flags &= ~flag;
 }
 
 void event_update()
@@ -54,10 +59,10 @@ void event_update()
                 run_learn();
                 break;
 
-            case SIMON:
-                g_current = SIMON;
-                run_simon();
-                break;
+            //case SIMON:
+            //    g_current = SIMON;
+            //    run_simon();
+            //    break;
 
             default:
                 g_current = NOSTATE;

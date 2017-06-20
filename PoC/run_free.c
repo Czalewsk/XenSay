@@ -1,4 +1,5 @@
 #include "XenSay.h"
+#include "events.h"
 #include "button.h"
 #include "audio.h"
 
@@ -32,7 +33,7 @@ static void onPressButton(u32 button)
         g_led = 0x10;
     }
     else if (button & BTN_CFG_1)
-        g_state = CONFIG;
+        event_setState(CONFIG);
 }
 
 static void onReleaseButton(u32 button)
