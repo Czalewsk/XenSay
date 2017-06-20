@@ -1,4 +1,5 @@
 #include "XenSay.h"
+#include "events.h"
 
 static u32 g_press;    // switch venant d'etre appuye
 static u32 g_release;  // swith venant d'etre relache
@@ -47,7 +48,6 @@ void sr_flag_update(void)
     g_press = actual_state & ~before;   // calcul des switch appuyes
     if (g_press  > 0 || g_release > 0)
         switcher();
-    IFS0bits.SPI1RXIF = 0;
 }
 
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
@@ -61,7 +61,8 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
     }
     if (IFS0bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
-
+        event_setFlag(FLAG_SHIFTREGISTER);
+        IFS0bits.SPI1RXIF = 0;
     }
 }
 
