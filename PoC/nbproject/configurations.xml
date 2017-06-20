@@ -20,6 +20,7 @@
       <itemPath>midi.h</itemPath>
       <itemPath>music.h</itemPath>
       <itemPath>button.h</itemPath>
+      <itemPath>events.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -31,6 +32,7 @@
       <itemPath>pragma.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>timer1.c</itemPath>
+      <itemPath>events.c</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
       <itemPath>run_config.c</itemPath>

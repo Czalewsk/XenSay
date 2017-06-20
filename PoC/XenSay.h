@@ -15,14 +15,6 @@
 // I2C Slave ADDR
 # define ADDR (0x7C)
 
-// State enum
-typedef enum {
-    CONFIG,
-    SIMON,
-    LEARN,
-    FREE
-} STATES;
-
 // Global
 STATES  g_state;    //  etat general dans lequel se trouve le piano
 u32     g_led;      //  gestion des leds
