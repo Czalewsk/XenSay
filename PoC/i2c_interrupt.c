@@ -1,5 +1,8 @@
 #include "XenSay.h"
 
+static  I2C_BUSY_FLAG   g_i2c_status;
+static  s_I2Cdata       g_i2c_buffer;
+
 s_I2Cdata    i2c_writeBuffer(s_I2Cdata *new);
 
 s8      i2c_sendAdress(void)
@@ -42,7 +45,7 @@ void    i2c_checkSDA(void)
 
     TRISGbits.TRISG3 = 1;
     TRISGbits.TRISG2 = 0;
-    if (PORTGbits.RG3)
+    if (!PORTGbits.RG3)
         while (i++ < 9)
         {
             LATGbits.LATG2 = 0;
@@ -72,50 +75,42 @@ s8      i2c_init(void)
 
 void    i2c_fsm(void)
 {
-    static  I2C_STATES  state = START;
-    static  u8          index;
-    static  s_I2Cdata   buffer;
+/*    static  I2C_STATES  state = START;
+    static  u8          index;*/
+//    static  s_I2Cdata   buffer;
 
-    switch(state)
+    switch(g_i2c_buffer.state)
     {
         I2C1STAT = 0;
         case(START):
         {
             i2c_start();
-            buffer = i2c_writeBuffer(NULL);
-            state = ADDRESS;
-            index = 0;
+            g_i2c_buffer.state = ADDRESS;
             break;
         }
         case (ADDRESS):
         {
             i2c_sendAdress();
-            state = SEND_DATA;
+            g_i2c_buffer.state = SEND_DATA;
             break ;
         }
         case (SEND_DATA):
         {
-            if (index == buffer.len)
-                state = STOP;
-            else if (buffer.index == index)
-            {
-                I2C1TRN = buffer.data[index++];
-                buffer.index++;
-                break ;
-            }
-            else
-                state = NEW_DATA;
+            I2C1TRN = g_i2c_buffer.data[g_i2c_buffer.index++];
+            g_i2c_buffer.index++;
+            g_i2c_buffer.state = (g_i2c_buffer.index == g_i2c_buffer.len) ? STOP : SEND_DATA;
+            break ;
         }
         case (STOP):
         {
             i2c_stop();
-            state = START;
+            g_i2c_buffer.state = END;
             break ;
         }
-        case (NEW_DATA):
+        case (END):
         {
-            i2c_stop();
-            state = START;
+            g_i2c_status = FREE;
+            break ;
         }
     }
 }
@@ -126,17 +121,11 @@ void    __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(25))) i2c1_
     i2c_fsm();
 }
 
-s_I2Cdata    i2c_writeBuffer(s_I2Cdata *new)
+void    i2c_writeBuffer(s_I2Cdata *new)
 {
-    static  s_I2Cdata   buffer;
-
-    if (new)
-    {
-        buffer = *new;
-        buffer.index = 0;
+        while (g_i2c_status);
+        g_i2c_buffer = *new;
         i2c_fsm();
-    }
-    return (buffer);
 }
 
 void   i2c_fillBuffer(u8 data, u8 last)
@@ -149,6 +138,8 @@ void   i2c_fillBuffer(u8 data, u8 last)
     if (last)
     {
         i = 0;
+        i2c_buffer.state = START;
+        i2c_buffer.index = 0;
         i2c_writeBuffer(&i2c_buffer);
     }
 }

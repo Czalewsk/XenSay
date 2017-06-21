@@ -15,20 +15,26 @@
 // I2C
 # define ADDR (0x7C)  // I2C screen Addr
 
-typedef struct  t_I2Cdata //I2C data struct with buf
-{
-    char    data[100];
-    u8      len;
-    u8      index;
-}               s_I2Cdata;
-
 typedef enum {
     START,
     ADDRESS,
     SEND_DATA,
     STOP,
-    NEW_DATA
+    END,
 } I2C_STATES;
+
+typedef struct  t_I2Cdata //I2C data struct with buf
+{
+    char        data[100];
+    u8          len;
+    u8          index;
+    I2C_STATES  state;
+}               s_I2Cdata;
+
+typedef enum  {
+    BUSY,
+    FREE,
+} I2C_BUSY_FLAG;
 
 // State enum
 typedef enum {
@@ -45,3 +51,4 @@ u32     g_switch;   // Etat des switch
 
 #endif	/* XENSAY_H */
 
+a

@@ -1,5 +1,7 @@
 #include "XenSay.h"
 
+void    lcd_clear(void);
+
 void        lcd_init_rst(void)
 {
     s16 i = 0;
