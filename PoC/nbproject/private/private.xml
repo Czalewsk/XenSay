@@ -8,9 +8,10 @@
             <file>file:/C:/Users/Xen/Desktop/xensay/PoC/audio.c</file>
             <file>file:/C:/Users/Xen/Desktop/xensay/PoC/ShiftRegister.c</file>
             <file>file:/C:/Users/Xen/Desktop/xensay/PoC/run_free.c</file>
-            <file>file:/C:/Users/Xen/Desktop/xensay/PoC/events.c</file>
             <file>file:/C:/Users/Xen/Desktop/xensay/PoC/run_learn.c</file>
+            <file>file:/C:/Users/Xen/Desktop/xensay/PoC/run_config.c</file>
             <file>file:/C:/Users/Xen/Desktop/xensay/PoC/audio.h</file>
+            <file>file:/C:/Users/Xen/Desktop/xensay/PoC/sdcard.c</file>
         </group>
     </open-files>
 </project-private>
