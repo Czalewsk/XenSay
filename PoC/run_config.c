@@ -1,17 +1,23 @@
 #include "XenSay.h"
+#include "events.h"
 
 void    press_menu(u32 button)
 {
-    static u8 i = 1;
+    static u8 i = 2;
     char game_mode[3][15] = {
         " Ultra  Simon ",
         "  Learn Mode  ",
         "  Free  Mode  "
     };
+    STATES game_state[3] = {
+        SIMON,
+        LEARN,
+        FREE
+    };
 
     if (button & 0x40)
     {
-        g_state = i + 1;
+        event_setState(game_state[i]);
         return ;
     }
     if (button & 0x80)

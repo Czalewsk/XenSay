@@ -110,6 +110,8 @@
 void audio_init();
 void audio_play(u8 note);
 void audio_stop();
+void audio_enable_midi(void);
+void audio_disable_midi(void);
 
 #endif	/* AUDIO_H */
 

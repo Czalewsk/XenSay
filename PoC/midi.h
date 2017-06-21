@@ -15,6 +15,7 @@
 void midi_init();
 void midi_play(u8 note);
 void midi_stop();
+void midi_flag_update();
 
 #endif	/* MIDI_H */
 

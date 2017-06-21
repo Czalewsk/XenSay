@@ -1,6 +1,7 @@
 #include <xc.h>
 #include <sys/attribs.h>
 #include "midi.h"
+#include "events.h"
 
 static u8 currentNote;
 static u8 buffer[MIDI_BUFFER_SIZE];
@@ -94,13 +95,20 @@ void midi_stop()
     }
 }
 
+void midi_flag_update()
+{
+    midi_send_buffer();
+    event_clearFlag(FLAG_MIDI);
+}
+
 /*
  * Interruption
  */
 
+// Interruption quand le buffer libere une place
 __ISR(_UART_2_VECTOR, IPL3AUTO) MidiBuffer()
 {
     if (bufferIndex > 0)
-        midi_send_buffer();
+        event_setFlag(FLAG_MIDI);
     IFS1bits.U2TXIF = 0;
 }

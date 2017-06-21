@@ -1,4 +1,5 @@
 #include "XenSay.h"
+#include "events.h"
 
 static u32 g_press;    // switch venant d'etre appuye
 static u32 g_release;  // swith venant d'etre relache
@@ -34,14 +35,29 @@ static void switcher(void)
 		onReleaseCallback(g_release);
 }
 
-void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
+void sr_flag_update(void)
 {
     static u32 before;
     static u32 actual_state;
 
     before = actual_state;
+
+    actual_state = SPI1BUF;
+    g_switch = actual_state;
+    g_release = before & ~actual_state; // calcul des switch relaches
+    g_press = actual_state & ~before;   // calcul des switch appuyes
+    if (g_press  > 0 || g_release > 0)
+        switcher();
+    event_clearFlag(FLAG_SHIFTREGISTER);
+}
+
+void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
+  {
     if  (SPI1STATbits.SPIROV || IFS0bits.SPI1EIF) // En cas d'erreur
-        ;
+    {
+        SPI1STATbits.SPIROV = 0;
+        IFS0bits.SPI1EIF = 0;
+    }
     if (IFS0bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
     {
         pulse_latch();         //Latch les donnees
@@ -49,12 +65,7 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
     }
     if (IFS0bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
-        actual_state = SPI1BUF;
-        g_switch = actual_state;
-        g_release = before & ~actual_state; // calcul des switch relaches
-        g_press = actual_state & ~before;   // calcul des switch appuyes
-        if (g_press  > 0 || g_release > 0)
-            switcher();
+        event_setFlag(FLAG_SHIFTREGISTER);
         IFS0bits.SPI1RXIF = 0;
     }
 }
