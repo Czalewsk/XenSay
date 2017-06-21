@@ -52,9 +52,12 @@ void sr_flag_update(void)
 }
 
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
-{
+  {
     if  (SPI1STATbits.SPIROV || IFS0bits.SPI1EIF) // En cas d'erreur
-        ;
+    {
+        SPI1STATbits.SPIROV = 0;
+        IFS0bits.SPI1EIF = 0;
+    }
     if (IFS0bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
     {
         pulse_latch();         //Latch les donnees
