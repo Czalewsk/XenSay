@@ -31,12 +31,12 @@ void    press_learn(u32 button)
 
     if (button & 0x80)
     {
-        lcd_write_line(read_musicName(&index));
+        lcd_write_line(read_musicName(&index), 1);
         index--;
     }
     else if (button & 0x8)
     {
-        lcd_write_line(read_musicName(&index));
+        lcd_write_line(read_musicName(&index), 1);
         index++;
     }
 }

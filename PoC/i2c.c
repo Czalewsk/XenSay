@@ -62,12 +62,11 @@ s8      i2c1_init(void)
     I2C1CON = 0;
     I2C1BRG = 10;
     I2C1STAT = 0;
-    I2C1CONbits.SIDL = 0;
     I2C1ADD = ADDR;
     tmp = I2C2RCV;
     IFS0bits.I2C1MIF = 0;
     IPC6bits.I2C1IP = 5;
-    IPC6bits.I2C1IS = 0;
+    IPC6bits.I2C1IS = 1;
     IEC0bits.I2C1MIE = 1;
     I2C1CONbits.ON = 1;
 }
