@@ -15,14 +15,14 @@ void    init_interrupt(void)
 
 int     main(void)
 {
+    init_interrupt();
     event_init();
     init_load_latch();
     lcd_init_rst();
-    i2c_init();
+    i2c1_init();
     lcd_init();
     spi_init();
     lcd_create_char();
-    init_interrupt();
     init_timer1();
     lcd_init_end();
     audio_init();

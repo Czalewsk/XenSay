@@ -1,4 +1,5 @@
 build/default/debug/ShiftRegister.o:  \
 ShiftRegister.c  \
 XenSay.h  \
-types.h 
+types.h  \
+ events.h 
