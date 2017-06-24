@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c pragma.c main.c timer1.c events.c run_config.c run_simon.c run_learn.c run_free.c sdcard.c
+SOURCEFILES_QUOTED_IF_SPACED=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c sdcard.c pragma.c main.c timer1.c events.c run_config.c run_simon.c run_learn.c run_free.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/events.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o ${OBJECTDIR}/sdcard.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/spi.o.d ${OBJECTDIR}/ShiftRegister.o.d ${OBJECTDIR}/i2c.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/midi.o.d ${OBJECTDIR}/buzzer.o.d ${OBJECTDIR}/audio.o.d ${OBJECTDIR}/music.o.d ${OBJECTDIR}/pragma.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/events.o.d ${OBJECTDIR}/run_config.o.d ${OBJECTDIR}/run_simon.o.d ${OBJECTDIR}/run_learn.o.d ${OBJECTDIR}/run_free.o.d ${OBJECTDIR}/sdcard.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/sdcard.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/events.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/spi.o.d ${OBJECTDIR}/ShiftRegister.o.d ${OBJECTDIR}/i2c.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/midi.o.d ${OBJECTDIR}/buzzer.o.d ${OBJECTDIR}/audio.o.d ${OBJECTDIR}/music.o.d ${OBJECTDIR}/sdcard.o.d ${OBJECTDIR}/pragma.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/timer1.o.d ${OBJECTDIR}/events.o.d ${OBJECTDIR}/run_config.o.d ${OBJECTDIR}/run_simon.o.d ${OBJECTDIR}/run_learn.o.d ${OBJECTDIR}/run_free.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/events.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o ${OBJECTDIR}/sdcard.o
+OBJECTFILES=${OBJECTDIR}/spi.o ${OBJECTDIR}/ShiftRegister.o ${OBJECTDIR}/i2c.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/midi.o ${OBJECTDIR}/buzzer.o ${OBJECTDIR}/audio.o ${OBJECTDIR}/music.o ${OBJECTDIR}/sdcard.o ${OBJECTDIR}/pragma.o ${OBJECTDIR}/main.o ${OBJECTDIR}/timer1.o ${OBJECTDIR}/events.o ${OBJECTDIR}/run_config.o ${OBJECTDIR}/run_simon.o ${OBJECTDIR}/run_learn.o ${OBJECTDIR}/run_free.o
 
 # Source Files
-SOURCEFILES=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c pragma.c main.c timer1.c events.c run_config.c run_simon.c run_learn.c run_free.c sdcard.c
+SOURCEFILES=spi.c ShiftRegister.c i2c.c lcd.c midi.c buzzer.c audio.c music.c sdcard.c pragma.c main.c timer1.c events.c run_config.c run_simon.c run_learn.c run_free.c
 
 
 CFLAGS=
@@ -154,6 +154,12 @@ ${OBJECTDIR}/music.o: music.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/music.o 
 	@${FIXDEPS} "${OBJECTDIR}/music.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/music.o.d" -o ${OBJECTDIR}/music.o music.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/sdcard.o: sdcard.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/sdcard.o.d 
+	@${RM} ${OBJECTDIR}/sdcard.o 
+	@${FIXDEPS} "${OBJECTDIR}/sdcard.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/sdcard.o.d" -o ${OBJECTDIR}/sdcard.o sdcard.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/pragma.o: pragma.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/pragma.o.d 
@@ -201,12 +207,6 @@ ${OBJECTDIR}/run_free.o: run_free.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/run_free.o.d 
 	@${RM} ${OBJECTDIR}/run_free.o 
 	@${FIXDEPS} "${OBJECTDIR}/run_free.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/run_free.o.d" -o ${OBJECTDIR}/run_free.o run_free.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/sdcard.o: sdcard.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/sdcard.o.d 
-	@${RM} ${OBJECTDIR}/sdcard.o 
-	@${FIXDEPS} "${OBJECTDIR}/sdcard.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/sdcard.o.d" -o ${OBJECTDIR}/sdcard.o sdcard.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
 else
 ${OBJECTDIR}/spi.o: spi.c  nbproject/Makefile-${CND_CONF}.mk
@@ -257,6 +257,12 @@ ${OBJECTDIR}/music.o: music.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/music.o 
 	@${FIXDEPS} "${OBJECTDIR}/music.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/music.o.d" -o ${OBJECTDIR}/music.o music.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/sdcard.o: sdcard.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/sdcard.o.d 
+	@${RM} ${OBJECTDIR}/sdcard.o 
+	@${FIXDEPS} "${OBJECTDIR}/sdcard.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/sdcard.o.d" -o ${OBJECTDIR}/sdcard.o sdcard.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/pragma.o: pragma.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/pragma.o.d 
@@ -305,12 +311,6 @@ ${OBJECTDIR}/run_free.o: run_free.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/run_free.o 
 	@${FIXDEPS} "${OBJECTDIR}/run_free.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/run_free.o.d" -o ${OBJECTDIR}/run_free.o run_free.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/sdcard.o: sdcard.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/sdcard.o.d 
-	@${RM} ${OBJECTDIR}/sdcard.o 
-	@${FIXDEPS} "${OBJECTDIR}/sdcard.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/sdcard.o.d" -o ${OBJECTDIR}/sdcard.o sdcard.c    -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD) 
-	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -330,7 +330,7 @@ else
 dist/${CND_CONF}/${IMAGE_TYPE}/PoC.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/PoC.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml
-	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/PoC.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
+	${MP_CC_DIR}/xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/PoC.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 
 
@@ -349,7 +349,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif
