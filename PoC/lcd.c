@@ -93,14 +93,7 @@ void    lcd_write_nb(char *str, u8 line, s8 icase)
 void    lcd_cursor(s8 show, s8 blink)
 {
     i2c_fillBuffer(0x00, 0);
-    if (!show && !blink)
-        i2c_fillBuffer(0x0C, 1);
-    else if (show && blink)
-        i2c_fillBuffer(0x0F, 1);
-    else if (show && !blink)
-        i2c_fillBuffer(0x0E, 1);
-    else
-        i2c_fillBuffer(0x0D, 1);
+    i2c_fillBuffer(0x0C | ((show << 1) | blink), 1);
 }
 
 void    lcd_create_char(void)
@@ -209,4 +202,9 @@ void    lcd_create_char(void)
     i2c_fillBuffer(0x3, 0);
     i2c_fillBuffer(0x40, 0);
     i2c_fillBuffer(0x4, 1);*/
+}
+
+void    lcd_shift(char *data, u8 line)
+{
+    
 }
