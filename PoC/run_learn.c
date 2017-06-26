@@ -1,12 +1,16 @@
 #include "XenSay.h"
 
-char    *read_musicName(int *index)
+static  s8   imusic;
+static  char music_name[50];
+
+void    read_musicName(void)
 {
-    static int max = 10;
-    char simulation[13][30] =
+    u8  i = 0;
+    static int max = 11;
+    char simulation[13][50] =
     {
-        "Tim Hotel's mom ",
-        "  Dricc's Mom   ",
+        "TEST shift du lcd avec un text a la con",
+        "  Xen il a pas soudeeeeeee ",
         "Tamer le Retour ",
         "Tonper le Chevre",
         "Taseur le brebis",
@@ -18,32 +22,33 @@ char    *read_musicName(int *index)
         "NIKE Dric  FORT",
     };
 
-    if (*index == -1)
-        *index = max;
-    else if (*index > max || !(simulation[*index]))
-        *index = 0;
-    return (simulation[*index]);
+    if (imusic == -1)
+        imusic = max - 1;
+    else if (imusic >= max)
+        imusic = 0;
+    while (simulation[imusic][i])
+    {
+        music_name[i] = simulation[imusic][i];
+        i++;
+    }
+    music_name[i] = '\0';
 }
 
 void    press_learn(u32 button)
 {
-    static int index = 0;
-
     if (button & 0x80)
-    {
-        lcd_write_line(read_musicName(&index), 1);
-        index--;
-    }
+        imusic--;
     else if (button & 0x8)
-    {
-        lcd_write_line(read_musicName(&index), 1);
-        index++;
-    }
+        imusic++;
+    read_musicName();
+    lcd_shift(music_name, 1);
 }
 
 void    run_learn(void)
 {
+    imusic = 0;
+    read_musicName();
     lcd_write_line("\177 Select Music \176", 0);
-//    lcd_write_line("\177              \176", 1);
+    lcd_shift(music_name, 1);
     setOnPressCallback(&press_learn);
 }

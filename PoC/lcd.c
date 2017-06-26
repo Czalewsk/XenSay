@@ -3,6 +3,9 @@
 
 void    lcd_clear(void);
 
+static  t_lcdBuff lcdBuffer;
+
+
 void        lcd_init_rst(void)
 {
     s16 i = 0;
@@ -204,7 +207,51 @@ void    lcd_create_char(void)
     i2c_fillBuffer(0x4, 1);*/
 }
 
+void    lcd_rotateBuff(void)
+{
+    u8 i;
+    char    lcd_print[16];
+
+    i = 0;
+    while (i < 16 && lcdBuffer.buffer[lcdBuffer.index + i])
+    {
+        lcd_print[i] = lcdBuffer.buffer[lcdBuffer.index + i];
+        i++;
+    }
+    lcdBuffer.index++;
+    while (i < 16)
+        lcd_print[i++] = ' ';
+    if (lcdBuffer.index >= lcdBuffer.len)
+        lcdBuffer.index = 0;
+    lcd_write_line(lcd_print, lcdBuffer.line);
+}
+
 void    lcd_shift(char *data, u8 line)
 {
-    
+    u8  i = 0;
+
+    while (*data)
+        lcdBuffer.buffer[i++] = *data++;
+    lcdBuffer.buffer[i] = '\0';
+    lcdBuffer.len = i;
+    if (i <= 16)
+    {
+        while (i < 16)
+            lcdBuffer.buffer[i++] = ' ';
+        lcd_write_line(lcdBuffer.buffer, line);
+        timer5Off();
+        return ;
+    }
+    lcdBuffer.index = 0;
+    lcdBuffer.line = line;
+    setTimer5F(&lcd_rotateBuff, 15625                               );
 }
+
+
+
+
+
+
+
+
+

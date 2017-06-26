@@ -26,6 +26,7 @@ int     main(void)
     init_timer1();
     lcd_init_end();
     audio_init();
+    timer5_init();
     //run_free();
     while (1)
     {

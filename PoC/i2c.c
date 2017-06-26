@@ -104,9 +104,19 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(25))) i2c1_int
     }
 }
 
+void    i2c_reinit(void)
+{
+    i2c_checkSDA();
+    i2c_stop();
+}
+
 void    i2c_writeBuffer(s_I2Cdata *new)
 {
-    while (g_i2c_status == BUSY_I2C);
+    u32 timeout = 10000;
+
+    while (g_i2c_status == BUSY_I2C && timeout--);
+    if (!timeout)
+        i2c_reinit();
     g_i2c_buffer = *new;
     g_i2c_status = BUSY_I2C;
     i2c_start();

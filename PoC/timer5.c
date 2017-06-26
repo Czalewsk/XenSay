@@ -5,7 +5,7 @@ static void (*timer5_f)(void);
 void    timer5_init(void)
 {
     T5CON = 0;              // Reset le registre du timer 1
-    T5CONbits.TCKPS = 2;    // Prescale de la clock du timer 1 a 1:64
+    T5CONbits.TCKPS = 5;    // Prescale de la clock du timer 1 a 1:64
     IPC5bits.T5IP = 2;      // Set la priorite de l'interruption du timer 1 a 6
     IFS0bits.T5IF = 0;      // Reset du flag d'interrupt du timer 1
     TMR5 = 0;               // Reset le timer 1
@@ -14,7 +14,6 @@ void    timer5_init(void)
     T5CONbits.ON = 0;
 }
 
-// Load des switch + envoie de l'etat des LEDs
 void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(20))) timer5(void)
 {
     if (timer5_f)
@@ -23,11 +22,12 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(20))) timer5(v
      IFS0bits.T5IF = 0;
 }
 
-void    setTimer5F(void (*f)(void))
+void    setTimer5F(void (*f)(void), u32 time)
 {
     if (!f)
         return ;
     timer5_f = f;
+    PR5 = time;
     TMR5 = 0;
     T5CONbits.ON = 1;
 }
