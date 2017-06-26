@@ -1,4 +1,6 @@
 #include "XenSay.h"
+#include "events.h"
+#include "button.h"
 
 static  s8   imusic;
 static  char music_name[50];
@@ -22,7 +24,7 @@ void    read_musicName(void)
         "NIKE Dric  FORT",
     };
 
-    if (imusic == -1)
+    if (imusic <= -1)
         imusic = max - 1;
     else if (imusic >= max)
         imusic = 0;
@@ -40,6 +42,12 @@ void    press_learn(u32 button)
         imusic--;
     else if (button & 0x8)
         imusic++;
+    else if (button & 0x40)
+    {
+        event_setState(CONFIG);
+        timer5Off();
+        return ;
+    }
     read_musicName();
     lcd_shift(music_name, 1);
 }

@@ -60,7 +60,7 @@ s8      i2c1_init(void)
 
     i2c_checkSDA();
     I2C1CON = 0;
-    I2C1BRG = 10;
+    I2C1BRG = 7;
     I2C1STAT = 0;
     I2C1ADD = ADDR;
     tmp = I2C2RCV;
@@ -112,7 +112,7 @@ void    i2c_reinit(void)
 
 void    i2c_writeBuffer(s_I2Cdata *new)
 {
-    u32 timeout = 10000;
+    u32 timeout = 20000;
 
     while (g_i2c_status == BUSY_I2C && timeout--);
     if (!timeout)

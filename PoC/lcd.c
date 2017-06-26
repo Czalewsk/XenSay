@@ -210,7 +210,7 @@ void    lcd_create_char(void)
 void    lcd_rotateBuff(void)
 {
     u8 i;
-    char    lcd_print[16];
+    char    lcd_print[18];
 
     i = 0;
     while (i < 16 && lcdBuffer.buffer[lcdBuffer.index + i])
@@ -218,33 +218,39 @@ void    lcd_rotateBuff(void)
         lcd_print[i] = lcdBuffer.buffer[lcdBuffer.index + i];
         i++;
     }
-    lcdBuffer.index++;
     while (i < 16)
         lcd_print[i++] = ' ';
-    if (lcdBuffer.index >= lcdBuffer.len)
+    if (++lcdBuffer.index >= lcdBuffer.len)
         lcdBuffer.index = 0;
+    lcd_print[16] = '\0';
     lcd_write_line(lcd_print, lcdBuffer.line);
 }
 
 void    lcd_shift(char *data, u8 line)
 {
     u8  i = 0;
+    t_lcdBuff   tmp;
 
     while (*data)
-        lcdBuffer.buffer[i++] = *data++;
-    lcdBuffer.buffer[i] = '\0';
-    lcdBuffer.len = i;
+        tmp.buffer[i++] = *data++;
     if (i <= 16)
     {
         while (i < 16)
-            lcdBuffer.buffer[i++] = ' ';
-        lcd_write_line(lcdBuffer.buffer, line);
+            tmp.buffer[i++] = ' ';
+        tmp.buffer[i] = '\0';
+        tmp.len = i;
         timer5Off();
+        lcdBuffer = tmp;
+        lcd_write_line(lcdBuffer.buffer, line);
         return ;
     }
-    lcdBuffer.index = 0;
-    lcdBuffer.line = line;
-    setTimer5F(&lcd_rotateBuff, 15625                               );
+    tmp.buffer[i] = '\0';
+    tmp.len = i;
+    tmp.index = 0;
+    tmp.line = line;
+    timer5Off();
+    lcdBuffer = tmp;
+    setTimer5F(&lcd_rotateBuff, 15625);
 }
 
 
