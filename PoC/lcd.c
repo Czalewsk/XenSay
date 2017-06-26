@@ -210,7 +210,7 @@ void    lcd_create_char(void)
 void    lcd_rotateBuff(void)
 {
     u8 i;
-    char    lcd_print[18];
+    char    lcd_print[17];
 
     i = 0;
     while (i < 16 && lcdBuffer.buffer[lcdBuffer.index + i])
@@ -250,7 +250,7 @@ void    lcd_shift(char *data, u8 line)
     tmp.line = line;
     timer5Off();
     lcdBuffer = tmp;
-    setTimer5F(&lcd_rotateBuff, 15625);
+    setTimer5F(&lcd_rotateBuff, 20625);
 }
 
 

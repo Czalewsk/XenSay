@@ -44,8 +44,8 @@ void    press_learn(u32 button)
         imusic++;
     else if (button & 0x40)
     {
-        event_setState(CONFIG);
         timer5Off();
+        event_setState(CONFIG);
         return ;
     }
     read_musicName();
