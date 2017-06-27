@@ -1,4 +1,6 @@
 build/default/production/run_learn.o:  \
 run_learn.c  \
 XenSay.h  \
-types.h 
+types.h  \
+ events.h  \
+button.h 

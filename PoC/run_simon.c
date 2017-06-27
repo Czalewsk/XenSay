@@ -4,18 +4,20 @@
 void    init_simon(void);
 
 static  u32     g_difficulty; // Difficultee
+static  u8      pattern[100]; // Pattern Simon
+static  u8      count;        // Len of simon
 
 static  u8      test[15][3] = {
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
+    " 0",
+    " 1",
+    " 2",
+    " 3",
+    " 4",
+    " 5",
+    " 6",
+    " 7",
+    " 8",
+    " 9",
     "10",
     "11",
     "12"
@@ -42,7 +44,6 @@ void    difficulty_simon(u32 button)
     }
     if (button & 0x40)
     {
-        timer5Off();
         g_difficulty = i;
         init_simon();
         return ;
@@ -62,9 +63,14 @@ void    run_simon(void)
     setOnPressCallback(&difficulty_simon);
 }
 
+void    save_pattern(void)
+{
+    pattern[count++] = TMR4;
+    light_pattern();
+}
+
 void    play_simon(u32 button)
 {
-    g_led = g_switch;
     if (g_switch == (0x8 | 0x80))
     {
         g_led = 0;
@@ -77,6 +83,7 @@ void    init_simon(void)
 {
 
     lcd_write_line("   Let's Play   ", 0);
+    setTimer4F(NULL, 3906, 7);
     lcd_clear_line(1);
     setOnPressCallback(&play_simon);
 }
