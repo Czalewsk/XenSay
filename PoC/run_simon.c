@@ -24,8 +24,9 @@ static  u8      test[15][3] = {
 void    difficulty_simon(u32 button)
 {
     u8         d;
-    static u8  i = 0;
-    char    tab[4][15] = {
+    static u8  i = 4;
+    char    tab[5][15] = {
+        "      TIM     ",
         "     EASY     ",
         "    NORMAL    ",
         "     HARD     ",
@@ -47,16 +48,17 @@ void    difficulty_simon(u32 button)
         return ;
     }
     else if (button & 0x80)
-        i = (i == 0) ? 3 : i - 1;
+        i = (i == 0) ? 4 : i - 1;
     else if (button & 0x8)
-        i = (i == 3) ? 0 : i + 1;
+        i = (i == 4) ? 0 : i + 1;
     lcd_write_nb(tab[i], 1, 1);
 }
 
 void    run_simon(void)
 {
     lcd_write_line(" Set Difficulty  ", 0);
-    lcd_write_line("\177     EASY     \176", 1);
+    lcd_write_line("\177              \176", 1);
+    difficulty_simon(0x8);
     setOnPressCallback(&difficulty_simon);
 }
 
@@ -73,6 +75,7 @@ void    play_simon(u32 button)
 
 void    init_simon(void)
 {
+
     lcd_write_line("   Let's Play   ", 0);
     lcd_clear_line(1);
     setOnPressCallback(&play_simon);
