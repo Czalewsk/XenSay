@@ -24,8 +24,6 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(20))) timer5(v
 
 void    setTimer5F(void (*f)(void), u32 time)
 {
-    if (!f)
-        return ;
     timer5_f = f;
     PR5 = time;
     TMR5 = 0;

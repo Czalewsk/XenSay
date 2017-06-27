@@ -47,5 +47,5 @@ void run_free(void)
     setOnPressCallback(&onPressButton);
     setOnReleaseCallback(&onReleaseButton);
     lcd_write_line("  Playing Free  ", 0);
-    lcd_write_line("                ", 1);
+    lcd_clear_line(1);
 }

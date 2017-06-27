@@ -55,7 +55,7 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) sp
   {
     if  (SPI1STATbits.SPIROV || IFS0bits.SPI1EIF) // En cas d'erreur
     {
-        SPI1STATbits.SPIROV = 0;
+        SPI1STATCLR = 1 << 6;
         IFS0bits.SPI1EIF = 0;
     }
     if (IFS0bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide

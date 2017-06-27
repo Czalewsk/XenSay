@@ -42,7 +42,7 @@ void    press_learn(u32 button)
         imusic--;
     else if (button & 0x8)
         imusic++;
-    else if (button & 0x40)
+    else if (button & 0x4)
     {
         timer5Off();
         event_setState(CONFIG);

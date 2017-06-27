@@ -60,10 +60,10 @@ void event_update()
                 g_current = LEARN;
                 break;
 
-//            case SIMON:
-//                run_simon();
-//                g_current = SIMON;
-//                break;
+            case SIMON:
+                run_simon();
+                g_current = SIMON;
+                break;
 
             default:
                 g_current = NOSTATE;

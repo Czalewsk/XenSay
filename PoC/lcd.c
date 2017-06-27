@@ -34,8 +34,6 @@ void    lcd_write_line(char *str, s8 line)
 
 void        lcd_init(void)
 {
-    u32 t = 50000;
-
     i2c_fillBuffer(0x80, 0);
     i2c_fillBuffer(0x38, 0);
     i2c_fillBuffer(0x80, 0);
@@ -52,12 +50,11 @@ void        lcd_init(void)
     i2c_fillBuffer(0x0C, 0);
     i2c_fillBuffer(0x80, 0);
     i2c_fillBuffer(0x01, 0);
-    i2c_fillBuffer(0x80, 1);
+    i2c_fillBuffer(0x80, 0);
     i2c_fillBuffer(0x06, 0);
     i2c_fillBuffer(0x00, 0);
     i2c_fillBuffer(0x0C, 1);
     lcd_write_line("  X e n  S a y ", 0);
-//    while (t--);
 }
 
 void    lcd_init_end(void)
@@ -253,7 +250,24 @@ void    lcd_shift(char *data, u8 line)
     setTimer5F(&lcd_rotateBuff, 20625);
 }
 
+void    lcd_clear_line(u8 line)
+{
+    u8 i = 0;
 
+    i2c_fillBuffer(0x80, 0);
+    if (line == 0)
+        i2c_fillBuffer(0x80, 0);
+    else
+        i2c_fillBuffer(0xC0, 0);
+    while (i < 15)
+    {
+        i2c_fillBuffer(0xC0, 0);
+        i2c_fillBuffer(' ', 0);
+        i++;
+    }
+    i2c_fillBuffer(0x40, 0);
+    i2c_fillBuffer(' ', 1);
+}
 
 
 

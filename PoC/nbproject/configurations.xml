@@ -35,6 +35,7 @@
       <itemPath>timer1.c</itemPath>
       <itemPath>events.c</itemPath>
       <itemPath>timer5.c</itemPath>
+      <itemPath>timer4.c</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
       <itemPath>run_config.c</itemPath>

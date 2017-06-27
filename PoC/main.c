@@ -15,6 +15,8 @@ void    init_interrupt(void)
 
 int     main(void)
 {
+    u32 t = 250000;
+
     init_interrupt();
     event_init();
     init_load_latch();
@@ -24,10 +26,11 @@ int     main(void)
     spi_init();
     lcd_create_char();
     init_timer1();
-    lcd_init_end();
     audio_init();
     timer5_init();
-    //run_free();
+    timer4_init();
+    while (t--);
+    lcd_init_end();
     while (1)
     {
         event_update();
