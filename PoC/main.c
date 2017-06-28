@@ -1,6 +1,7 @@
 #include "XenSay.h"
 #include "events.h"
 #include "audio.h"
+#include "sdcard.h"
 
 void run_config(void);
 void run_simon(void);
@@ -31,6 +32,8 @@ int     main(void)
     timer4_init();
     while (t--);
     lcd_init_end();
+    sdcard_init();
+    
     while (1)
     {
         event_update();

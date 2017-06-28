@@ -104,23 +104,23 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000000         0x360c       13836  App's exec code 
-.rodata                 0x9d00360c          0x250         592  Read-only const 
-.text                   0x9d00385c          0x428        1064  App's exec code 
-.dinit                  0x9d003c84          0x1f0         496   
-.text                   0x9d003e74          0x8a8        2216  App's exec code 
-.text.general_exception 0x9d00471c           0xdc         220   
-.text                   0x9d0047f8           0xa8         168  App's exec code 
-.rodata                 0x9d0048a0           0xe0         224  Read-only const 
-.text.main_entry        0x9d004980           0x4c          76   
-.text._bootstrap_except 0x9d0049cc           0x48          72   
-.text._general_exceptio 0x9d004a14           0x48          72   
-.text                   0x9d004a5c           0x44          68  App's exec code 
-.vector_default         0x9d004aa0           0x38          56   
-.text                   0x9d004ad8           0x18          24  App's exec code 
-.rodata                 0x9d004af0           0x24          36  Read-only const 
-.text._on_reset         0x9d004b14            0x8           8   
-.text._on_bootstrap     0x9d004b1c            0x8           8   
+.text                   0x9d000000         0x360c       13836  App's exec code
+.rodata                 0x9d00360c          0x250         592  Read-only const
+.text                   0x9d00385c          0x428        1064  App's exec code
+.dinit                  0x9d003c84          0x1f0         496
+.text                   0x9d003e74          0x8a8        2216  App's exec code
+.text.general_exception 0x9d00471c           0xdc         220
+.text                   0x9d0047f8           0xa8         168  App's exec code
+.rodata                 0x9d0048a0           0xe0         224  Read-only const
+.text.main_entry        0x9d004980           0x4c          76
+.text._bootstrap_except 0x9d0049cc           0x48          72
+.text._general_exceptio 0x9d004a14           0x48          72
+.text                   0x9d004a5c           0x44          68  App's exec code
+.vector_default         0x9d004aa0           0x38          56
+.text                   0x9d004ad8           0x18          24  App's exec code
+.rodata                 0x9d004af0           0x24          36  Read-only const
+.text._on_reset         0x9d004b14            0x8           8
+.text._on_bootstrap     0x9d004b1c            0x8           8
       Total kseg0_program_mem used  :      0x4b24       19236  3.7% of 0x80000
 
 kseg0 Boot-Memory Usage
@@ -128,62 +128,62 @@ section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
          Total kseg0_boot_mem used  :           0           0  <1% of 0x970
 
-Exception-Memory Usage 
+Exception-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.app_excpt              0x9fc01180           0x10          16  General-Exception 
-.vector_0               0x9fc01200            0x8           8  Interrupt Vector 0 
-.vector_1               0x9fc01220            0x8           8  Interrupt Vector 1 
-.vector_2               0x9fc01240            0x8           8  Interrupt Vector 2 
-.vector_3               0x9fc01260            0x8           8  Interrupt Vector 3 
-.vector_4               0x9fc01280            0x8           8  Interrupt Vector 4 
-.vector_5               0x9fc012a0            0x8           8  Interrupt Vector 5 
-.vector_6               0x9fc012c0            0x8           8  Interrupt Vector 6 
-.vector_7               0x9fc012e0            0x8           8  Interrupt Vector 7 
-.vector_8               0x9fc01300            0x8           8  Interrupt Vector 8 
-.vector_9               0x9fc01320            0x8           8  Interrupt Vector 9 
-.vector_10              0x9fc01340            0x8           8  Interrupt Vector 10 
-.vector_11              0x9fc01360            0x8           8  Interrupt Vector 11 
-.vector_12              0x9fc01380            0x8           8  Interrupt Vector 12 
-.vector_13              0x9fc013a0            0x8           8  Interrupt Vector 13 
-.vector_14              0x9fc013c0            0x8           8  Interrupt Vector 14 
-.vector_15              0x9fc013e0            0x8           8  Interrupt Vector 15 
-.vector_16              0x9fc01400            0x8           8  Interrupt Vector 16 
-.vector_17              0x9fc01420            0x8           8  Interrupt Vector 17 
-.vector_18              0x9fc01440            0x8           8  Interrupt Vector 18 
-.vector_19              0x9fc01460            0x8           8  Interrupt Vector 19 
-.vector_20              0x9fc01480            0x8           8  Interrupt Vector 20 
-.vector_21              0x9fc014a0            0x8           8  Interrupt Vector 21 
-.vector_22              0x9fc014c0            0x8           8  Interrupt Vector 22 
-.vector_23              0x9fc014e0            0x8           8  Interrupt Vector 23 
-.vector_24              0x9fc01500            0x8           8  Interrupt Vector 24 
-.vector_25              0x9fc01520            0x8           8  Interrupt Vector 25 
-.vector_26              0x9fc01540            0x8           8  Interrupt Vector 26 
-.vector_27              0x9fc01560            0x8           8  Interrupt Vector 27 
-.vector_28              0x9fc01580            0x8           8  Interrupt Vector 28 
-.vector_29              0x9fc015a0            0x8           8  Interrupt Vector 29 
-.vector_30              0x9fc015c0            0x8           8  Interrupt Vector 30 
-.vector_31              0x9fc015e0            0x8           8  Interrupt Vector 31 
-.vector_32              0x9fc01600            0x8           8  Interrupt Vector 32 
-.vector_33              0x9fc01620            0x8           8  Interrupt Vector 33 
-.vector_34              0x9fc01640            0x8           8  Interrupt Vector 34 
-.vector_35              0x9fc01660            0x8           8  Interrupt Vector 35 
-.vector_36              0x9fc01680            0x8           8  Interrupt Vector 36 
-.vector_37              0x9fc016a0            0x8           8  Interrupt Vector 37 
-.vector_38              0x9fc016c0            0x8           8  Interrupt Vector 38 
-.vector_39              0x9fc016e0            0x8           8  Interrupt Vector 39 
-.vector_40              0x9fc01700            0x8           8  Interrupt Vector 40 
-.vector_41              0x9fc01720            0x8           8  Interrupt Vector 41 
-.vector_42              0x9fc01740            0x8           8  Interrupt Vector 42 
-.vector_43              0x9fc01760            0x8           8  Interrupt Vector 43 
-.vector_44              0x9fc01780            0x8           8  Interrupt Vector 44 
+.app_excpt              0x9fc01180           0x10          16  General-Exception
+.vector_0               0x9fc01200            0x8           8  Interrupt Vector 0
+.vector_1               0x9fc01220            0x8           8  Interrupt Vector 1
+.vector_2               0x9fc01240            0x8           8  Interrupt Vector 2
+.vector_3               0x9fc01260            0x8           8  Interrupt Vector 3
+.vector_4               0x9fc01280            0x8           8  Interrupt Vector 4
+.vector_5               0x9fc012a0            0x8           8  Interrupt Vector 5
+.vector_6               0x9fc012c0            0x8           8  Interrupt Vector 6
+.vector_7               0x9fc012e0            0x8           8  Interrupt Vector 7
+.vector_8               0x9fc01300            0x8           8  Interrupt Vector 8
+.vector_9               0x9fc01320            0x8           8  Interrupt Vector 9
+.vector_10              0x9fc01340            0x8           8  Interrupt Vector 10
+.vector_11              0x9fc01360            0x8           8  Interrupt Vector 11
+.vector_12              0x9fc01380            0x8           8  Interrupt Vector 12
+.vector_13              0x9fc013a0            0x8           8  Interrupt Vector 13
+.vector_14              0x9fc013c0            0x8           8  Interrupt Vector 14
+.vector_15              0x9fc013e0            0x8           8  Interrupt Vector 15
+.vector_16              0x9fc01400            0x8           8  Interrupt Vector 16
+.vector_17              0x9fc01420            0x8           8  Interrupt Vector 17
+.vector_18              0x9fc01440            0x8           8  Interrupt Vector 18
+.vector_19              0x9fc01460            0x8           8  Interrupt Vector 19
+.vector_20              0x9fc01480            0x8           8  Interrupt Vector 20
+.vector_21              0x9fc014a0            0x8           8  Interrupt Vector 21
+.vector_22              0x9fc014c0            0x8           8  Interrupt Vector 22
+.vector_23              0x9fc014e0            0x8           8  Interrupt Vector 23
+.vector_24              0x9fc01500            0x8           8  Interrupt Vector 24
+.vector_25              0x9fc01520            0x8           8  Interrupt Vector 25
+.vector_26              0x9fc01540            0x8           8  Interrupt Vector 26
+.vector_27              0x9fc01560            0x8           8  Interrupt Vector 27
+.vector_28              0x9fc01580            0x8           8  Interrupt Vector 28
+.vector_29              0x9fc015a0            0x8           8  Interrupt Vector 29
+.vector_30              0x9fc015c0            0x8           8  Interrupt Vector 30
+.vector_31              0x9fc015e0            0x8           8  Interrupt Vector 31
+.vector_32              0x9fc01600            0x8           8  Interrupt Vector 32
+.vector_33              0x9fc01620            0x8           8  Interrupt Vector 33
+.vector_34              0x9fc01640            0x8           8  Interrupt Vector 34
+.vector_35              0x9fc01660            0x8           8  Interrupt Vector 35
+.vector_36              0x9fc01680            0x8           8  Interrupt Vector 36
+.vector_37              0x9fc016a0            0x8           8  Interrupt Vector 37
+.vector_38              0x9fc016c0            0x8           8  Interrupt Vector 38
+.vector_39              0x9fc016e0            0x8           8  Interrupt Vector 39
+.vector_40              0x9fc01700            0x8           8  Interrupt Vector 40
+.vector_41              0x9fc01720            0x8           8  Interrupt Vector 41
+.vector_42              0x9fc01740            0x8           8  Interrupt Vector 42
+.vector_43              0x9fc01760            0x8           8  Interrupt Vector 43
+.vector_44              0x9fc01780            0x8           8  Interrupt Vector 44
           Total exception_mem used  :       0x178         376  9.2% of 0x1000
 
 kseg1 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.reset                  0xbfc00000          0x1f0         496  Reset handler 
-.bev_excpt              0xbfc00380           0x10          16  BEV-Exception 
+.reset                  0xbfc00000          0x1f0         496  Reset handler
+.bev_excpt              0xbfc00380           0x10          16  BEV-Exception
          Total kseg1_boot_mem used  :       0x200         512  43.8% of 0x490
         --------------------------------------------------------------------------
          Total Program Memory used  :      0x4e9c       20124  3.8% of 0x81e00
@@ -193,13 +193,13 @@ section                    address  length [bytes]      (dec)  Description
 kseg1 Data-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.sdata                  0xa0000000            0x8           8  Small init data 
-.sbss                   0xa0000008           0x60          96  Small uninit data 
-.bss                    0xa0000068           0xd8         216  Uninitialized data 
-.data                   0xa0000140           0xc0         192  Initialized data 
-.bss                    0xa0000200           0xd0         208  Uninitialized data 
-.data                   0xa00002d0           0x30          48  Initialized data 
-.bss                    0xa0000300           0x10          16  Uninitialized data 
+.sdata                  0xa0000000            0x8           8  Small init data
+.sbss                   0xa0000008           0x60          96  Small uninit data
+.bss                    0xa0000068           0xd8         216  Uninitialized data
+.data                   0xa0000140           0xc0         192  Initialized data
+.bss                    0xa0000200           0xd0         208  Uninitialized data
+.data                   0xa00002d0           0x30          48  Initialized data
+.bss                    0xa0000300           0x10          16  Uninitialized data
          Total kseg1_data_mem used  :       0x310         784  2.4% of 0x8000
         --------------------------------------------------------------------------
             Total Data Memory used  :       0x310         784  2.4% of 0x8000
@@ -209,8 +209,8 @@ section                    address  length [bytes]      (dec)  Description
 Dynamic Data-Memory Reservation
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-heap                    0xa0000318           0x10          16  Reserved for heap 
-stack                   0xa0000340         0x7cb8       31928  Reserved for stack 
+heap                    0xa0000318           0x10          16  Reserved for heap
+stack                   0xa0000340         0x7cb8       31928  Reserved for stack
 
         --------------------------------------------------------------------------
 
@@ -858,7 +858,7 @@ END GROUP
                 0xa0000000                _sdata_begin = .
  *(.sdata .sdata.* .gnu.linkonce.s.*)
  .sdata         0xa0000000        0x1 build/default/production/run_simon.o
- *fill*         0xa0000001        0x3 
+ *fill*         0xa0000001        0x3
  .sdata         0xa0000004        0x4 build/default/production/run_learn.o
                 0xa0000008                . = ALIGN (0x4)
                 0xa0000008                _sdata_end = .
@@ -880,15 +880,15 @@ END GROUP
  .sbss          0xa0000020        0x8 build/default/production/i2c.o
  .sbss          0xa0000028        0x2 build/default/production/midi.o
  .sbss          0xa000002a        0x1 build/default/production/audio.o
- *fill*         0xa000002b        0x1 
+ *fill*         0xa000002b        0x1
  .sbss          0xa000002c       0x10 build/default/production/music.o
  .sbss          0xa000003c        0xc build/default/production/events.o
  .sbss          0xa0000048        0x4 build/default/production/timer5.o
  .sbss          0xa000004c        0x1 build/default/production/run_config.o
- *fill*         0xa000004d        0x3 
+ *fill*         0xa000004d        0x3
  .sbss          0xa0000050        0x8 build/default/production/run_simon.o
  .sbss          0xa0000058        0x1 build/default/production/run_learn.o
- *fill*         0xa0000059        0x3 
+ *fill*         0xa0000059        0x3
  .sbss          0xa000005c        0x4 build/default/production/timer4.o
  *(.scommon)
  .scommon       0xa0000060        0x8 build/default/production/spi.o
