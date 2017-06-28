@@ -132,6 +132,8 @@ u8 sdcard_start(void)
             return (sd_error(" SD ERROR SDSC  "));
     }
     
+    LATBbits.LATB2 = 1;
+    
     return (1);
 }
 
@@ -142,6 +144,9 @@ u8 *sdcard_read(u32 addr)
     
     if (flags & FLAGS_CCS)
         addr *= 512;
+    
+    LATBbits.LATB2 = 0;
+    
     // Request read block
     if (sd_send_cmd(17, addr >> 24, addr >> 16, addr >> 8, addr, 0) != 0)
     {
@@ -164,6 +169,8 @@ u8 *sdcard_read(u32 addr)
     // Ignore CRC
     SPI(0xff);
     SPI(0xff);
+    
+    LATBbits.LATB2 = 0;
     
     return (block);
 }
