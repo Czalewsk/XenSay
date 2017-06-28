@@ -20,6 +20,10 @@ void event_init(void)
 
 void event_setState(STATES state)
 {
+    lcd_clear();
+    setOnPressCallback(0);
+    setOnReleaseCallback(0);
+    
     g_new = state;
 }
 
