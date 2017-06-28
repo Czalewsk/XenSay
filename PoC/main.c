@@ -28,8 +28,7 @@ int     main(void)
     lcd_init_end();
     audio_init();
     sdcard_init();
-    //sdcard_start();
-    //run_free();
+    
     while (1)
     {
         event_update();
