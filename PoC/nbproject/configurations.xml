@@ -11,6 +11,7 @@
       <itemPath>audio.c</itemPath>
       <itemPath>music.c</itemPath>
       <itemPath>sdcard.c</itemPath>
+      <itemPath>xformat.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -24,6 +25,8 @@
       <itemPath>events.h</itemPath>
       <itemPath>i2c.h</itemPath>
       <itemPath>sdcard.h</itemPath>
+      <itemPath>xformat.h</itemPath>
+      <itemPath>smartlibc.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -38,6 +41,7 @@
       <itemPath>events.c</itemPath>
       <itemPath>timer5.c</itemPath>
       <itemPath>timer4.c</itemPath>
+      <itemPath>smartlibc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
       <itemPath>run_config.c</itemPath>
@@ -65,7 +69,7 @@
         <platformTool>ICD3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>1.43</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>4</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
