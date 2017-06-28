@@ -142,7 +142,7 @@ u8 *sdcard_read(u32 addr)
     static u8 block[512];
     u16 i;
     
-    if (flags & FLAGS_CCS)
+    if (!(flags & FLAGS_CCS))
         addr *= 512;
     
     LATBbits.LATB2 = 0;
