@@ -16,9 +16,19 @@ static void error()
     setOnPressCallback(&onPressButtonError);
 }
 
+/* Game
+ * - music_startStep(data, length);
+ * - music_getStepNote();
+ * - music_getStepDelay();
+ * - music_getStepLength();
+ * - music_setOnStepEnd();
+ * - music_playStep();
+ */
+
 static void onPressButtonGame(u32 button)
 {
-    
+    u8 note = music_getStepNote();
+    music_playStep();
 }
 
 static void onPressButtonSelect(u32 button)
@@ -27,8 +37,8 @@ static void onPressButtonSelect(u32 button)
     
     if (button & BTN_CFG_1) // Ok
     {
-        //setOnPressCallback(NULL);
-        music_play(xformat_loadMusic(), xformat_sizeMusic());
+        setOnPressCallback(&onPressButtonGame);
+        music_startStep(xformat_loadMusic(), xformat_sizeMusic());
     }
     else if (button & BTN_CFG_2) // Prev
     {

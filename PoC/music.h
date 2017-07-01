@@ -10,15 +10,19 @@
 
 #include "types.h"
 
-#define MUSIC_STATE_AUTO_PLAY 0
-#define MUSIC_STATE_AUTO_DELAY 1
-#define MUSIC_STATE_GAME_WAIT 2
+#define FLAG_PLAY 1
+#define FLAG_DELAY 2
+#define FLAG_AUTO 8
 
-void music_init();
-void music_play(u8 *data, u16 length);
-void music_stop();
-void music_game_start(u8 *data, u16 length, u8 level);
-void music_game_note_press(u8 note);
+void    music_init();
+void    music_play(u8 *data, u16 length);
+void    music_stop();
+void    music_startStep(u8 *data, u16 length);
+void    music_playStep();
+u8      music_getStepNote();
+u8      music_getStepLength();
+u8      music_getStepDelay();
+void    music_setOnStepEnd(void (*c)(void));
 
 #endif	/* MUSIC_H */
 

@@ -7,34 +7,20 @@
  * Internal variables
  */
 
-static u8 state;
+static u8 fState;
 static u8 *music;
 static u8 *endmusic;
+static void (*onStepEnd)(void);
 
 /*
  * Internal function
  */
 
-static void music_timer_reset()
+static void music_timerReset()
 {
     T3CONbits.ON = 0;
     TMR3 = 0;
     IFS0bits.T3IF = 0;
-}
-
-static void music_play_step()
-{
-    music_timer_reset();
-    if (music + 3 > endmusic)
-        audio_stop();
-    else
-    {
-        state = MUSIC_STATE_AUTO_PLAY;
-        audio_play(*music++ - 1);
-        PR3 = (*music++ * 39) + 50;
-        TMR3 = 0;
-        T3CONbits.ON = 1;
-    }
 }
 
 /*
@@ -71,69 +57,70 @@ void music_init()
 
 void music_play(u8 *data, u16 length)
 {
+    fState = FLAG_AUTO;
     music = data;
     endmusic = data + length;
-    music_play_step();
+    music_playStep();
 }
 
 void music_stop()
 {
     music = NULL;
-    music_timer_reset();
+    music_timerReset();
     audio_stop();
 }
 
-/*
- * Game section
- */
-
-static u8 level;
-static u8 waitNote;
-
-
-static void music_game_wait_note(u8 note)
-{
-    // Enable led
-}
-
-static void music_game_timeout()
-{
-
-}
-
-static void music_game_step()
-{
-    if (music + 2 >= endmusic)
-    {
-        music_stop();
-    }
-    else
-    {
-        waitNote = *music++;
-        state = MUSIC_STATE_GAME_WAIT;
-        music_game_wait_note(waitNote);
-        PR3 = ((*music++ * 39) * level) + 50; // Set le timeout
-    }
-}
-
 // Level = timeout: delay * lvl
-void music_game_start(u8 *data, u16 length, u8 lvl)
+void music_startStep(u8 *data, u16 length)
 {
-    level = lvl;
+    fState = 0;
     music = data;
-    endmusic = data + length - 1;
+    endmusic = data + length;
+    onStepEnd = NULL;
 }
 
-void music_game_note_press(u8 note)
+void music_playStep()
 {
-    // When button press, check note
-    music_timer_reset();
-    /*if (note == waitNote)
-        //OK
-        (void);
+    if (!music)
+        return ;
+    
+    music_timerReset();
+    if (music + 3 > endmusic)
+        music_stop();
     else
-        //BAD
-        (void);*/
+    {
+        fState |= FLAG_PLAY;
+        audio_play(*music++ - 1);
+        PR3 = (*music++ * 39) + 50;
+        TMR3 = 0;
+        T3CONbits.ON = 1;
+    }
+}
+
+u8 music_getStepNote()
+{
+    if (!music || music + 3 > endmusic)
+        return (0);
+    return (*music);
+}
+
+u8 music_getStepLength()
+{
+    if (!music || music + 3 > endmusic)
+        return (0);
+    return (*(music + 1) * 39);
+}
+
+u8 music_getStepDelay()
+{
+    if (!music || music + 3 > endmusic)
+        return (0);
+    return (*(music + 2) * 39);
+}
+
+void music_setOnStepEnd(void (*c)(void))
+{
+    onStepEnd = c;
 }
 
 /*
@@ -142,21 +129,26 @@ void music_game_note_press(u8 note)
 
 __ISR(_TIMER_3_VECTOR, IPL5AUTO) MusicTimer()
 {
-    if (state == MUSIC_STATE_AUTO_PLAY)
+    if (fState & FLAG_PLAY)
     {
-        state = MUSIC_STATE_AUTO_DELAY;
+        fState ^= (FLAG_PLAY | FLAG_DELAY);
         audio_stop();
-        music_timer_reset();
+        music_timerReset();
         PR3 = (*music++ * 39) + 50;
         T3CONbits.ON = 1;
     }
-    else if (state == MUSIC_STATE_AUTO_DELAY)
+    else if (fState & FLAG_DELAY)
     {
-        music_play_step();
-    }
-    else if (state == MUSIC_STATE_GAME_WAIT)
-    {
-        music_timer_reset();
-        music_game_timeout();
+        fState &= ~FLAG_DELAY;
+        
+        if (fState & FLAG_AUTO)
+            music_playStep();
+        else
+        {
+            audio_stop();
+            music_timerReset();
+            if (onStepEnd)
+                onStepEnd();
+        }
     }
 }
