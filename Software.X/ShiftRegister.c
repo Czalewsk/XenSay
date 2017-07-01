@@ -42,7 +42,8 @@ void sr_flag_update(void)
 
     before = actual_state;
 
-    actual_state = SPI1BUF;
+    actual_state = SPI1BUF & 0xFFFFFF00;
+    IEC1bits.SPI1RXIE = 1;
     g_switch = actual_state;
     g_release = before & ~actual_state; // calcul des switch relaches
     g_press = actual_state & ~before;   // calcul des switch appuyes
@@ -56,20 +57,22 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(31))) sp
     if  (SPI1STATbits.SPIROV || IFS1bits.SPI1EIF) // En cas d'erreur
     {
         SPI1STATCLR = 1 << 6;
-        event_setFlag(FLAG_SHIFTREGISTER);
-        IFS1bits.SPI1EIF = 0;
+//        event_setFlag(FLAG_SHIFTREGISTER);
+//        IEC1bits.SPI1RXIE = 1;
+//        IFS1bits.SPI1EIF = 0;
     }
     if (IFS1bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
     {
+        IEC1bits.SPI1TXIE = 0;
         pulse_latch();         //Latch les donnees
         IFS1bits.SPI1TXIF = 0; // Remet a 0 le flag d'interrupt
     }
     if (IFS1bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
         event_setFlag(FLAG_SHIFTREGISTER);
+        IEC1bits.SPI1RXIE = 0;
         IFS1bits.SPI1RXIF = 0;
     }
-    IFS1CLR = 1 << 6;
 }
 
 void setOnPressCallback(void (*c)(u32 button))

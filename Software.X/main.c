@@ -26,7 +26,7 @@ int     main(void)
     //lcd_init();
     spi_init();
     //lcd_create_char();
-    //init_timer1();
+    init_timer1();
     //audio_init();
     //audio_play(1);
     //timer5_init();
@@ -34,11 +34,11 @@ int     main(void)
     //while (t--);
     //lcd_init_end();
     //sdcard_init();
-    //g_led = 0xffffffff;
+    //g_led = 0xFFFFFFFF;
     
     while (1)
     {
-        //event_update();
+        event_update();
         WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
     return (1);

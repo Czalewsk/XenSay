@@ -2,12 +2,13 @@
 
 void    spi_init(void)
 {
-    int cData = 0;
+    u32 cData = 0;
     
     // PPS
     TRISAbits.TRISA1 = 1; // Set SDI1 to input
     SDI1Rbits.SDI1R = 0;
     RPB11Rbits.RPB11R = 3; // Set SDO1 PPS
+    ANSELAbits.ANSA1 = 0;  // Fucking Analogique
 
     TRISBbits.TRISB14 = 0; // SCK1
     LATBbits.LATB14 = 0;
@@ -38,11 +39,11 @@ void    spi_init(void)
     IPC7bits.SPI1IS = 1; // SPI1 Interrupt Sub-Priority (0 a 3)
     IEC1bits.SPI1EIE = 1; //Gestion d'erreurs
     IEC1bits.SPI1RXIE = 1; // Gestion de recois
-    IEC1bits.SPI1TXIE = 1; //Gestion de transmission des donnees
+    IEC1bits.SPI1TXIE = 0; //Gestion de transmission des donnees
 
     //Etape 6
     //BRG = Baud Rate Generator
-    SPI1BRG = 32; //  0 est le + rapide, 127 est le + lent
+    SPI1BRG = 100; //  = ---> 32 | 0 est le + rapide, 127 est le + lent
 
     //Etape 7
     SPI1STATbits.SPIROV = 0;  // Receive Overflow Flag Bit

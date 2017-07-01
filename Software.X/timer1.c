@@ -7,7 +7,7 @@ void    init_timer1(void)
     IPC1bits.T1IP = 5;      // Set la priorite de l'interruption du timer 1 a 6
     IFS0bits.T1IF = 0;      // Reset du flag d'interrupt du timer 1
     TMR1 = 0;               // Reset le timer 1
-    PR1 = 156;            // osc (8 MHz) / PBDIV(8) -> 1MHz ->  / timer prescale(64) -> 15625 -> 1s
+    PR1 = 1562;            // osc (8 MHz) / PBDIV(8) -> 1MHz ->  / timer prescale(64) -> 15625 -> 1s
     IEC0bits.T1IE = 1;      // Active l'interruption du timer 1
     T1CONbits.ON = 1;
 }
@@ -17,9 +17,10 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(4))) timer1(vo
 {
     if (SPI1STATbits.SPITBE)
     {
-//        g_led = g_switch;   //Debug switch <-> LED
+         g_led = g_switch >> 13 ;   //Debug switch <-> LED
          pulse_load();
          SPI1BUF = g_led;
+         IEC1bits.SPI1TXIE = 1;
     }
      TMR1 = 0;
      IFS0bits.T1IF = 0;
