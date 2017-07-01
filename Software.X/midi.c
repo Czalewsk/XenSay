@@ -47,33 +47,36 @@ static void midi_note_off(u8 midiNote)
 
 void midi_init()
 {
+    // Configuration des PPS
+    RPA0Rbits.RPA0R = 1;
+    
     // Configuration de l'UART
     U2BRG = 1; // Need 31.250 bps for midi
 
-    U2STAbits.ADDEN = 0;
-    U2STAbits.URXISEL = 0; // Interrupt mode
-    U2STAbits.UTXEN = 1; // Enable transmit
-    U2STAbits.UTXBRK = 0; // No break next transmit
-    U2STAbits.URXEN = 0; // Disable receive
-    U2STAbits.UTXINV = 0; // Idle TX state is 0
-    U2STAbits.UTXISEL = 0;
+    U1STAbits.ADDEN = 0;
+    U1STAbits.URXISEL = 0; // Interrupt mode
+    U1STAbits.UTXEN = 1; // Enable transmit
+    U1STAbits.UTXBRK = 0; // No break next transmit
+    U1STAbits.URXEN = 0; // Disable receive
+    U1STAbits.UTXINV = 0; // Idle TX state is 0
+    U1STAbits.UTXISEL = 0;
 
-    U2MODEbits.STSEL = 0; // 1 seul stop bit
-    U2MODEbits.PDSEL = 0;
-    U2MODEbits.BRGH = 0; // Standard speed mode
-    U2MODEbits.RXINV = 0; // Idle RX state is 1
-    U2MODEbits.ABAUD = 0;
-    U2MODEbits.LPBACK = 0;
-    U2MODEbits.WAKE = 0;
-    U2MODEbits.UEN = 0; //Enable pins (RX && TX)
-    U2MODEbits.IREN = 0;
-    U2MODEbits.SIDL = 0;
-    U2MODEbits.ON = 1;
+    U1MODEbits.STSEL = 0; // 1 seul stop bit
+    U1MODEbits.PDSEL = 0;
+    U1MODEbits.BRGH = 0; // Standard speed mode
+    U1MODEbits.RXINV = 0; // Idle RX state is 1
+    U1MODEbits.ABAUD = 0;
+    U1MODEbits.LPBACK = 0;
+    U1MODEbits.WAKE = 0;
+    U1MODEbits.UEN = 0; //Enable pins (RX && TX)
+    U1MODEbits.IREN = 0;
+    U1MODEbits.SIDL = 0;
+    U1MODEbits.ON = 1;
 
     // Interruption UART
-    IFS1bits.U2TXIF = 0;
-    IPC8bits.U2IP = 3;
-    IEC1bits.U2TXIE = 1;
+    IFS1bits.U1TXIF = 0;
+    IPC8bits.U1IP = 3;
+    IEC1bits.U1TXIE = 1;
 
     currentNote = 0;
     bufferIndex = 0;
@@ -106,9 +109,9 @@ void midi_flag_update()
  */
 
 // Interruption quand le buffer libere une place
-__ISR(_UART_2_VECTOR, IPL3AUTO) MidiBuffer()
+__ISR(_UART_1_VECTOR, IPL3AUTO) MidiBuffer()
 {
     if (bufferIndex > 0)
         event_setFlag(FLAG_MIDI);
-    IFS1bits.U2TXIF = 0;
+    IFS1bits.U1TXIF = 0;
 }

@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
   <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="f1" displayName="Drivers" projectFiles="true">
+      <itemPath>audio.c</itemPath>
+      <itemPath>buzzer.c</itemPath>
+      <itemPath>i2c.c</itemPath>
+      <itemPath>lcd.c</itemPath>
+      <itemPath>midi.c</itemPath>
+      <itemPath>music.c</itemPath>
+      <itemPath>sdcard.c</itemPath>
+      <itemPath>ShiftRegister.c</itemPath>
+      <itemPath>spi.c</itemPath>
+      <itemPath>xformat.c</itemPath>
+    </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>audio.h</itemPath>
+      <itemPath>button.h</itemPath>
+      <itemPath>buzzer.h</itemPath>
+      <itemPath>events.h</itemPath>
+      <itemPath>i2c.h</itemPath>
+      <itemPath>midi.h</itemPath>
+      <itemPath>music.h</itemPath>
+      <itemPath>sdcard.h</itemPath>
+      <itemPath>smartlibc.h</itemPath>
+      <itemPath>XenSay.h</itemPath>
+      <itemPath>xformat.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -12,12 +35,19 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>../PoC/main.c</itemPath>
-      <itemPath>../PoC/pragma.c</itemPath>
       <itemPath>../PoC/smartlibc.c</itemPath>
-      <itemPath>../PoC/timer1.c</itemPath>
-      <itemPath>../PoC/timer4.c</itemPath>
-      <itemPath>../PoC/timer5.c</itemPath>
+      <itemPath>events.c</itemPath>
+      <itemPath>main.c</itemPath>
+      <itemPath>pragma.c</itemPath>
+      <itemPath>timer1.c</itemPath>
+      <itemPath>timer4.c</itemPath>
+      <itemPath>timer5.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="StateMode" projectFiles="true">
+      <itemPath>run_config.c</itemPath>
+      <itemPath>run_free.c</itemPath>
+      <itemPath>run_learn.c</itemPath>
+      <itemPath>run_simon.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -164,6 +194,9 @@
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
+      <ICD3PlatformTool>
+        <property key="firmware.download.all" value="false"/>
+      </ICD3PlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>

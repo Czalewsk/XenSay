@@ -9,11 +9,11 @@ static  t_lcdBuff lcdBuffer;
 void        lcd_init_rst(void)
 {
     s16 i = 0;
-    TRISGbits.TRISG9 = 0;
-    LATGbits.LATG9 = 1;
-    LATGbits.LATG9 = 0;
+    TRISBbits.TRISB7 = 0; // RESET LCD
+    LATBbits.LATB7 = 1;
+    LATBbits.LATB7 = 0;
     while (i++ < 100);
-    LATGbits.LATG9 = 1;
+    LATBbits.LATB7 = 1;
 }
 
 void    lcd_write_line(char *str, s8 line)

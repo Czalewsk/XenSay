@@ -23,7 +23,7 @@ static u16 notes[] = {
 
 __ISR(_TIMER_2_VECTOR, IPL6AUTO) BuzzerTimer()
 {
-    LATDbits.LATD2 = !LATDbits.LATD2;
+    LATAbits.LATA4 = !LATAbits.LATA4;
     IFS0bits.T2IF = 0;
 }
 
@@ -31,8 +31,8 @@ __ISR(_TIMER_2_VECTOR, IPL6AUTO) BuzzerTimer()
 void buzzer_init()
 {
     // Initialisation de la pin du buzzer
-    LATDbits.LATD2 = 0;
-    TRISDbits.TRISD2 = 0;
+    LATAbits.LATA4 = 0;
+    TRISAbits.TRISA4 = 0;
 
     // Initialisation du timer
     IEC0bits.T2IE = 1;

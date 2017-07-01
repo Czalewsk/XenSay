@@ -42,16 +42,16 @@ void    i2c_checkSDA(void)
 {
     u8  i = 0;
 
-    TRISGbits.TRISG3 = 1;
-    TRISGbits.TRISG2 = 0;
-    if (!PORTGbits.RG3)
+    TRISBbits.TRISB9 = 1; // SDA1
+    TRISBbits.TRISB8 = 0; // SCL1
+    if (!PORTBbits.RB9)
         while (i++ < 9)
         {
-            LATGbits.LATG2 = 0;
-            LATGbits.LATG2 = 1;
+            LATBbits.LATB8 = 0;
+            LATBbits.LATB8 = 1;
         }
-    TRISGbits.TRISG3 = 0;
-    LATGbits.LATG2 = 0;
+    TRISBbits.TRISB9 = 0;
+    LATBbits.LATB8 = 0;
 }
 
 s8      i2c1_init(void)
@@ -64,16 +64,16 @@ s8      i2c1_init(void)
     I2C1STAT = 0;
     I2C1ADD = ADDR;
     tmp = I2C2RCV;
-    IFS0bits.I2C1MIF = 0;
-    IPC6bits.I2C1IP = 5;
-    IPC6bits.I2C1IS = 1;
-    IEC0bits.I2C1MIE = 1;
+    IFS1bits.I2C1MIF = 0;
+    IPC8bits.I2C1IP = 5;
+    IPC8bits.I2C1IS = 1;
+    IEC1bits.I2C1MIE = 1;
     I2C1CONbits.ON = 1;
 }
 
-void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(25))) i2c1_interrupt(void)
+void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
 {
-    IFS0bits.I2C1MIF = 0;
+    IFS1bits.I2C1MIF = 0;
     switch(g_i2c_buffer.state)
     {
      //   I2C1STAT = 0;
@@ -116,7 +116,10 @@ void    i2c_writeBuffer(s_I2Cdata *new)
 
     while (g_i2c_status == BUSY_I2C && timeout--);
     if (!timeout)
-        i2c_reinit();
+    {
+        //i2c_reinit();
+        return ;
+    }
     g_i2c_buffer = *new;
     g_i2c_status = BUSY_I2C;
     i2c_start();

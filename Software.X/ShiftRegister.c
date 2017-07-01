@@ -7,24 +7,24 @@ static u32 g_release;  // swith venant d'etre relache
 static void (*onPressCallback)(u32 button);
 static void (*onReleaseCallback)(u32 button);
 
-void     init_load_latch(void)
+void     shiftRegister_init(void)
 {
-    TRISDbits.TRISD0 = 0;
-    LATDbits.LATD0 = 0;
-    TRISDbits.TRISD1 = 0;
-    LATDbits.LATD1 = 1;
+    TRISBbits.TRISB4 = 0; // Latch
+    LATBbits.LATB4 = 0;
+    TRISBbits.TRISB10 = 0; // Load
+    LATBbits.LATB10 = 1;
 }
 
 void    pulse_load(void)
 {
-    LATDbits.LATD1 = 0;
-    LATDbits.LATD1 = 1;
+    LATBbits.LATB10 = 0;
+    LATBbits.LATB10 = 1;
 }
 
 void    pulse_latch(void)
 {
-    LATDbits.LATD0 = 1;
-    LATDbits.LATD0 = 0;
+    LATBbits.LATB4 = 1;
+    LATBbits.LATB4 = 0;
 }
 
 static void switcher(void)
@@ -51,24 +51,25 @@ void sr_flag_update(void)
     event_clearFlag(FLAG_SHIFTREGISTER);
 }
 
-void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(23))) spi_interrupt(void)
+void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(31))) spi_interrupt(void)
   {
-    if  (SPI1STATbits.SPIROV || IFS0bits.SPI1EIF) // En cas d'erreur
+    if  (SPI1STATbits.SPIROV || IFS1bits.SPI1EIF) // En cas d'erreur
     {
         SPI1STATCLR = 1 << 6;
         event_setFlag(FLAG_SHIFTREGISTER);
-        IFS0bits.SPI1EIF = 0;
+        IFS1bits.SPI1EIF = 0;
     }
-    if (IFS0bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
+    if (IFS1bits.SPI1TXIF) // Interrupt quand le registre d'envoi est vide
     {
         pulse_latch();         //Latch les donnees
-        IFS0bits.SPI1TXIF = 0; // Remet a 0 le flag d'interrupt
+        IFS1bits.SPI1TXIF = 0; // Remet a 0 le flag d'interrupt
     }
-    if (IFS0bits.SPI1RXIF) // Interrup quand le registre de reception est plein
+    if (IFS1bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
         event_setFlag(FLAG_SHIFTREGISTER);
-        IFS0bits.SPI1RXIF = 0;
+        IFS1bits.SPI1RXIF = 0;
     }
+    IFS1CLR = 1 << 6;
 }
 
 void setOnPressCallback(void (*c)(u32 button))

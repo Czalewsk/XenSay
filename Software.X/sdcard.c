@@ -40,16 +40,21 @@ static u8 sd_send_cmd(const u8 cmd, const u8 arg1, const u8 arg2,
 
 static u8 sd_error(char *str)
 {
-    LATBbits.LATB2 = 1;
+    LATBbits.LATB13 = 1;
     lcd_write_line(str, 0);
     return (0);
 }
 
 void sdcard_init(void)
-{    
+{   
+    // Configuration des PPS
+    TRISBbits.TRISB2 = 1;
+    SDI2Rbits.SDI2R = 4;
+    RPB5Rbits.RPB5R = 4;
+    
     // Configuration de la pin SS
-    TRISBbits.TRISB2 = 0;
-    LATBbits.LATB2 = 1;
+    TRISBbits.TRISB13 = 0;
+    LATBbits.LATB13 = 1;
     
     // Initialise SPI
     SPI2CON = 0;
@@ -64,8 +69,8 @@ void sdcard_init(void)
     IFS1bits.SPI2EIF = 0;
     IFS1bits.SPI2RXIF = 0;
     IFS1bits.SPI2TXIF = 0;
-    IPC7bits.SPI2IP = 6;
-    IPC7bits.SPI2IS = 0;
+    IPC9bits.SPI2IP = 6;
+    IPC9bits.SPI2IS = 0;
     IEC1bits.SPI2EIE = 0;
     IEC1bits.SPI2RXIE = 0;
     IEC1bits.SPI2TXIE = 0;
@@ -80,12 +85,12 @@ u8 sdcard_start(void)
     flags = 0;
     
     // Passage en mode natif de la carte (512 coups de clock si l'état précedent = unfinished read)
-    LATBbits.LATB2 = 1;
+    LATBbits.LATB13 = 1;
     for (i = 0; i < 530; ++i)
         SPI(0xff);
     
     // Reset the sdcard with CMD0
-    LATBbits.LATB2 = 0;
+    LATBbits.LATB13 = 0;
     if (sd_send_cmd(0, 0, 0, 0, 0, 0x95) == 255)
         return (sd_error("    NO SDCARD   "));
     
@@ -132,7 +137,7 @@ u8 sdcard_start(void)
             return (sd_error(" SD ERROR SDSC  "));
     }
     
-    LATBbits.LATB2 = 1;
+    LATBbits.LATB13 = 1;
     
     return (1);
 }
@@ -145,7 +150,7 @@ u8 *sdcard_read(u32 addr)
     if (!(flags & FLAGS_CCS))
         addr *= 512;
     
-    LATBbits.LATB2 = 0;
+    LATBbits.LATB13 = 0;
     
     // Request read block
     if (sd_send_cmd(17, addr >> 24, addr >> 16, addr >> 8, addr, 0) != 0)
@@ -170,7 +175,7 @@ u8 *sdcard_read(u32 addr)
     SPI(0xff);
     SPI(0xff);
     
-    LATBbits.LATB2 = 0;
+    LATBbits.LATB13 = 0;
     
     return (block);
 }
