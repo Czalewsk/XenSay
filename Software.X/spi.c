@@ -43,7 +43,7 @@ void    spi_init(void)
 
     //Etape 6
     //BRG = Baud Rate Generator
-    SPI1BRG = 100; //  = ---> 32 | 0 est le + rapide, 127 est le + lent
+    SPI1BRG = 32; //  = ---> 32 | 0 est le + rapide, 127 est le + lent
 
     //Etape 7
     SPI1STATbits.SPIROV = 0;  // Receive Overflow Flag Bit
@@ -54,6 +54,7 @@ void    spi_init(void)
     SPI1CONbits.MSTEN = 1; //MSTEN: Master Mode Enable bit; 1 = Master mode
     SPI1CONbits.SMP = 1; //SMP: SPI Data Input Sample Phase bit; 1 = Input data sampled at end of data output time (if MSTEN = 1)
     SPI1CONbits.MODE32 = 1; // Set 32bits SPI
+    SPI1CONbits.MODE16 = 0;
     SPI1CONbits.ENHBUF = 0;
     
     //Etape 9

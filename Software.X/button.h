@@ -8,11 +8,11 @@
 #ifndef BUTTON_H
 #define	BUTTON_H
 
-#define BTN_CFG_1 0x40
-#define BTN_CFG_2 0x80
-#define BTN_CFG_3 0x8
-#define BTN_CFG_4 0x0
-#define BTN_CFG_5 0x0
+#define BTN_CFG_1 0x1000
+#define BTN_CFG_2 0x800
+#define BTN_CFG_3 0x400
+#define BTN_CFG_4 0x200
+#define BTN_CFG_5 0x100
 
 #define BTN_NOTE1 0x4
 #define BTN_NOTE2 0x20

@@ -1,5 +1,6 @@
 #include "XenSay.h"
 #include "events.h"
+#include "button.h"
 
 void    init_simon(void);
 
@@ -7,8 +8,6 @@ static  u32     g_difficulty; // Difficultee
 static  u8      pattern[100]; // Pattern Simon
 static  u8      count;        // Len of simon
 static  u8      display_pattern;
-
-static  u8      corres[15] = { 0x8, 0x80, 0x4, 0x40, 0x2, 0x20, 0x1, 0x10};
 
 static  u8      test[15][3] = {
     " 0",
@@ -38,22 +37,22 @@ void    difficulty_simon(u32 button)
         "    EXTREME   ",
     };
 
-    if (button & 0x4)
+    if (button & BTN_CFG_5)
     {
         timer5Off();
         g_led = 0;
         event_setState(CONFIG);
         return ;
     }
-    if (button & 0x40)
+    if (button & BTN_CFG_3)
     {
         g_difficulty = i;
         init_simon();
         return ;
     }
-    else if (button & 0x80)
+    else if (button & BTN_CFG_2)
         i = (i == 0) ? 4 : i - 1;
-    else if (button & 0x8)
+    else if (button & BTN_CFG_1)
         i = (i == 4) ? 0 : i + 1;
     lcd_write_nb(tab[i], 1, 1);
 }
@@ -82,7 +81,7 @@ void    light_pattern(void)
 
 void    save_pattern(void)
 {
-   pattern[count++] = corres[TMR4 % 8];
+//   pattern[count++] = corres[TMR4 % 8];
    timer4Off();
    display_pattern = 1;
    setTimer4F(&light_pattern, 3906, 7);

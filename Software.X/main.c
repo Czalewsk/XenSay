@@ -12,29 +12,43 @@ void    init_interrupt(void)
 {
     INTCONbits.MVEC = 1;             // Set le mode d'interruption multi-vector
     __builtin_enable_interrupts();   // Indique au cpu d'ecouter les interruptions
+    ANSELA = 0;
+    ANSELB = 0;
+}
+
+void    turnOnLED(u32 button)
+{
+    g_led = ((button & 0x1F0000) >> 8) | (button >> 24) | (((g_switch & 0x1F0000) >> 8) | (g_switch >> 24));
+}
+
+void    turnOffLED(u32 button)
+{
+    g_led = g_led & ~(((button & 0x1F0000) >> 8) | (button >> 24));
 }
 
 int     main(void)
 {
-    u32 t = 250000;
+    u32 t = 25000;
 
     init_interrupt();
-    //event_init();
+    event_init();
+    lcd_init_rst();
+    i2c1_init();
+    lcd_init();
     shiftRegister_init();
-    //lcd_init_rst();
-    //i2c1_init();
-    //lcd_init();
     spi_init();
-    //lcd_create_char();
+    lcd_create_char();
     init_timer1();
     //audio_init();
     //audio_play(1);
     //timer5_init();
     //timer4_init();
-    //while (t--);
-    //lcd_init_end();
+    while (t--);
+    lcd_init_end();
+    lcd_clear();
     //sdcard_init();
-    //g_led = 0xFFFFFFFF;
+    setOnPressCallback(&turnOnLED);
+    setOnReleaseCallback(&turnOffLED);
     
     while (1)
     {

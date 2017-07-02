@@ -60,7 +60,7 @@ s8      i2c1_init(void)
 
     i2c_checkSDA();
     I2C1CON = 0;
-    I2C1BRG = 2;
+    I2C1BRG = 15;
     I2C1STAT = 0;
     I2C1ADD = ADDR;
     tmp = I2C2RCV;

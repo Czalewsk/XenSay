@@ -1,5 +1,6 @@
 #include "XenSay.h"
 #include "events.h"
+#include "button.h"
 
 static  u8  config_select;
 
@@ -16,14 +17,14 @@ void    press_menu(u32 button)
         FREE
     };
 
-    if (button & 0x40)
+    if (button & BTN_CFG_3)
     {
         event_setState(game_state[config_select]);
         return ;
     }
-    if (button & 0x80)
+    if (button & BTN_CFG_2)
         config_select = (config_select == 0) ? 2 : config_select - 1;
-    else if (button & 0x8)
+    else if (button & BTN_CFG_1)
         config_select = (config_select == 2) ? 0 : config_select + 1;
     lcd_write_nb(game_mode[config_select], 1, 1);
 }
