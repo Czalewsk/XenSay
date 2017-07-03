@@ -14,19 +14,19 @@
 #define BTN_CFG_4 0x200
 #define BTN_CFG_5 0x100
 
-#define BTN_NOTE1 0x4
-#define BTN_NOTE2 0x20
-#define BTN_NOTE3 0x2
-#define BTN_NOTE4 0x10
-#define BTN_NOTE5 0x1
-#define BTN_NOTE6 0x0
-#define BTN_NOTE7 0x0
-#define BTN_NOTE8 0x0
-#define BTN_NOTE9 0x0
-#define BTN_NOTE10 0x0
-#define BTN_NOTE11 0x0
-#define BTN_NOTE12 0x0
-#define BTN_NOTE13 0x0
+#define BTN_NOTE1 0x10000000
+#define BTN_NOTE2 0x10000
+#define BTN_NOTE3 0x2000000
+#define BTN_NOTE4 0x20000
+#define BTN_NOTE5 0x4000000
+#define BTN_NOTE6 0x8000000
+#define BTN_NOTE7 0x40000
+#define BTN_NOTE8 0x10000000
+#define BTN_NOTE9 0x80000
+#define BTN_NOTE10 0x20000000
+#define BTN_NOTE11 0x100000
+#define BTN_NOTE12 0x40000000
+#define BTN_NOTE13 0x80000000
 
 void setOnPressCallback(void (*c)(u32 button));
 void setOnReleaseCallback(void (*c)(u32 button));
