@@ -41,8 +41,8 @@ int     main(void)
     init_timer1();
     //audio_init();
     //audio_play(1);
-    //timer5_init();
-    //timer4_init();
+    timer5_init();
+    timer4_init();
     while (t--);
     lcd_init_end();
     lcd_clear();
