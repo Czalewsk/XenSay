@@ -20,10 +20,10 @@
 #pragma config FPLLODIV = DIV_256       // System PLL Output Clock Divider (PLL Divide by 256)
 
 // DEVCFG1
-#pragma config FNOSC = FRC              // Oscillator Selection Bits (Fast RC Osc (FRC))
+#pragma config FNOSC = PRI              // Oscillator Selection Bits (Fast RC Osc (FRC))
 #pragma config FSOSCEN = OFF            // Secondary Oscillator Enable (Disabled)
 #pragma config IESO = ON                // Internal/External Switch Over (Enabled)
-#pragma config POSCMOD = OFF            // Primary Oscillator Configuration (Primary osc disabled)
+#pragma config POSCMOD = XT            // Primary Oscillator Configuration (Primary osc disabled)
 #pragma config OSCIOFNC = ON            // CLKO Output Signal Active on the OSCO Pin (Enabled)
 #pragma config FPBDIV = DIV_8           // Peripheral Clock Divisor (Pb_Clk is Sys_Clk/8)
 #pragma config FCKSM = CSDCMD           // Clock Switching and Monitor Selection (Clock Switch Disable, FSCM Disabled)
