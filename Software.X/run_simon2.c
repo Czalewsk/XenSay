@@ -9,7 +9,7 @@ typedef enum    {
     DIFFICULTY,
     INIT_PLAY,
     PLAY,
-    LOOSER,
+    LOOSE,
     WIN,
     EXIT,
 } SIMON_STATES;
@@ -76,13 +76,6 @@ void    play_simon(u32 button)
     }
     if (in_game == 1)
     {
-        if (index == len_pattern)
-        {
-            index = 0;
-            in_game = 0;
-            event_setFlag(FLAG_SIMON);
-            return ;
-        }
         if (button & corr_btn[pattern[index]])
         {
             g_led = 1 << pattern[index];
@@ -93,6 +86,13 @@ void    play_simon(u32 button)
             simon_state = EXIT;
             event_setFlag(FLAG_SIMON);
         }
+        if (index >= len_pattern)
+        {
+            index = 0;
+            in_game = 0;
+            event_setFlag(FLAG_SIMON);
+            return ;
+        }
     }
     else if (in_game == -1)
     {
@@ -100,7 +100,6 @@ void    play_simon(u32 button)
         event_setFlag(FLAG_SIMON);
     }
     return ;
-
 }
 
 void    light_pattern(void)
@@ -125,7 +124,7 @@ void    run_simon(void)
     {
             case(INIT):
                 timer5Off();
-                setTimer4F(&light_pattern, 15625, 2);
+                setTimer4F(&light_pattern, 15625, 3);
                 len_pattern = 0;
                 g_difficulty = 0;
                 show_pattern = 0;
@@ -144,12 +143,13 @@ void    run_simon(void)
                 pattern[len_pattern++] = PR4 % 13;
                 show_pattern = 1;
                 break ;
-            case(EXIT):
+            case(LOOSE):
                 g_led = 0xFFFF;
                 lcd_clear();
                 lcd_write_line("Loose! Try Again", 0);
                 lcd_write_line("Press to restart", 1);
                 in_game = -1;
+                break ;
     }
     event_clearFlag(FLAG_SIMON);
     return ;

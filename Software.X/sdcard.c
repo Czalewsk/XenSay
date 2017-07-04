@@ -58,7 +58,7 @@ void sdcard_init(void)
     
     // Initialise SPI
     SPI2CON = 0;
-    SPI2BRG = 1;
+    SPI2BRG = 5;
     
     SPI2CONbits.MSTEN = 1; // Le pic est le maitre
     SPI2CONbits.CKE = 0;
@@ -86,7 +86,7 @@ u8 sdcard_start(void)
     
     // Passage en mode natif de la carte (512 coups de clock si l'état précedent = unfinished read)
     LATBbits.LATB13 = 1;
-    for (i = 0; i < 530; ++i)
+    for (i = 0; i < 10; ++i)
         SPI(0xff);
     
     // Reset the sdcard with CMD0
