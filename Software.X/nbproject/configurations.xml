@@ -48,6 +48,7 @@
       <itemPath>run_free.c</itemPath>
       <itemPath>run_learn.c</itemPath>
       <itemPath>run_simon.c</itemPath>
+      <itemPath>run_simon2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -83,8 +84,6 @@
           <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
-        <subordinates>
-        </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>

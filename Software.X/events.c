@@ -94,4 +94,8 @@ void event_update()
     {
         midi_flag_update();
     }
+    if (g_flags & FLAG_SIMON)
+    {
+        run_simon();
+    }
 }
