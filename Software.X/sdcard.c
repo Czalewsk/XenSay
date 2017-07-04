@@ -86,7 +86,7 @@ u8 sdcard_start(void)
     
     // Passage en mode natif de la carte (512 coups de clock si l'état précedent = unfinished read)
     LATBbits.LATB13 = 1;
-    for (i = 0; i < 2000000; ++i)
+    for (i = 0; i < 200; ++i)
         SPI(0xff);
     
     // Reset the sdcard with CMD0

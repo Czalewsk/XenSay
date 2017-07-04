@@ -20,12 +20,16 @@ static  u32      corr_btn[13] = {BTN_NOTE1, BTN_NOTE3, BTN_NOTE5, BTN_NOTE6,
                                 BTN_NOTE11};
 
 static  SIMON_STATES   simon_state = INIT;
-static  u32            g_difficulty = 10; // Difficultee
 static  u32            pattern[100]; // Pattern Simon
 static  u32            len_pattern;        // Len of simon
 static  u8             show_pattern;  // affichage du pattern
 static  u8             in_game;
 static  u8             simon_index;
+static  u8             simon_modulo;
+static  u32            simon_pr;
+
+static  u32             simon_difficulty_time[2] = {25000, 10000};
+static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 10, 13};
 
 void    exit_simon(void)
 {
@@ -42,15 +46,48 @@ void    reinit_simon(u32 button)
     event_setFlag(FLAG_SIMON);
 }
 
+
+
+void    light_pattern(void)
+{
+    static  u8  i;
+    static  u8  blink;
+
+    if (!show_pattern)
+        return ;
+    if (i >= len_pattern)
+    {
+        g_led = 0;
+        show_pattern = 0;
+        in_game = 1;
+        blink = 0;
+        i = 0;
+        return ;
+    }
+    if (!blink)
+    {
+        PR4 = simon_pr;
+        g_led = 1 << pattern[i++];
+        blink = 1;
+    }
+    else
+    {
+        g_led = 0;
+        PR4 /= 4;
+        blink = 0;
+    }
+}
+
 void    difficulty_simon(u32 button)
 {
-    static u8  i = 4;
-    char    tab[5][15] = {
+    static u8  i = 0;
+    char    tab[6][15] = {
         "     TIM      ",
         "     EASY     ",
         "    NORMAL    ",
         "     HARD     ",
         "    EXTREME   ",
+        "     CAROL    ",
     };
 
     if (button & BTN_CFG_5)
@@ -60,16 +97,18 @@ void    difficulty_simon(u32 button)
     }
     if (button & BTN_CFG_3)
     {
-        g_difficulty = i;
-        pattern[len_pattern++] = TMR4 % 13;
+        simon_modulo = simon_difficulty_btn[i];
+        simon_pr = simon_difficulty_time[i / 4];
+       // pattern[len_pattern++] = TMR1 % simon_modulo;
+        setTimer4F(&light_pattern, simon_pr, 4);
         simon_state = INIT_PLAY;
         event_setFlag(FLAG_SIMON);
         return ;
     }
     else if (button & BTN_CFG_2)
-        i = (i == 4) ? 0 : i + 1;
+        i = (i == 5) ? 0 : i + 1;
     else if (button & BTN_CFG_1)
-        i = (i == 0) ? 4 : i - 1;
+        i = (i == 0) ? 5 : i - 1;
     lcd_write_nb(tab[i], 1, 1);
 }
 
@@ -104,23 +143,6 @@ void    play_simon(u32 button)
     return ;
 }
 
-void    light_pattern(void)
-{
-    static  u8  i;
-
-    if (!show_pattern)
-        return ;
-    if (i >= len_pattern)
-    {
-        g_led = 0;
-        show_pattern = 0;
-        in_game = 1;
-        i = 0;
-        return ;
-    }
-    g_led = 1 << pattern[i++];
-}
-
 void    run_simon(void)
 {
     switch(simon_state)
@@ -128,17 +150,17 @@ void    run_simon(void)
             case(INIT):
                 timer5Off();
                 g_led = 0;
-                setTimer4F(&light_pattern, 20000, 4);
                 len_pattern = 0;
-                g_difficulty = 0;
                 show_pattern = 0;
                 simon_index = 0;
                 in_game = 0;
+                simon_modulo = 0;
+                simon_pr = 0;
                 simon_state = DIFFICULTY;
             case(DIFFICULTY):
                 lcd_write_line(" Set Difficulty  ", 0);
                 lcd_write_line("\177              \176", 1);
-                difficulty_simon(BTN_CFG_2);
+                difficulty_simon(0);
                 setOnPressCallback(&difficulty_simon);
                 break ;
             case(INIT_PLAY):
@@ -147,7 +169,7 @@ void    run_simon(void)
                 setOnPressCallback(&play_simon);
                 simon_state = PLAY;
             case(PLAY):
-                pattern[len_pattern++] = TMR4 % 13;
+                pattern[len_pattern++] = TMR4 % simon_modulo;
                 show_pattern = 1;
                 break ;
             case(LOOSE):
