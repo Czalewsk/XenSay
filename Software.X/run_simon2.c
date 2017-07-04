@@ -83,8 +83,9 @@ void    play_simon(u32 button)
         }
         else
         {
-            simon_state = EXIT;
+            simon_state = LOOSE;
             event_setFlag(FLAG_SIMON);
+            return ;
         }
         if (index >= len_pattern)
         {
@@ -140,14 +141,14 @@ void    run_simon(void)
                 setOnPressCallback(&play_simon);
                 simon_state = PLAY;
             case(PLAY):
-                pattern[len_pattern++] = PR4 % 13;
+                pattern[len_pattern++] = TMR4 % 13;
                 show_pattern = 1;
                 break ;
             case(LOOSE):
                 g_led = 0xFFFF;
                 lcd_clear();
-                lcd_write_line("Loose! Try Again", 0);
-                lcd_write_line("Press to restart", 1);
+                lcd_write_line("     Loose !    ", 0);
+                lcd_write_line("    Try Again   ", 1);
                 in_game = -1;
                 break ;
     }

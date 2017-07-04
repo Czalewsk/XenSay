@@ -65,13 +65,13 @@ s8      i2c1_init(void)
     I2C1ADD = ADDR;
     tmp = I2C2RCV;
     IFS1bits.I2C1MIF = 0;
-    IPC8bits.I2C1IP = 5;
+    IPC8bits.I2C1IP = 4;
     IPC8bits.I2C1IS = 1;
     IEC1bits.I2C1MIE = 1;
     I2C1CONbits.ON = 1;
 }
 
-void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
+void __attribute__ ((interrupt(IPL4AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
 {
     IFS1bits.I2C1MIF = 0;
     switch(g_i2c_buffer.state)
