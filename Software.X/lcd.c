@@ -72,7 +72,25 @@ void    lcd_clear(void)
     while (t--);
 }
 
-void    lcd_write_nb(char *str, u8 line, s8 icase)
+void    lcd_write_nb(u32 nbr, u8 line, s8 icase)
+{
+    u8  count = 0;
+    u8  moche_tab[11];
+
+    while (nbr)
+    {
+        if (count > 10)
+            return ;
+        moche_tab[count] = nbr % 10 + '0';
+        count++;
+        nbr /= 10;
+    }
+    moche_tab[count] = '\0';
+    lcd_write_case(moche_tab, line, icase);
+    return ;
+}
+
+void    lcd_write_case(char *str, u8 line, s8 icase)
 {
     if (line > 1 || icase > 15)
         return ;
@@ -96,7 +114,7 @@ void    lcd_cursor(s8 show, s8 blink)
     i2c_fillBuffer(0x0C | ((show << 1) | blink), 1);
 }
 
-void    lcd_create_char(void)
+void    lcd_create_char(void) //barrede chargement
 {
     i2c_fillBuffer(0x80, 0);
     i2c_fillBuffer(0x34, 0);
@@ -204,7 +222,7 @@ void    lcd_create_char(void)
     i2c_fillBuffer(0x4, 1);*/
 }
 
-void    lcd_rotateBuff(void)
+void    lcd_rotateBuff(void) //rappelee par lcd shift, elle decalle le str
 {
     u8 i;
     char    lcd_print[17];
@@ -223,7 +241,7 @@ void    lcd_rotateBuff(void)
     lcd_write_line(lcd_print, lcdBuffer.line);
 }
 
-void    lcd_shift(char *data, u8 line)
+void    lcd_shift(char *data, u8 line) //gestion du defilement
 {
     u8  i = 0;
     t_lcdBuff   tmp;

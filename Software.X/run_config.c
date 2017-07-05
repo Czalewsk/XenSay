@@ -26,7 +26,7 @@ void    press_menu(u32 button)
         config_select = (config_select == 0) ? 2 : config_select - 1;
     else if (button & BTN_CFG_1)
         config_select = (config_select == 2) ? 0 : config_select + 1;
-    lcd_write_nb(game_mode[config_select], 1, 1);
+    lcd_write_case(game_mode[config_select], 1, 1);
 }
 
 void    run_config(void)    //Le Menu quoi !!

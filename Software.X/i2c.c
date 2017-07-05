@@ -23,7 +23,7 @@ s8      i2c_start(void)
         I2C1CONbits.SEN = 1;
     }
  //   else
- //       return (0);
+//       return (0);
 //    i2c_sendAdress();
     return (1);
 
@@ -54,7 +54,7 @@ void    i2c_checkSDA(void)
     LATBbits.LATB8 = 0;
 }
 
-s8      i2c1_init(void)
+void      i2c1_init(void)
 {
     u8  tmp = 0;
 
@@ -125,7 +125,7 @@ void    i2c_writeBuffer(s_I2Cdata *new)
     i2c_start();
 }
 
-void   i2c_fillBuffer(u8 data, u8 last)
+void   i2c_fillBuffer(u8 data, u8 last) //fullbuff
 {
     static  s_I2Cdata   i2c_buffer;
     static  u8          i;

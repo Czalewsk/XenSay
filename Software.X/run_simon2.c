@@ -27,8 +27,9 @@ static  u8             in_game;
 static  u8             simon_index;
 static  u8             simon_modulo;
 static  u32            simon_pr;
+static  u8             blink;
 
-static  u32             simon_difficulty_time[2] = {25000, 10000};
+static  u32            simon_difficulty_time[2] = {30000, 10000};
 static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 10, 13};
 
 void    exit_simon(void)
@@ -46,12 +47,9 @@ void    reinit_simon(u32 button)
     event_setFlag(FLAG_SIMON);
 }
 
-
-
 void    light_pattern(void)
 {
     static  u8  i;
-    static  u8  blink;
 
     if (!show_pattern)
         return ;
@@ -109,7 +107,7 @@ void    difficulty_simon(u32 button)
         i = (i == 5) ? 0 : i + 1;
     else if (button & BTN_CFG_1)
         i = (i == 0) ? 5 : i - 1;
-    lcd_write_nb(tab[i], 1, 1);
+    lcd_write_case(tab[i], 1, 1);
 }
 
 void    play_simon(u32 button)
@@ -136,6 +134,7 @@ void    play_simon(u32 button)
         {
             simon_index = 0;
             in_game = 0;
+            blink = 1;
             event_setFlag(FLAG_SIMON);
             return ;
         }
@@ -176,7 +175,8 @@ void    run_simon(void)
                 g_led = 0xFFFF;
                 lcd_clear();
                 lcd_write_line("Loose! Try Again", 0);
-                lcd_write_line("Max score is    ", 1);
+                lcd_write_line("Your score is   ", 1);
+                lcd_write_nb(len_pattern > 1 ? len_pattern - 1 : 0, 1, 14);
                 setOnPressCallback(&reinit_simon);
                 break ;
     }
