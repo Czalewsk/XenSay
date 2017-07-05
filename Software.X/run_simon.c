@@ -1,7 +1,7 @@
 #include "XenSay.h"
 #include "events.h"
 #include "button.h"
-
+/*
 void    play_simon(u32 button);
 void    save_pattern(void);
 
@@ -137,3 +137,4 @@ void    play_simon(u32 button)
         return ;
     }
 }
+*/

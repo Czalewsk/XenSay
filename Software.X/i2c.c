@@ -23,7 +23,7 @@ s8      i2c_start(void)
         I2C1CONbits.SEN = 1;
     }
  //   else
- //       return (0);
+//       return (0);
 //    i2c_sendAdress();
     return (1);
 
@@ -54,7 +54,7 @@ void    i2c_checkSDA(void)
     LATBbits.LATB8 = 0;
 }
 
-s8      i2c1_init(void)
+void      i2c1_init(void)
 {
     u8  tmp = 0;
 
@@ -65,13 +65,13 @@ s8      i2c1_init(void)
     I2C1ADD = ADDR;
     tmp = I2C2RCV;
     IFS1bits.I2C1MIF = 0;
-    IPC8bits.I2C1IP = 5;
+    IPC8bits.I2C1IP = 4;
     IPC8bits.I2C1IS = 1;
     IEC1bits.I2C1MIE = 1;
     I2C1CONbits.ON = 1;
 }
 
-void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
+void __attribute__ ((interrupt(IPL4AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
 {
     IFS1bits.I2C1MIF = 0;
     switch(g_i2c_buffer.state)
@@ -125,7 +125,7 @@ void    i2c_writeBuffer(s_I2Cdata *new)
     i2c_start();
 }
 
-void   i2c_fillBuffer(u8 data, u8 last)
+void   i2c_fillBuffer(u8 data, u8 last) //fullbuff
 {
     static  s_I2Cdata   i2c_buffer;
     static  u8          i;

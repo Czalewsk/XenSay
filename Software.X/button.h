@@ -14,7 +14,7 @@
 #define BTN_CFG_4 0x200
 #define BTN_CFG_5 0x100
 
-#define BTN_NOTE1 0x10000000
+#define BTN_NOTE1 0x1000000
 #define BTN_NOTE2 0x10000
 #define BTN_NOTE3 0x2000000
 #define BTN_NOTE4 0x20000
