@@ -14,14 +14,14 @@ static u8 SPI(const u8 send)
 
 static u8 sd_wait_rep()
 {
-    u8 i = 0;
+    u16 i = 0;
     u8 data = 0xff;
 
     do
     {
         data = SPI(0xff);
         ++i;
-    } while (i <= 10 && data == 0xff);
+    } while (i <= 256 && data == 0xff);
     return (data);
 }
 
@@ -86,7 +86,7 @@ u8 sdcard_start(void)
     
     // Passage en mode natif de la carte (512 coups de clock si l'état précedent = unfinished read)
     LATBbits.LATB13 = 1;
-    for (i = 0; i < 530; ++i)
+    for (i = 0; i < 10; ++i)
         SPI(0xff);
     
     // Reset the sdcard with CMD0

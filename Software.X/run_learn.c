@@ -2,8 +2,22 @@
 #include "xformat.h"
 #include "events.h"
 #include "button.h"
+#include "led.h"
 
-static u8 state;
+static u32 tabBtn[] = {
+    BTN_NOTE1, BTN_NOTE2, BTN_NOTE3, BTN_NOTE4, BTN_NOTE5, BTN_NOTE6, BTN_NOTE7,
+    BTN_NOTE8, BTN_NOTE9, BTN_NOTE10, BTN_NOTE11, BTN_NOTE12, BTN_NOTE13
+};
+static u32 tabLed[] = {
+    LED_1, LED_2, LED_3, LED_4, LED_5, LED_6, LED_7,
+    LED_8, LED_9, LED_10, LED_11, LED_12, LED_13
+};
+
+static void onPressButtonAlway(u32 button)
+{
+    if (button & BTN_CFG_5)
+        event_setState(CONFIG);
+}
 
 static void onPressButtonError(u32 button)
 {
@@ -16,38 +30,39 @@ static void error()
     setOnPressCallback(&onPressButtonError);
 }
 
-/* Game
- * - music_startStep(data, length);
- * - music_getStepNote();
- * - music_getStepDelay();
- * - music_getStepLength();
- * - music_setOnStepEnd();
- * - music_playStep();
- */
-
 static void onPressButtonGame(u32 button)
 {
+    onPressButtonAlway(button);
+    
     u8 note = music_getStepNote();
     music_playStep();
 }
 
 static void onPressButtonSelect(u32 button)
 {
-    u8 *name;
+    onPressButtonAlway(button);
     
-    if (button & BTN_CFG_1) // Ok
+    u8 *name;
+    u8 *music;
+    u16 size;
+    
+    if (button & BTN_CFG_3) // Ok
     {
-        setOnPressCallback(&onPressButtonGame);
-        music_startStep(xformat_loadMusic(), xformat_sizeMusic());
+        music = xformat_loadMusic();
+        size = xformat_sizeMusic();
+        if (!music)
+            error();
+        else
+            setOnPressCallback(&onPressButtonGame);
     }
-    else if (button & BTN_CFG_2) // Prev
+    else if (button & BTN_CFG_1) // Prev
     {
         if (!(name = xformat_prevMusic()))
             error();
         lcd_shift("", 1);
         lcd_shift(name, 1);
     }
-    else if (button & BTN_CFG_3) // Next
+    else if (button & BTN_CFG_2) // Next
     {
         if (!(name = xformat_nextMusic()))
             error();

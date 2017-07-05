@@ -17,7 +17,7 @@ void audio_init()
 
     buzzer_init();
     midi_init();
-    music_init();
+    //music_init();
 }
 
 void audio_play(u8 note)
