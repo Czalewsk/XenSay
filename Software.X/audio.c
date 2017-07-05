@@ -6,6 +6,7 @@
 #include "music.h"
 
 static u8 enableMidi;
+static u8 enableBuzzer;
 
 /*
  * Public function
@@ -14,6 +15,7 @@ static u8 enableMidi;
 void audio_init()
 {
     enableMidi = 1;
+    enableBuzzer = 1;
 
     buzzer_init();
     midi_init();
@@ -24,7 +26,8 @@ void audio_play(u8 note)
 {
     if (enableMidi)
         midi_play(note);
-    buzzer_play(note);
+    if (enableBuzzer)
+        buzzer_play(note);
 }
 
 void audio_stop()
@@ -33,12 +36,22 @@ void audio_stop()
     buzzer_stop();
 }
 
-void audio_enableMidi()
+void audio_setMidi(u8 status)
 {
-    enableMidi = 1;
+    enableMidi = status;
 }
 
-void audio_disableMidi()
+u8  audio_getMidi(void)
 {
-    enableMidi = 0;
+    return (enableMidi);
+}
+
+void audio_setBuzzer(u8 status)
+{
+    enableBuzzer = status;
+}
+
+u8  audio_getBuzzer(void)
+{
+    return (enableBuzzer);
 }

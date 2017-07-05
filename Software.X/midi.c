@@ -11,8 +11,12 @@ static void midi_send_buffer()
 {
     u8 i = 0;
 
-    while (i < bufferIndex && !U2STAbits.UTXBF)
-        U2TXREG = buffer[--bufferIndex];
+    while (i < bufferIndex && !U1STAbits.UTXBF)
+        U1TXREG = buffer[--bufferIndex];
+    if (bufferIndex)
+        IEC1bits.U1TXIE = 1;
+    else
+        IEC1bits.U1TXIE = 0;
 }
 
 static void midi_add_buffer(u8 byte)
@@ -51,7 +55,7 @@ void midi_init()
     RPA0Rbits.RPA0R = 1;
     
     // Configuration de l'UART
-    U2BRG = 1; // Need 31.250 bps for midi
+    U1BRG = 1; // Need 31.250 bps for midi
 
     U1STAbits.ADDEN = 0;
     U1STAbits.URXISEL = 0; // Interrupt mode
@@ -76,7 +80,7 @@ void midi_init()
     // Interruption UART
     IFS1bits.U1TXIF = 0;
     IPC8bits.U1IP = 3;
-    IEC1bits.U1TXIE = 1;
+    IEC1bits.U1TXIE = 0;
 
     currentNote = 0;
     bufferIndex = 0;
@@ -100,8 +104,8 @@ void midi_stop()
 
 void midi_flag_update()
 {
-    midi_send_buffer();
     event_clearFlag(FLAG_MIDI);
+    midi_send_buffer();
 }
 
 /*
@@ -111,7 +115,7 @@ void midi_flag_update()
 // Interruption quand le buffer libere une place
 __ISR(_UART_1_VECTOR, IPL3AUTO) MidiBuffer()
 {
+    IEC1bits.U1TXIE = 0;
     if (bufferIndex > 0)
         event_setFlag(FLAG_MIDI);
-    IFS1bits.U1TXIF = 0;
 }
