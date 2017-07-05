@@ -108,16 +108,13 @@ void __attribute__ ((interrupt(IPL4AUTO))) __attribute__ ((vector(33))) i2c1_int
 
 void    i2c_reinit(void)
 {
-    i2c_checkSDA();
     i2c_stop();
+    i2c_checkSDA();
+    lcd_init_rst();
     timeout = 20000;
-    I2C1CON = 0;
-    I2C1STAT = 0;
-    IFS1bits.I2C1MIF = 0;
+    i2c1_init();
     g_i2c_buffer.index = 0;
     g_i2c_status = FREE_I2C; 
-    lcd_clear();
-    lcd_init_rst();
     i2c_writeBuffer(&g_i2c_buffer);
 }
 

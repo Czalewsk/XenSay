@@ -71,7 +71,7 @@ void    light_pattern(void)
     else
     {
         g_led = 0;
-        PR4 /= 4;
+        PR4 /= 2;
         blink = 0;
     }
 }
