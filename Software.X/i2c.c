@@ -3,6 +3,8 @@
 
 static  I2C_BUSY_FLAG   g_i2c_status = FREE_I2C;
 static  s_I2Cdata       g_i2c_buffer;
+static  u32             timeout = 20000;
+
 
 void    i2c_writeBuffer(s_I2Cdata *new);
 
@@ -108,16 +110,23 @@ void    i2c_reinit(void)
 {
     i2c_checkSDA();
     i2c_stop();
+    timeout = 20000;
+    I2C1CON = 0;
+    I2C1STAT = 0;
+    IFS1bits.I2C1MIF = 0;
+    g_i2c_buffer.index = 0;
+    g_i2c_status = FREE_I2C; 
+    lcd_clear();
+    lcd_init_rst();
+    i2c_writeBuffer(&g_i2c_buffer);
 }
 
 void    i2c_writeBuffer(s_I2Cdata *new)
 {
-    u32 timeout = 20000;
-
     while (g_i2c_status == BUSY_I2C && timeout--);
     if (!timeout)
     {
-        //i2c_reinit();
+        i2c_reinit();
         return ;
     }
     g_i2c_buffer = *new;
