@@ -59,6 +59,7 @@ void buzzer_play(u8 note)
 
 void buzzer_stop()
 {
+    LATAbits.LATA4 = 0;
     T2CONbits.ON = 0;
     TMR2 = 0;
 }

@@ -110,8 +110,10 @@
 void audio_init();
 void audio_play(u8 note);
 void audio_stop();
-void audio_enable_midi(void);
-void audio_disable_midi(void);
+void audio_setMidi(u8 status);
+u8   audio_getMidi(void);
+void audio_setBuzzer(u8 status);
+u8   audio_getBuzzer(void);
 
 #endif	/* AUDIO_H */
 

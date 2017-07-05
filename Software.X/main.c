@@ -39,8 +39,7 @@ int     main(void)
     spi_init();
     lcd_create_char();
     init_timer1();
-    //audio_init();
-    //audio_play(1);
+    audio_init();
     timer5_init();
     timer4_init();
     while (t--);
@@ -53,7 +52,7 @@ int     main(void)
     while (1)
     {
         event_update();
-        WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
+        //WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
     return (1);
 }

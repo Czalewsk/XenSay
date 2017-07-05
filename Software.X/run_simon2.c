@@ -80,7 +80,7 @@ void    difficulty_simon(u32 button)
 {
     static u8  i = 0;
     char    tab[6][15] = {
-        "     TIM      ",
+        "     DRIC     ",
         "     EASY     ",
         "    NORMAL    ",
         "     HARD     ",
