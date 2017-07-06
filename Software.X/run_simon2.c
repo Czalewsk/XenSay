@@ -14,6 +14,12 @@ typedef enum    {
     EXIT,
 } SIMON_STATES;
 
+typedef enum    {
+    BLINK_ON,
+    BLINK_OFF,
+    BLINK_DELAY,
+}   BLINK_STATES;
+
 static  u32      corr_btn[13] = {BTN_NOTE1, BTN_NOTE3, BTN_NOTE5, BTN_NOTE6,
                                 BTN_NOTE8, BTN_NOTE10, BTN_NOTE12, BTN_NOTE13,
                                 BTN_NOTE2, BTN_NOTE4, BTN_NOTE7, BTN_NOTE9,
@@ -27,7 +33,7 @@ static  u8             in_game;
 static  u8             simon_index;
 static  u8             simon_modulo;
 static  u32            simon_pr;
-static  u8             blink;
+static  BLINK_STATES   blink = BLINK_ON;
 
 static  u32            simon_difficulty_time[2] = {30000, 10000};
 static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 10, 13};
@@ -47,6 +53,29 @@ void    reinit_simon(u32 button)
     event_setFlag(FLAG_SIMON);
 }
 
+
+void    blink_mode(u32 pattern)
+{
+    switch (blink)
+    {       
+        case(BLINK_ON):
+             g_led = 0;
+             PR4 /= 2;
+             blink = BLINK_OFF;
+             break;
+        case(BLINK_OFF):
+            PR4 = simon_pr;
+            g_led = 1 << pattern;
+            blink = BLINK_ON;
+            break;
+        case(BLINK_DELAY):
+            PR4 = 25000;
+            g_led = 1 << pattern;
+            blink = BLINK_OFF;
+            break;
+    }       
+}
+
 void    light_pattern(void)
 {
     static  u8  i;
@@ -58,22 +87,11 @@ void    light_pattern(void)
         g_led = 0;
         show_pattern = 0;
         in_game = 1;
-        blink = 0;
+        blink = BLINK_OFF;
         i = 0;
         return ;
     }
-    if (!blink)
-    {
-        PR4 = simon_pr;
-        g_led = 1 << pattern[i++];
-        blink = 1;
-    }
-    else
-    {
-        g_led = 0;
-        PR4 /= 2;
-        blink = 0;
-    }
+    blink_mode(pattern[i++]);
 }
 
 void    difficulty_simon(u32 button)
@@ -134,7 +152,7 @@ void    play_simon(u32 button)
         {
             simon_index = 0;
             in_game = 0;
-            blink = 1;
+            blink = BLINK_ON;
             event_setFlag(FLAG_SIMON);
             return ;
         }
@@ -170,6 +188,7 @@ void    run_simon(void)
             case(PLAY):
                 pattern[len_pattern++] = TMR4 % simon_modulo;
                 show_pattern = 1;
+                blink = BLINK_DELAY;
                 break ;
             case(LOOSE):
                 g_led = 0xFFFF;
