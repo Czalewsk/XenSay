@@ -106,6 +106,7 @@
 #define AUDIO_NOTE_A8  93
 #define AUDIO_NOTE_AS8 94
 #define AUDIO_NOTE_B8  95
+#define AUDIO_NOTE_C9  96
 
 void audio_init();
 void audio_play(u8 note);

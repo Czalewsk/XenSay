@@ -108,6 +108,7 @@
 #define BUZZER_NOTE_A8  7040
 #define BUZZER_NOTE_AS8 7458
 #define BUZZER_NOTE_B8  7902
+#define BUZZER_NOTE_C9  8372
 
 void buzzer_init();
 void buzzer_play(u8 note);

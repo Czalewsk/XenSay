@@ -21,7 +21,7 @@ static u8 sd_wait_rep()
     {
         data = SPI(0xff);
         ++i;
-    } while (i <= 256 && data == 0xff);
+    } while (i <= 10 && data == 0xff);
     return (data);
 }
 
@@ -61,7 +61,7 @@ void sdcard_init(void)
     SPI2BRG = 1;
 
     SPI2CONbits.MSTEN = 1; // Le pic est le maitre
-    SPI2CONbits.CKE = 0;
+    SPI2CONbits.CKE = 1;
     SPI2CONbits.CKP = 0; // Idle clock = low
     SPI2CONbits.ON = 1;
 
@@ -69,11 +69,6 @@ void sdcard_init(void)
     IFS1bits.SPI2EIF = 0;
     IFS1bits.SPI2RXIF = 0;
     IFS1bits.SPI2TXIF = 0;
-    IPC9bits.SPI2IP = 6;
-    IPC9bits.SPI2IS = 0;
-    IEC1bits.SPI2EIE = 0;
-    IEC1bits.SPI2RXIE = 0;
-    IEC1bits.SPI2TXIE = 0;
 }
 
 u8 sdcard_start(void)
@@ -176,6 +171,7 @@ u8 *sdcard_read(u32 addr)
     SPI(0xff);
 
     LATBbits.LATB13 = 0;
+    
 
     return (block);
 }
