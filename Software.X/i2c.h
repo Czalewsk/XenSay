@@ -10,6 +10,7 @@
 
 // I2C
 # define ADDR (0x7C)  // I2C screen Addr
+#define TIMEOUT_I2C (30000)
 
 typedef enum {
     START,

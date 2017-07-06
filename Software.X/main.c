@@ -28,7 +28,7 @@ void    turnOffLED(u32 button)
 
 int     main(void)
 {
-    u32 t = 25000;
+    u32 t = 95000;
 
     init_interrupt();
     event_init();
@@ -42,7 +42,7 @@ int     main(void)
     audio_init();
     timer5_init();
     timer4_init();
-    while (t--);
+    //while (t--);
     lcd_init_end();
     lcd_clear();
     sdcard_init();
@@ -52,7 +52,7 @@ int     main(void)
     while (1)
     {
         event_update();
-        //WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
+        WDTCONbits.WDTCLR = 1;  // Clear le watchdog timer
     }
     return (1);
 }

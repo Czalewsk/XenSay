@@ -10,10 +10,10 @@ void    i2c_writeBuffer(s_I2Cdata *new);
 
 s8      i2c_sendAdress(void)
 {
-//    if (I2C1STATbits.S && !I2C1STATbits.TBF && !I2C1STATbits.TRSTAT)
+    if (I2C1STATbits.S && !I2C1STATbits.TBF && !I2C1STATbits.TRSTAT)
         I2C1TRN = (ADDR);
-//    else
-//        return (0);
+    else
+        return (0);
     return (1);
 }
 
@@ -76,6 +76,7 @@ void      i2c1_init(void)
 void __attribute__ ((interrupt(IPL4AUTO))) __attribute__ ((vector(33))) i2c1_interrupt(void)
 {
     IFS1bits.I2C1MIF = 0;
+    timeout = TIMEOUT_I2C;
     switch(g_i2c_buffer.state)
     {
      //   I2C1STAT = 0;
@@ -111,21 +112,17 @@ void    i2c_reinit(void)
     i2c_stop();
     i2c_checkSDA();
     lcd_init_rst();
-    timeout = 20000;
+    timeout = TIMEOUT_I2C;
     i2c1_init();
     g_i2c_buffer.index = 0;
     g_i2c_status = FREE_I2C; 
-    i2c_writeBuffer(&g_i2c_buffer);
 }
 
 void    i2c_writeBuffer(s_I2Cdata *new)
 {
     while (g_i2c_status == BUSY_I2C && timeout--);
     if (!timeout)
-    {
         i2c_reinit();
-        return ;
-    }
     g_i2c_buffer = *new;
     g_i2c_status = BUSY_I2C;
     i2c_start();
