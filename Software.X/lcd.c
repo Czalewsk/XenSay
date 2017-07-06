@@ -2,6 +2,7 @@
 #include "i2c.h"
 
 void    lcd_clear(void);
+void    lcd_write_case(char *str, u8 line, s8 icase);
 
 static  t_lcdBuff lcdBuffer;
 
@@ -75,18 +76,20 @@ void    lcd_clear(void)
 void    lcd_write_nb(u32 nbr, u8 line, s8 icase)
 {
     u8  count = 0;
-    u8  moche_tab[11];
+    u8  nbr_tab[11];
 
+    if (!nbr)
+        nbr_tab[count++] = '0';
     while (nbr)
     {
         if (count > 10)
             return ;
-        moche_tab[count] = nbr % 10 + '0';
+        nbr_tab[count] = nbr % 10 + '0';
         count++;
         nbr /= 10;
     }
-    moche_tab[count] = '\0';
-    lcd_write_case(moche_tab, line, icase);
+    nbr_tab[count] = '\0';
+    lcd_write_case(nbr_tab, line, icase);
     return ;
 }
 
@@ -265,7 +268,7 @@ void    lcd_shift(char *data, u8 line) //gestion du defilement
     tmp.line = line;
     timer5Off();
     lcdBuffer = tmp;
-    setTimer5F(&lcd_rotateBuff, 20625);
+    setTimer5F(&lcd_rotateBuff, 20625, 5, 1);
 }
 
 void    lcd_clear_line(u8 line)
