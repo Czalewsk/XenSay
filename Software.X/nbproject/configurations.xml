@@ -28,6 +28,8 @@
       <itemPath>XenSay.h</itemPath>
       <itemPath>xformat.h</itemPath>
       <itemPath>types.h</itemPath>
+      <itemPath>correspondances.h</itemPath>
+      <itemPath>led.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

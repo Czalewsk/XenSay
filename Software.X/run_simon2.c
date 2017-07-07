@@ -1,6 +1,7 @@
 #include "XenSay.h"
 #include "events.h"
 #include "button.h"
+#include "correspondances.h"
 
 void    run_simon(void);
 
@@ -18,6 +19,7 @@ typedef enum    {
     BLINK_ON,
     BLINK_OFF,
     BLINK_DELAY,
+    BLINK_PATTERN,
 }   BLINK_STATES;
 
 static  u32      corr_btn[13] = {BTN_NOTE1, BTN_NOTE3, BTN_NOTE5, BTN_NOTE6,
@@ -33,10 +35,11 @@ static  u8             in_game;
 static  u8             simon_index;
 static  u8             simon_modulo;
 static  u32            simon_pr;
+static  u8             decalage_difficulty;
 static  BLINK_STATES   blink = BLINK_ON;
 
 static  u32            simon_difficulty_time[2] = {30000, 10000};
-static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 10, 13};
+static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 8, 13};
 
 void    exit_simon(void)
 {
@@ -54,6 +57,19 @@ void    reinit_simon(u32 button)
     event_setFlag(FLAG_SIMON);
 }
 
+static void simon_sound_off(u32 button)
+{
+    if (!show_pattern)
+        audio_stop();
+}
+
+void    play_note_simon(u32 button, u8 octave)
+{
+    u8  ugly_corr_tab[] = { 0, 2, 4, 5, 7, 9, 11, 12, 1, 3 ,6, 8, 10};
+
+
+     audio_play(((octave - 1) * 12) + ugly_corr_tab[button]);
+}
 
 void    blink_mode(u8 *index)
 {
@@ -61,17 +77,27 @@ void    blink_mode(u8 *index)
     {       
         case(BLINK_ON):
              g_led = 0;
-             PR4 = (PR4 / 3) * 2;
+             audio_stop();
+             PR4 = 35000;
              blink = BLINK_OFF;
              break;
         case(BLINK_OFF):
+            g_led = 1 << pattern[(*index)];
             PR4 = simon_pr;
-            g_led = 1 << pattern[(*index)++];
+            audio_stop();
+            play_note_simon(pattern[(*index)++], 4);
             blink = BLINK_ON;
             break;
         case(BLINK_DELAY):
-            PR4 = 55000;
+            audio_stop();
+            in_game = 0;
+            PR4 = 20000;
+            blink = BLINK_PATTERN;
+            break;
+        case(BLINK_PATTERN):
             g_led = 0;
+            audio_stop();
+            PR4 = 35000;
             blink = BLINK_OFF;
             break;
     }       
@@ -86,18 +112,21 @@ void    light_pattern(void)
     if (i >= len_pattern)
     {
         g_led = 0;
+        audio_stop();
         show_pattern = 0;
         in_game = 1;
-        blink = BLINK_OFF;
+        blink = BLINK_ON;
         i = 0;
         return ;
     }
+    simon_sound_off(0);
     blink_mode(&i);
 }
 
 void    difficulty_simon(u32 button)
 {
     static u8  i = 0;
+
     char    tab[6][15] = {
         "      TIM     ",
         "     EASY     ",
@@ -115,8 +144,9 @@ void    difficulty_simon(u32 button)
     if (button & BTN_CFG_3)
     {
         simon_modulo = simon_difficulty_btn[i];
+        decalage_difficulty = (i <= 2) ? (3 - i): 0;  // decalage des boutons et les leds au centre du clavier dans le mode TIM, EASY et NORMAL
         simon_pr = simon_difficulty_time[i / 4];
-        pattern[len_pattern++] = TMR5 % simon_modulo;
+        pattern[len_pattern++] = (TMR5 % simon_modulo) + decalage_difficulty;
         setTimer4F(&light_pattern, simon_pr, 4);
         simon_state = INIT_PLAY;
         event_setFlag(FLAG_SIMON);
@@ -140,11 +170,13 @@ void    play_simon(u32 button)
     {
         if (button & corr_btn[pattern[simon_index]])
         {
+            play_note_simon(pattern[simon_index], 4);
             g_led = 1 << pattern[simon_index];
             simon_index++;
         }
         else
         {
+            play_note_simon(3, 1);
             simon_state = LOOSE;
             event_setFlag(FLAG_SIMON);
             return ;
@@ -152,8 +184,7 @@ void    play_simon(u32 button)
         if (simon_index >= len_pattern)
         {
             simon_index = 0;
-            in_game = 0;
-            blink = BLINK_ON;
+            blink = BLINK_DELAY;
             event_setFlag(FLAG_SIMON);
             return ;
         }
@@ -166,6 +197,7 @@ void    run_simon(void)
     switch(simon_state)
     {
             case(INIT):
+                simon_sound_off(0);
                 timer5Off();
                 setTimer5F(NULL, 65000, 7, 0);
                 g_led = 0;
@@ -187,9 +219,10 @@ void    run_simon(void)
                 lcd_write_line("  Let's Play !  ", 0);
                 lcd_write_line("Your score is   ", 1);
                 setOnPressCallback(&play_simon);
+                setOnReleaseCallback(&simon_sound_off);
                 simon_state = PLAY;
             case(PLAY):
-                pattern[len_pattern++] = TMR5 % simon_modulo;
+                pattern[len_pattern++] = (TMR5 % simon_modulo) + decalage_difficulty;
                 lcd_write_nb(len_pattern > 2 ? len_pattern - 2 : 0, 1, 14);
                 show_pattern = 1;
                 blink = BLINK_DELAY;

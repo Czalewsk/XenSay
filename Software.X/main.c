@@ -46,8 +46,8 @@ int     main(void)
     lcd_init_end();
     lcd_clear();
     sdcard_init();
-    setOnPressCallback(&turnOnLED);
-    setOnReleaseCallback(&turnOffLED);
+    //setOnPressCallback(&turnOnLED);
+    //setOnReleaseCallback(&turnOffLED);
     
     while (1)
     {
