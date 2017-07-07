@@ -24,6 +24,7 @@ static void onPressButton(u32 button)
     {
         g_led = 0x0;
         audio_stop();
+        audio_setBuzzer(1);
         event_setState(CONFIG);
         return ;
     }
@@ -51,6 +52,7 @@ static void onPressButton(u32 button)
         {
             g_led = tabLed[i];
             audio_play(((octave - 1) * 12) + i);
+            break;
         }
     }
 }

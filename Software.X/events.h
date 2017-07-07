@@ -23,6 +23,7 @@ typedef enum {
 #define FLAG_SHIFTREGISTER 1
 #define FLAG_MIDI 2
 #define FLAG_SIMON 4
+#define FLAG_TIMER4 8
 
 void event_init();
 void event_setState(STATES state);

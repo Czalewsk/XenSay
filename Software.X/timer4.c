@@ -1,4 +1,5 @@
 #include "XenSay.h"
+#include "events.h"
 
 static void (*timer4_f)(void);
 
@@ -16,10 +17,9 @@ void    timer4_init(void)
 
 void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(16))) timer4(void)
 {
-    if (timer4_f)
-        timer4_f();
-     TMR4 = 0;
-     IFS0bits.T4IF = 0;
+    event_setFlag(FLAG_TIMER4);
+    TMR4 = 0;
+    IFS0bits.T4IF = 0;
 }
 
 void    setTimer4F(void (*f)(void), u32 pr4, u32 tckps)
@@ -37,4 +37,11 @@ void    timer4Off(void)
 {
     T4CONbits.ON = 0;
     TMR4 = 0;
+}
+
+void    run_timer4(void)
+{
+    if (timer4_f)
+        timer4_f();
+    event_clearFlag(FLAG_TIMER4);
 }

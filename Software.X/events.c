@@ -98,4 +98,8 @@ void event_update()
     {
         run_simon();
     }
+    if (g_flags & FLAG_TIMER4)
+    {
+        run_timer4();
+    }
 }
