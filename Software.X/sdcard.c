@@ -9,6 +9,7 @@ static u8 SPI(const u8 send)
     SPI2BUF = send;
     while (!SPI2STATbits.SPITBE);
     while (!SPI2STATbits.SPIRBF);
+    
     return (SPI2BUF);
 }
 
@@ -21,7 +22,7 @@ static u8 sd_wait_rep()
     {
         data = SPI(0xff);
         ++i;
-    } while (i <= 10 && data == 0xff);
+    } while (i <= 20 && data == 0xff);
     return (data);
 }
 
@@ -153,9 +154,9 @@ u8 *sdcard_read(u32 addr)
         sd_error(" SD READ ERROR  ");
         return (0);
     }
-
+    u8 rep;
     // Wait data
-    if (sd_wait_rep() != 0xfe)
+    if ((rep = sd_wait_rep()) != 0xfe)
     {
         sd_error("SD READ TOKEN ER");
         return (0);
@@ -170,7 +171,7 @@ u8 *sdcard_read(u32 addr)
     SPI(0xff);
     SPI(0xff);
 
-    LATBbits.LATB13 = 0;
+    LATBbits.LATB13 = 1;
     
 
     return (block);
