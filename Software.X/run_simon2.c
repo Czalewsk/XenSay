@@ -2,6 +2,10 @@
 #include "events.h"
 #include "button.h"
 #include "correspondances.h"
+#include "audio.h"
+#include "buzzer.h"
+#include "midi.h"
+#include "music.h"
 
 void    run_simon(void);
 
@@ -37,6 +41,7 @@ static  u8             simon_modulo;
 static  u32            simon_pr;
 static  u8             decalage_difficulty;
 static  BLINK_STATES   blink = BLINK_ON;
+static  u8             disable_state_buzzer;
 
 static  u32            simon_difficulty_time[2] = {30000, 10000};
 static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 8, 13};
@@ -63,10 +68,23 @@ static void simon_sound_off(u32 button)
         audio_stop();
 }
 
+void simon_sound_toggle(void)  //Set l'etatdu buzzer On <-> Off
+{
+    static  u8  state;
+
+    audio_setBuzzer(state);
+    lcd_write_line(" Sound = ", 0);
+    if (state)
+        lcd_write_case("On     ", 0, 9);
+    else
+        lcd_write_case("Off    ", 0, 9);
+    state = !state;
+    disable_state_buzzer = 1;
+}
+
 void    play_note_simon(u32 button, u8 octave)
 {
     u8  ugly_corr_tab[] = { 0, 2, 4, 5, 7, 9, 11, 12, 1, 3 ,6, 8, 10};
-
 
      audio_play(((octave - 1) * 12) + ugly_corr_tab[button]);
 }
@@ -141,6 +159,16 @@ void    difficulty_simon(u32 button)
         exit_simon();
         return ;
     }
+    if (disable_state_buzzer)
+    {
+        lcd_write_line(" Set Difficulty  ", 0);
+        disable_state_buzzer = 0;
+    }
+    if (button & BTN_CFG_4)
+    {
+        simon_sound_toggle();
+        return ;
+    }
     if (button & BTN_CFG_3)
     {
         simon_modulo = simon_difficulty_btn[i];
@@ -164,6 +192,11 @@ void    play_simon(u32 button)
     if (button & BTN_CFG_5)
     {
         exit_simon();
+        return ;
+    }
+    if (button & BTN_CFG_4)
+    {
+        simon_sound_toggle();
         return ;
     }
     if (in_game == 1)
@@ -222,6 +255,11 @@ void    run_simon(void)
                 setOnReleaseCallback(&simon_sound_off);
                 simon_state = PLAY;
             case(PLAY):
+                if (disable_state_buzzer)
+                {
+                    lcd_write_line("  Let's Play !  ", 0);
+                    disable_state_buzzer = 0;
+                }
                 pattern[len_pattern++] = (TMR5 % simon_modulo) + decalage_difficulty;
                 lcd_write_nb(len_pattern > 2 ? len_pattern - 2 : 0, 1, 14);
                 show_pattern = 1;
