@@ -60,7 +60,7 @@ void      i2c1_init(void)
 {
     u8  tmp = 0;
 
-    i2c_checkSDA();
+    //i2c_checkSDA();
     I2C1CON = 0;
     I2C1BRG = 15;
     I2C1STAT = 0;

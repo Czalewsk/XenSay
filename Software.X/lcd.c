@@ -9,12 +9,13 @@ static  t_lcdBuff lcdBuffer;
 
 void        lcd_init_rst(void)
 {
-    s16 i = 0;
+    u16 i = 0;
     TRISBbits.TRISB7 = 0; // RESET LCD
     LATBbits.LATB7 = 1;
     LATBbits.LATB7 = 0;
     while (i++ < 100);
     LATBbits.LATB7 = 1;
+    while (i++ < 65000);
 }
 
 void    lcd_write_line(char *str, s8 line)
@@ -55,7 +56,7 @@ void        lcd_init(void)
     i2c_fillBuffer(0x06, 0);
     i2c_fillBuffer(0x00, 0);
     i2c_fillBuffer(0x0C, 1);
-    lcd_write_line("  X e n  S a y ", 0);
+    //lcd_write_line("  X e n  S a y ", 0);
 }
 
 void    lcd_init_end(void)
