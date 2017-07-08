@@ -75,20 +75,26 @@ void    lcd_clear(void)
 
 void    lcd_write_nb(u32 nbr, u8 line, s8 icase)
 {
+    u32 nbr_cpy;
     u8  count = 0;
     u8  nbr_tab[11];
 
-    if (!nbr)
-        nbr_tab[count++] = '0';
-    while (nbr)
+    nbr_cpy = nbr;
+    while (nbr_cpy || !count)
     {
-        if (count > 10)
-            return ;
-        nbr_tab[count] = nbr % 10 + '0';
+        nbr_cpy /= 10;
         count++;
-        nbr /= 10;
     }
-    nbr_tab[count] = '\0';
+    if (count > 10)
+            return ;
+    nbr_tab[count--] = '\0';
+    while (count)
+    {
+        nbr_tab[count] = nbr % 10 + 48;
+        nbr /= 10;
+        count--;
+    }
+    nbr_tab[count] = nbr % 10 + 48;
     lcd_write_case(nbr_tab, line, icase);
     return ;
 }

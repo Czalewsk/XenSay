@@ -64,7 +64,7 @@ void    reinit_simon(u32 button)
 
 static void simon_sound_off(u32 button)
 {
-    if (!show_pattern)
+    if (in_game)
         audio_stop();
 }
 
@@ -84,9 +84,9 @@ void simon_sound_toggle(void)  //Set l'etatdu buzzer On <-> Off
 
 void    play_note_simon(u32 button, u8 octave)
 {
-    u8  ugly_corr_tab[] = { 0, 2, 4, 5, 7, 9, 11, 12, 1, 3 ,6, 8, 10};
+    u8  tab_correspondance[] = { 0, 2, 4, 5, 7, 9, 11, 12, 1, 3 ,6, 8, 10};
 
-     audio_play(((octave - 1) * 12) + ugly_corr_tab[button]);
+     audio_play(((octave - 1) * 12) + tab_correspondance[button]);
 }
 
 void    blink_mode(u8 *index)
@@ -107,12 +107,13 @@ void    blink_mode(u8 *index)
             blink = BLINK_ON;
             break;
         case(BLINK_DELAY):
-            audio_stop();
+            //audio_stop();
             in_game = 0;
             PR4 = 20000;
             blink = BLINK_PATTERN;
             break;
         case(BLINK_PATTERN):
+            in_game = 0;
             g_led = 0;
             audio_stop();
             PR4 = 35000;
@@ -133,6 +134,7 @@ void    light_pattern(void)
         audio_stop();
         show_pattern = 0;
         in_game = 1;
+        timer4Off();
         blink = BLINK_ON;
         i = 0;
         return ;
@@ -217,6 +219,7 @@ void    play_simon(u32 button)
         if (simon_index >= len_pattern)
         {
             simon_index = 0;
+            timer4On();
             blink = BLINK_DELAY;
             event_setFlag(FLAG_SIMON);
             return ;
