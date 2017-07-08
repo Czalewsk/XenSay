@@ -10,10 +10,10 @@ void    i2c_writeBuffer(s_I2Cdata *new);
 
 s8      i2c_sendAdress(void)
 {
-    if (I2C1STATbits.S && !I2C1STATbits.TBF && !I2C1STATbits.TRSTAT)
+    //if (I2C1STATbits.S && !I2C1STATbits.TBF && !I2C1STATbits.TRSTAT)
         I2C1TRN = (ADDR);
-    else
-        return (0);
+    //else
+    //    return (0);
     return (1);
 }
 

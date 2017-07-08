@@ -48,6 +48,8 @@ static  u8             simon_difficulty_btn[6] = {2, 4, 6, 13, 8, 13};
 
 void    exit_simon(void)
 {
+    audio_stop();
+    audio_setBuzzer(1);
     timer4Off();
     timer5Off();
     g_led = 0;
@@ -266,6 +268,7 @@ void    run_simon(void)
                 pattern[len_pattern++] = (TMR5 % simon_modulo) + decalage_difficulty;
                 lcd_write_nb(len_pattern > 2 ? len_pattern - 2 : 0, 1, 14);
                 show_pattern = 1;
+                timer4On();
                 blink = BLINK_DELAY;
                 break ;
             case(LOOSE):
