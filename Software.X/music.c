@@ -10,7 +10,7 @@
 static u8 fState;
 static u8 *music;
 static u8 *endmusic;
-static void (*onStepEnd)(void);
+static void (*onStepEnd)(u8 delay);
 
 /*
  * Internal function
@@ -118,7 +118,7 @@ u8 music_getStepDelay()
     return (*(music + 2) * 39);
 }
 
-void music_setOnStepEnd(void (*c)(void))
+void music_setOnStepEnd(void (*c)(u8 delay))
 {
     onStepEnd = c;
 }
@@ -148,7 +148,7 @@ __ISR(_TIMER_3_VECTOR, IPL5AUTO) MusicTimer()
             audio_stop();
             music_timerReset();
             if (onStepEnd)
-                onStepEnd();
+                onStepEnd(music_getStepDelay());
         }
     }
 }
