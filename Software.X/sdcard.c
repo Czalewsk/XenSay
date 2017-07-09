@@ -6,9 +6,22 @@ static u8 flags;
 
 static u8 SPI(const u8 send)
 {
+    /*u8 retry;
+    u8 timeout;
+    
+    for (retry = 0; retry < 5; ++retry)
+    {
+        timeout = 0;
+        */
+    //IEC1bits.SPI2TXIE = 1;
     SPI2BUF = send;
-    while (!SPI2STATbits.SPITBE);
-    while (!SPI2STATbits.SPIRBF);
+    //IEC1bits.SPI2RXIE = 1;
+    //while (/*!(flags & FLAGS_TX) || */!(flags & FLAGS_RX));
+    //flags &= ~FLAGS_RX;
+    while (/*timeout < 40 && */(!SPI2STATbits.SPITBE || !SPI2STATbits.SPIRBF));
+        /*if (timeout < 40)
+            return (SPI2BUF);
+    }*/
     
     return (SPI2BUF);
 }
@@ -67,9 +80,11 @@ void sdcard_init(void)
     SPI2CONbits.ON = 1;
 
     // Interruption config
-    IFS1bits.SPI2EIF = 0;
-    IFS1bits.SPI2RXIF = 0;
-    IFS1bits.SPI2TXIF = 0;
+    IEC1bits.SPI2RXIE = 0;
+    IEC1bits.SPI2TXIE = 0;
+    IEC1bits.SPI2EIE = 0;
+    IPC9bits.SPI2IP = 7;
+    IPC9bits.SPI2IS = 2;
 }
 
 u8 sdcard_start(void)
@@ -80,9 +95,9 @@ u8 sdcard_start(void)
     // Initialisation de la carte sd
     flags = 0;
 
-    // Passage en mode natif de la carte (512 coups de clock si l'�tat pr�cedent = unfinished read)
+    // Passage en mode natif de la carte (512 coups de clock si l'etat precedent = unfinished read)
     LATBbits.LATB13 = 1;
-    for (i = 0; i < 10; ++i)
+    for (i = 0; i < 20; ++i)
         SPI(0xff);
 
     // Reset the sdcard with CMD0
@@ -154,14 +169,14 @@ u8 *sdcard_read(u32 addr)
         sd_error(" SD READ ERROR  ");
         return (0);
     }
-    u8 rep;
+    
     // Wait data
-    if ((rep = sd_wait_rep()) != 0xfe)
+    if (sd_wait_rep() != 0xfe)
     {
         sd_error("SD READ TOKEN ER");
         return (0);
     }
-
+        
     // Read data block (512 bytes)
     i = 0;
     while (i < 512)
@@ -175,4 +190,18 @@ u8 *sdcard_read(u32 addr)
     
 
     return (block);
+}
+
+__ISR(_SPI2_VECTOR, IPL7AUTO) SDCardISR()
+{
+    if (IEC1bits.SPI2TXIE && IFS1bits.SPI2TXIF)
+    {
+        IEC1bits.SPI2TXIE = 0;
+        flags |= FLAGS_TX;
+    }
+    if (IEC1bits.SPI2RXIE && IFS1bits.SPI2RXIF)
+    {
+        IEC1bits.SPI2RXIE = 0;
+        flags |= FLAGS_RX;
+    }
 }

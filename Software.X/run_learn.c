@@ -3,6 +3,7 @@
 #include "events.h"
 #include "button.h"
 #include "led.h"
+#include "correspondances.h"
 
 typedef enum    {
     MUSIC,
@@ -15,25 +16,18 @@ typedef enum    {
 
 void setupState(LEARN_STATES state);
 
-static u32 tabBtn[] = {
-    BTN_NOTE1, BTN_NOTE2, BTN_NOTE3, BTN_NOTE4, BTN_NOTE5, BTN_NOTE6, BTN_NOTE7,
-    BTN_NOTE8, BTN_NOTE9, BTN_NOTE10, BTN_NOTE11, BTN_NOTE12, BTN_NOTE13
-};
-
-static u32 tabLed[] = {
-    LED_1, LED_2, LED_3, LED_4, LED_5, LED_6, LED_7,
-    LED_8, LED_9, LED_10, LED_11, LED_12, LED_13
-};
-
 static u8 tabDifficulty[] = {
     0, 5, 3, 1
 };
 
 static u8 difficulty;
 
+static u16 stepIndex;
+
 static void learnReset()
 {
     music_stop();
+    audio_setBuzzer(1);
     g_led = 0x0;
 }
 
@@ -60,11 +54,16 @@ static void error()
 
 static void onPressButtonRetry(u32 button)
 {
-    g_led = 0x0;
     if (button & BTN_CFG_5)
+    {
+        g_led = 0x0;
         onPressButtonAlway(button);
-    else
+    }
+    else if (button & 0x1E00)
+    {
+        g_led = 0x0;
         setupState(MUSIC);
+    }
 
 }
 
@@ -87,8 +86,6 @@ static void waitNextStep(u8 delay)
     else
     {
         g_led = tabLed[music_getStepNote() % 12];
-        //if (delay)
-            //setTimer4F(&timerTimeout, (delay * 39), 7);
         if (tabDifficulty[difficulty])
             setTimer4F(&timerTimeout, (tabDifficulty[difficulty] * 100) * 39, 7);
     }
@@ -96,19 +93,40 @@ static void waitNextStep(u8 delay)
 
 static void onPressButtonGame(u32 button)
 {
+    u8 size;
+    u8 value64;
+    u8 i;
+    u8 str[] = "                ";
+    
     if (tabBtn[music_getStepNote() % 12] & button)
     {
-        g_led = 0;
+        // Loading bar
+        ++stepIndex;
+        size = xformat_sizeMusic() / 3;
+        value64 = (((float)stepIndex) / ((float)size)) * 64;   // Fucking float but change later
+        for (i = 0; i < value64 / 4; ++i)
+            str[i] = 4;
+        if (value64 % 4)
+            str[i] = value64 % 4;
+        lcd_write_line(str, 1);
+        
+        g_led = 0x0;
         timer4Off();
         music_playStep();
     }
     else if (button & 0xFFFFE0FF)
     {
-        timer4Off();
         music_stop();
         lcd_write_line("     Loose !    ", 0);
         g_led = 0xffff;
         retry();
+    }
+    if (button & BTN_CFG_4)
+    {
+        audio_setBuzzer(!audio_getBuzzer());
+        lcd_clear_line(0);
+        lcd_write_line("  Buzzer: ", 0);
+        lcd_write_case(audio_getBuzzer() ? "yes" : "no ", 0, 10);
     }
     
     onPressButtonAlway(button);
@@ -128,7 +146,10 @@ static void onPressButtonDifficulty(u32 button)
     else if (button & BTN_CFG_2)
         difficulty = difficulty < 3 ? difficulty + 1 : 3;
     else if (button & BTN_CFG_3)
+    {
         setupState(PLAY);
+        return ;
+    }
     lcd_write_line(diffName[difficulty], 1);
     
     onPressButtonAlway(button);
@@ -144,15 +165,29 @@ static void onPressButtonSelect(u32 button)
     {
         if (!(name = xformat_prevMusic()))
             error();
-        lcd_shift("", 1);
-        lcd_shift(name, 1);
+        else
+        {
+            lcd_shift("", 1);
+            lcd_shift(name, 1);
+        }
     }
     else if (button & BTN_CFG_2) // Next
     {
         if (!(name = xformat_nextMusic()))
             error();
-        lcd_shift("", 1);
-        lcd_shift(name, 1);
+        else
+        {
+            lcd_shift("", 1);
+            lcd_shift(name, 1);
+        }
+    }
+    else if (button & BTN_CFG_4) // Preview
+    {
+        u8 *data;
+        
+        if (!(data = xformat_loadMusic()))
+            error();
+        music_play(data, xformat_sizeMusic());
     }
     
     onPressButtonAlway(button);
@@ -184,6 +219,7 @@ void    setupState(LEARN_STATES state)
             break;
             
         case DIFFICULTY:
+            music_stop();
             lcd_write_line(" Set Difficulty ", 0);
             lcd_write_line("\177     DRICC    \176", 1);
             difficulty = 0;
@@ -191,6 +227,7 @@ void    setupState(LEARN_STATES state)
             break;
             
         case PLAY:
+            stepIndex = 0;
             music = xformat_loadMusic();
             size = xformat_sizeMusic();
             if (!music)
@@ -201,18 +238,25 @@ void    setupState(LEARN_STATES state)
                 music_setOnStepEnd(&waitNextStep);
                 setOnPressCallback(&onPressButtonGame);
                 lcd_write_line("  Let's Fuck !  ", 0);
+                lcd_clear_line(1);
                 g_led = tabLed[music_getStepNote() % 12];
             }
             break;
         case LOOSE:
+            timer4Off();
+            learnReset();
             lcd_write_line("    Loose !     ", 0);
             retry();
             break;
         case WIN:
+            timer4Off();
+            learnReset();
             lcd_write_line("   You Win !    ", 0);
             retry();
             break;
         case TIMEOUT:
+            timer4Off();
+            learnReset();
             music_stop();
             lcd_write_line("    Timeout !   ", 0);
             g_led = 0xffff;

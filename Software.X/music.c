@@ -2,6 +2,7 @@
 #include <sys/attribs.h>
 #include "music.h"
 #include "audio.h"
+#include "events.h"
 
 /*
  * Internal variables
@@ -54,6 +55,13 @@ void music_init()
     PR2 = length * 39;// 3906 = 1s with 256 divide, 39 = 0.001s
     T2CONbits.ON = 1;
 }*/
+
+void music_flag_update(void)
+{
+    if (onStepEnd)
+        onStepEnd(music_getStepDelay());
+    event_clearFlag(FLAG_MUSIC);
+}
 
 void music_play(u8 *data, u16 length)
 {
@@ -148,7 +156,7 @@ __ISR(_TIMER_3_VECTOR, IPL5AUTO) MusicTimer()
             audio_stop();
             music_timerReset();
             if (onStepEnd)
-                onStepEnd(music_getStepDelay());
+                event_setFlag(FLAG_MUSIC);
         }
     }
 }
