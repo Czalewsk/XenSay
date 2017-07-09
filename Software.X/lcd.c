@@ -2,18 +2,20 @@
 #include "i2c.h"
 
 void    lcd_clear(void);
+void    lcd_write_case(char *str, u8 line, s8 icase);
 
 static  t_lcdBuff lcdBuffer;
 
 
 void        lcd_init_rst(void)
 {
-    s16 i = 0;
+    u16 i = 0;
     TRISBbits.TRISB7 = 0; // RESET LCD
     LATBbits.LATB7 = 1;
     LATBbits.LATB7 = 0;
     while (i++ < 100);
     LATBbits.LATB7 = 1;
+    while (i++ < 65000);
 }
 
 void    lcd_write_line(char *str, s8 line)
@@ -54,7 +56,7 @@ void        lcd_init(void)
     i2c_fillBuffer(0x06, 0);
     i2c_fillBuffer(0x00, 0);
     i2c_fillBuffer(0x0C, 1);
-    lcd_write_line("  X e n  S a y ", 0);
+    //lcd_write_line("  X e n  S a y ", 0);
 }
 
 void    lcd_init_end(void)
@@ -74,19 +76,27 @@ void    lcd_clear(void)
 
 void    lcd_write_nb(u32 nbr, u8 line, s8 icase)
 {
+    u32 nbr_cpy;
     u8  count = 0;
-    u8  moche_tab[11];
+    u8  nbr_tab[11];
 
-    while (nbr)
+    nbr_cpy = nbr;
+    while (nbr_cpy || !count)
     {
-        if (count > 10)
-            return ;
-        moche_tab[count] = nbr % 10 + '0';
+        nbr_cpy /= 10;
         count++;
-        nbr /= 10;
     }
-    moche_tab[count] = '\0';
-    lcd_write_case(moche_tab, line, icase);
+    if (count > 10)
+            return ;
+    nbr_tab[count--] = '\0';
+    while (count)
+    {
+        nbr_tab[count] = nbr % 10 + 48;
+        nbr /= 10;
+        count--;
+    }
+    nbr_tab[count] = nbr % 10 + 48;
+    lcd_write_case(nbr_tab, line, icase);
     return ;
 }
 
@@ -265,7 +275,7 @@ void    lcd_shift(char *data, u8 line) //gestion du defilement
     tmp.line = line;
     timer5Off();
     lcdBuffer = tmp;
-    setTimer5F(&lcd_rotateBuff, 20625);
+    setTimer5F(&lcd_rotateBuff, 20625, 5, 1);
 }
 
 void    lcd_clear_line(u8 line)

@@ -22,10 +22,13 @@ void __attribute__ ((interrupt(IPL5AUTO))) __attribute__ ((vector(20))) timer5(v
      IFS0bits.T5IF = 0;
 }
 
-void    setTimer5F(void (*f)(void), u32 time)
+void    setTimer5F(void (*f)(void), u32 time, u8 tckps, u8 intrrpt)
 {
+    T5CONbits.ON = 0;
     timer5_f = f;
     PR5 = time;
+    IEC0bits.T5IE = intrrpt;
+    T5CONbits.TCKPS = tckps;
     TMR5 = 0;
     T5CONbits.ON = 1;
 }

@@ -33,6 +33,12 @@ void    setTimer4F(void (*f)(void), u32 pr4, u32 tckps)
     T4CONbits.ON = 1;
 }
 
+void    timer4On(void)
+{
+    TMR4 = 0;
+    T4CONbits.ON = 1;
+}
+
 void    timer4Off(void)
 {
     T4CONbits.ON = 0;
