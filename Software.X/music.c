@@ -2,6 +2,7 @@
 #include <sys/attribs.h>
 #include "music.h"
 #include "audio.h"
+#include "events.h"
 
 /*
  * Internal variables
@@ -10,7 +11,7 @@
 static u8 fState;
 static u8 *music;
 static u8 *endmusic;
-static void (*onStepEnd)(void);
+static void (*onStepEnd)(u8 delay);
 
 /*
  * Internal function
@@ -54,6 +55,13 @@ void music_init()
     PR2 = length * 39;// 3906 = 1s with 256 divide, 39 = 0.001s
     T2CONbits.ON = 1;
 }*/
+
+void music_flag_update(void)
+{
+    if (onStepEnd)
+        onStepEnd(music_getStepDelay());
+    event_clearFlag(FLAG_MUSIC);
+}
 
 void music_play(u8 *data, u16 length)
 {
@@ -108,17 +116,17 @@ u8 music_getStepLength()
 {
     if (!music || music + 3 > endmusic)
         return (0);
-    return (*(music + 1) * 39);
+    return (*(music + 1));
 }
 
 u8 music_getStepDelay()
 {
     if (!music || music + 3 > endmusic)
         return (0);
-    return (*(music + 2) * 39);
+    return (*(music + 2));
 }
 
-void music_setOnStepEnd(void (*c)(void))
+void music_setOnStepEnd(void (*c)(u8 delay))
 {
     onStepEnd = c;
 }
@@ -148,7 +156,7 @@ __ISR(_TIMER_3_VECTOR, IPL5AUTO) MusicTimer()
             audio_stop();
             music_timerReset();
             if (onStepEnd)
-                onStepEnd();
+                event_setFlag(FLAG_MUSIC);
         }
     }
 }

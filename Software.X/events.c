@@ -7,6 +7,7 @@ void run_learn(void);
 void run_simon(void);
 
 void sr_flag_update(void);
+void music_flag_update(void);
 
 static STATES g_current;
 static STATES g_new;
@@ -87,19 +88,13 @@ void event_update()
 
     // Flags
     if (g_flags & FLAG_SHIFTREGISTER)
-    {
         sr_flag_update();
-    }
     if (g_flags & FLAG_MIDI)
-    {
         midi_flag_update();
-    }
     if (g_flags & FLAG_SIMON)
-    {
         run_simon();
-    }
     if (g_flags & FLAG_TIMER4)
-    {
         run_timer4();
-    }
+    if (g_flags & FLAG_MUSIC)
+        music_flag_update();
 }

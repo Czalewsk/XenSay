@@ -22,7 +22,7 @@ void    music_playStep();
 u8      music_getStepNote();
 u8      music_getStepLength();
 u8      music_getStepDelay();
-void    music_setOnStepEnd(void (*c)(void));
+void    music_setOnStepEnd(void (*c)(u8 delay));
 
 #endif	/* MUSIC_H */
 
