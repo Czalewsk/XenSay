@@ -43,13 +43,13 @@ void sr_flag_update(void)
     before = actual_state;
 
     actual_state = SPI1BUF & 0xFFFFFF00;
-    IEC1bits.SPI1RXIE = 1;
     g_switch = actual_state;
     g_release = before & ~actual_state; // calcul des switch relaches
     g_press = actual_state & ~before;   // calcul des switch appuyes
     if (g_press  > 0 || g_release > 0)
         switcher();
     event_clearFlag(FLAG_SHIFTREGISTER);
+    IEC1bits.SPI1RXIE = 1;
 }
 
 void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(31))) spi_interrupt(void)

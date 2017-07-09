@@ -4,8 +4,9 @@
 #include "audio.h"
 #include "led.h"
 
-static u8 octave;
-static u32 tabBtn[] = {
+static u32  last_button_sound;
+static u8   octave;
+static u32  tabBtn[] = {
     BTN_NOTE1, BTN_NOTE2, BTN_NOTE3, BTN_NOTE4, BTN_NOTE5, BTN_NOTE6, BTN_NOTE7,
     BTN_NOTE8, BTN_NOTE9, BTN_NOTE10, BTN_NOTE11, BTN_NOTE12, BTN_NOTE13
 };
@@ -40,7 +41,7 @@ static void onPressButton(u32 button)
         lcd_write_line("\177   Octave:    \176", 1);
         lcd_write_nb(octave, 1, 12);
     }
-    else if (button & BTN_CFG_3)
+    else if (button & BTN_CFG_4)
     {
         audio_setBuzzer(!audio_getBuzzer());
         lcd_write_case(audio_getBuzzer() ? "yes" : "no ", 0, 10);
@@ -51,6 +52,7 @@ static void onPressButton(u32 button)
         if (tabBtn[i] & button)
         {
             g_led = tabLed[i];
+            last_button_sound = button;
             audio_play(((octave - 1) * 12) + i);
             break;
         }
@@ -59,8 +61,11 @@ static void onPressButton(u32 button)
 
 static void onReleaseButton(u32 button)
 {
-    audio_stop();
-    g_led = 0x0;
+    if (button & last_button_sound)
+    {
+        audio_stop();
+        g_led = 0x0;
+    }
 }
 
 void run_free(void)
