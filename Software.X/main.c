@@ -30,13 +30,13 @@ int     main(void)
 {
     u32 t = 95000;
 
+    lcd_init_rst();
     init_interrupt();
     event_init();
-    lcd_init_rst();
     i2c1_init();
-    lcd_init();
     shiftRegister_init();
     spi_init();
+    lcd_init();
     lcd_create_char();
     init_timer1();
     audio_init();
@@ -46,8 +46,8 @@ int     main(void)
     lcd_init_end();
     lcd_clear();
     sdcard_init();
-    setOnPressCallback(&turnOnLED);
-    setOnReleaseCallback(&turnOffLED);
+    //setOnPressCallback(&turnOnLED);
+    //setOnReleaseCallback(&turnOffLED);
     
     while (1)
     {

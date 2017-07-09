@@ -22,7 +22,7 @@ static u16 notes[] = {
  * Interruption
  */
 
-__ISR(_TIMER_2_VECTOR, IPL6AUTO) BuzzerTimer()
+__ISR(_TIMER_2_VECTOR, IPL5AUTO) BuzzerTimer()
 {
     LATAbits.LATA4 = !LATAbits.LATA4;
     IFS0bits.T2IF = 0;
@@ -37,7 +37,8 @@ void buzzer_init()
 
     // Initialisation du timer
     IEC0bits.T2IE = 1;
-    IPC2bits.T2IP = 6;
+    IPC2bits.T2IP = 5;
+    IPC2bits.T2IS = 1;
     IFS0bits.T2IF = 0;
 
     T2CON = 0;

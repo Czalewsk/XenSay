@@ -43,7 +43,7 @@ void    spi_init(void)
 
     //Etape 6
     //BRG = Baud Rate Generator
-    SPI1BRG = 32; //  = ---> 32 | 0 est le + rapide, 127 est le + lent
+    SPI1BRG = 42; //  = ---> 32 | 0 est le + rapide, 127 est le + lent
 
     //Etape 7
     SPI1STATbits.SPIROV = 0;  // Receive Overflow Flag Bit
