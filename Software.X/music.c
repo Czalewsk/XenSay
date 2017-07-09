@@ -108,14 +108,14 @@ u8 music_getStepLength()
 {
     if (!music || music + 3 > endmusic)
         return (0);
-    return (*(music + 1) * 39);
+    return (*(music + 1));
 }
 
 u8 music_getStepDelay()
 {
     if (!music || music + 3 > endmusic)
         return (0);
-    return (*(music + 2) * 39);
+    return (*(music + 2));
 }
 
 void music_setOnStepEnd(void (*c)(u8 delay))
