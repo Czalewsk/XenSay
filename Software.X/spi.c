@@ -6,23 +6,23 @@ void    spi_init(void)
     
     // PPS
     TRISAbits.TRISA1 = 1; // Set SDI1 to input
-    SDI1Rbits.SDI1R = 0;
+    SDI1Rbits.SDI1R = 0; // Serial Data Input
     RPB11Rbits.RPB11R = 3; // Set SDO1 PPS
     ANSELAbits.ANSA1 = 0;  // Fucking Analogique
 
-    TRISBbits.TRISB14 = 0; // SCK1
-    LATBbits.LATB14 = 0;
+    TRISBbits.TRISB14 = 0; // SCK1 (Set la pin en output)
+    LATBbits.LATB14 = 0; // Set la tension a 0 sur la pin
 
     //Etape 1
-    IEC1bits.SPI1EIE = 0;
-    IEC1bits.SPI1RXIE = 0;
-    IEC1bits.SPI1TXIE = 0;
+    IEC1bits.SPI1EIE = 0; // Error Interrupt Enable Control bit
+    IEC1bits.SPI1RXIE = 0;// Receive Buffer
+    IEC1bits.SPI1TXIE = 0; //Transmit Buffer
 
     //Etape 2
-    SPI1CON = 0;
+    SPI1CON = 0; //// Reset du registre de config du timer (SPI Control Register)
 
     //Etape 3
-    cData = SPI1BUF;
+    cData = SPI1BUF; //SPI Buffer Register
     SPI1BUF = 0;
 
     //Etape 4
@@ -38,7 +38,7 @@ void    spi_init(void)
     IPC7bits.SPI1IP = 6; // SPI1 Interrupt Priority (0 a 7)
     IPC7bits.SPI1IS = 1; // SPI1 Interrupt Sub-Priority (0 a 3)
     IEC1bits.SPI1EIE = 1; //Gestion d'erreurs
-    IEC1bits.SPI1RXIE = 1; // Gestion de recois
+    IEC1bits.SPI1RXIE = 1; // Gestion de recois (interrupt enable bit)
     IEC1bits.SPI1TXIE = 0; //Gestion de transmission des donnees
 
     //Etape 6
@@ -54,9 +54,9 @@ void    spi_init(void)
     SPI1CONbits.MSTEN = 1; //MSTEN: Master Mode Enable bit; 1 = Master mode
     SPI1CONbits.SMP = 1; //SMP: SPI Data Input Sample Phase bit; 1 = Input data sampled at end of data output time (if MSTEN = 1)
     SPI1CONbits.MODE32 = 1; // Set 32bits SPI
-    SPI1CONbits.MODE16 = 0;
-    SPI1CONbits.ENHBUF = 0;
+    SPI1CONbits.MODE16 = 0; // 32/16-bit Communication Select bits
+    SPI1CONbits.ENHBUF = 0; // Enhanced Buffer Enable bit
     
     //Etape 9
-    SPI1CONbits.ON = 1;
+    SPI1CONbits.ON = 1; // Reset du registre de config du timer
 }

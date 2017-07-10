@@ -25,7 +25,7 @@ static u16 notes[] = {
 __ISR(_TIMER_2_VECTOR, IPL5AUTO) BuzzerTimer()
 {
     LATAbits.LATA4 = !LATAbits.LATA4;
-    IFS0bits.T2IF = 0;
+    IFS0bits.T2IF = 0; ////TxIF interrupt flag bit
 }
 
 
@@ -36,22 +36,22 @@ void buzzer_init()
     TRISAbits.TRISA4 = 0;
 
     // Initialisation du timer
-    IEC0bits.T2IE = 1;
-    IPC2bits.T2IP = 5;
-    IPC2bits.T2IS = 1;
-    IFS0bits.T2IF = 0;
+    IEC0bits.T2IE = 1; // interrupt enable bit
+    IPC2bits.T2IP = 5; //Interrupt Priority Control bits
+    IPC2bits.T2IS = 1; //Interrupt Subpriority Control bits
+    IFS0bits.T2IF = 0; //TxIF interrupt flag bit
 
     T2CON = 0;
     //T2CONbits.TCS = 0; // Clock PBCLK
     T2CONbits.TCKPS = 0; // Timer Prescal 1:1 (500000 = 0.5s)
-    T2CONbits.TGATE = 0;
+    T2CONbits.TGATE = 0; // Timer Gated Time Accumulation Enable bit
     T2CONbits.ON = 0;
 }
 
 void buzzer_play(u8 note)
 {
     T2CONbits.ON = 0;
-    IFS0bits.T2IF = 0;
+    IFS0bits.T2IF = 0; //TxIF interrupt flag bit
 
     PR2 = BUZZER_PERIOD / notes[note];
     TMR2 = 0;

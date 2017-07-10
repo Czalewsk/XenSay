@@ -1,7 +1,6 @@
 #include "XenSay.h"
 #include "events.h"
 #include "button.h"
-#include "correspondances.h"
 #include "audio.h"
 #include "buzzer.h"
 #include "midi.h"

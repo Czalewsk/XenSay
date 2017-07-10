@@ -11,6 +11,7 @@
 # include <xc.h>
 # include <sys/attribs.h>
 # include "types.h"
+# include "correspondances.h"
 
 // I2C Slave ADDR
 # define ADDR (0x7C)

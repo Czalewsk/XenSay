@@ -33,9 +33,9 @@ static u8 sd_wait_rep()
 
     do
     {
-        data = SPI(0xff);
+        data = SPI(0xff); // 0xff == les donnees a envoyer a SPI en mode WAIT (quand on n'a pas les donnes a envoyer)
         ++i;
-    } while (i <= 20 && data == 0xff);
+    } while (i <= 20 && data == 0xff); // i <= 20 == TIMEOUT
     return (data);
 }
 
@@ -63,7 +63,7 @@ void sdcard_init(void)
 {
     // Configuration des PPS
     TRISBbits.TRISB2 = 1;
-    SDI2Rbits.SDI2R = 4;
+    SDI2Rbits.SDI2R = 4; // Serial Data Input
     RPB5Rbits.RPB5R = 4;
 
     // Configuration de la pin SS
@@ -72,19 +72,19 @@ void sdcard_init(void)
 
     // Initialise SPI
     SPI2CON = 0;
-    SPI2BRG = 1;
+    SPI2BRG = 1; // SPI Baud Rate Register
 
     SPI2CONbits.MSTEN = 1; // Le pic est le maitre
-    SPI2CONbits.CKE = 1;
+    SPI2CONbits.CKE = 1; // CKE: SPI Clock Edge Select bit ; 1 = Serial output data changes on transition from active clock state to idle clock state (see CKP bit)
     SPI2CONbits.CKP = 0; // Idle clock = low
     SPI2CONbits.ON = 1;
 
     // Interruption config
-    IEC1bits.SPI2RXIE = 0;
-    IEC1bits.SPI2TXIE = 0;
-    IEC1bits.SPI2EIE = 0;
-    IPC9bits.SPI2IP = 7;
-    IPC9bits.SPI2IS = 2;
+    IEC1bits.SPI2RXIE = 0;  // Gestion de recois (interrupt enable bit)
+    IEC1bits.SPI2TXIE = 0; //Gestion de transmission des donnees
+    IEC1bits.SPI2EIE = 0; //Gestion d'erreurs
+    IPC9bits.SPI2IP = 7; // SPI2 Interrupt Priority (0 a 7)
+    IPC9bits.SPI2IS = 2; // SPI2 Interrupt Sub-Priority (0 a 3)
 }
 
 u8 sdcard_start(void)

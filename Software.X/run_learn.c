@@ -3,7 +3,6 @@
 #include "events.h"
 #include "button.h"
 #include "led.h"
-#include "correspondances.h"
 
 typedef enum    {
     MUSIC,

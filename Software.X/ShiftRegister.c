@@ -70,7 +70,7 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(31))) sp
     if (IFS1bits.SPI1RXIF) // Interrup quand le registre de reception est plein
     {
         event_setFlag(FLAG_SHIFTREGISTER);
-        IEC1bits.SPI1RXIE = 0;
+        IEC1bits.SPI1RXIE = 0; // Gestion de recois :P
         IFS1bits.SPI1RXIF = 0;
     }
 }

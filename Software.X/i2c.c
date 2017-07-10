@@ -22,7 +22,7 @@ s8      i2c_start(void)
  //   if (I2C1STATbits.P)
     {
         g_i2c_buffer.state = ADDRESS;
-        I2C1CONbits.SEN = 1;
+        I2C1CONbits.SEN = 1; //Start Condition Enable bit
     }
  //   else
 //       return (0);
@@ -34,7 +34,7 @@ s8      i2c_start(void)
 s8      i2c_stop(void)
 {
 //    if (!(I2C1CON & 0x1F))
-        I2C1CONbits.PEN = 1;
+        I2C1CONbits.PEN = 1; //Stop Condition Enable bit
   //  else
  //       return (0);
     return (1);
@@ -60,12 +60,12 @@ void      i2c1_init(void)
 {
     u8  tmp = 0;
 
-    //i2c_checkSDA();
-    I2C1CON = 0;
-    I2C1BRG = 15;
-    I2C1STAT = 0;
-    I2C1ADD = ADDR;
-    tmp = I2C2RCV;
+    //i2c_checkSDA(); -> Serial Data Line
+    I2C1CON = 0; // I2C Control Register
+    I2C1BRG = 15; // I2C Baud Rate Generator Register
+    I2C1STAT = 0; // I2C Status Register
+    I2C1ADD = ADDR; // I2C Slave Address Register
+    tmp = I2C2RCV; // I2C Receive Data Register
     IFS1bits.I2C1MIF = 0;
     IPC8bits.I2C1IP = 4;
     IPC8bits.I2C1IS = 1;
