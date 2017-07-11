@@ -73,7 +73,7 @@ void       __attribute__ ((interrupt(IPL6AUTO))) __attribute__ ((vector(31))) sp
         IEC1bits.SPI1RXIE = 0; // Gestion de recois :P
         IFS1bits.SPI1RXIF = 0;
     }
-}
+    }
 
 void setOnPressCallback(void (*c)(u32 button))
 {

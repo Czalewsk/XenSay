@@ -10,9 +10,9 @@
 
 #include "types.h"
 
-#define FLAGS_CCS 1
-#define FLAGS_TX 2
-#define FLAGS_RX 4
+#define FLAGS_CCS 1 // Card Capacity Status
+#define FLAGS_TX 2 //transmission des donnes
+#define FLAGS_RX 4 // reception des donnes
 
 void sdcard_init(void);
 u8 sdcard_start(void);
