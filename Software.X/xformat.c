@@ -66,7 +66,8 @@ u8 xformat_getMusicCount()
     
     count = 0;
     
-    for (entry = 0; entry < XFORMAT_FAT_MAXENTRY; ++entry)
+    entry = 0;
+    while (entry < XFORMAT_FAT_MAXENTRY)
     {
         if (!(entry % XFORMAT_FAT_ENTRYINSECTOR)) // Read sector of entry
         {
@@ -76,6 +77,7 @@ u8 xformat_getMusicCount()
         
         if (GET_FATENTRYSIZE(block, entry))
             ++count;
+        ++entry;
     }
     return (count);
 }
@@ -110,7 +112,11 @@ u8 *xformat_nextMusic()
 {
     u8 *block;
     u8 entry;
-    
+    u32 intStatus;
+
+    // disable interrupts
+    intStatus = INTDisableInterrupts();
+
     entry = musicIndex + 1;
     // Read first block
     if (entry % XFORMAT_FAT_ENTRYINSECTOR && entry < XFORMAT_FAT_MAXENTRY)
@@ -132,11 +138,12 @@ u8 *xformat_nextMusic()
             musicIndex = entry;
             musicSector = GET_FATENTRYSECTOR(block, entry);
             musicSize = GET_FATENTRYSIZE(block, entry);
-            
+            INTRestoreInterrupts(intStatus);
             return ((u8 *)slc_memcpy(musicName, block + (entry * XFORMAT_FAT_ENTRYSIZE) + 4,
                     XFORMAT_MUSIC_MAXNAME));
         }
     }
+    INTRestoreInterrupts(intStatus);
     return (musicName);
 }
 

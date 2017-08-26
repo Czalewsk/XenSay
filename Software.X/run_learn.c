@@ -197,7 +197,7 @@ void    setupState(LEARN_STATES state)
     u8 *name;
     u8 *music;
     u16 size;
-    
+
     switch (state)
     {
         case MUSIC:
